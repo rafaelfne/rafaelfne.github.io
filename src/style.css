@@ -4,6 +4,10 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+  @apply bg-gray-900 text-white;
+}
+
 .font-sans {
-  letter-spacing: 0.25;
+  @apply tracking-tight;
 }
