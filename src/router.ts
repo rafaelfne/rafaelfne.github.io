@@ -5,6 +5,10 @@ const router: RouterOptions = {
     {
       path: '/',
       component: () => import('./pages/home/HomePage.vue')
+    },
+    {
+      path: '/bloc-no-frontend',
+      component: () => import('./pages/articles/BlocInFrontendArticle.vue')
     }
   ]
 }

@@ -11,3 +11,7 @@ body {
 .font-sans {
   @apply tracking-tight;
 }
+
+p {
+  @apply pb-4;
+}
