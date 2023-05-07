@@ -1,3 +1,9 @@
+@import url("../public/fonts/typography.css");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.font-sans {
+  letter-spacing: 0.25;
+}

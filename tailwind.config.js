@@ -7,6 +7,9 @@ export default {
   ],
   theme: {
     extend: {},
+    fontFamily: {
+      'sans': ['"Cartograph CF"']
+    }
   },
   plugins: [
     require('flowbite/plugin')
