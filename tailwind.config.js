@@ -1,19 +1,16 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  darkMode: true,
+  darkMode: 'class',
   content: [
     "./index.html",
-    "./src/**/*.{vue,js,ts,jsx,tsx}",
-    "./node_modules/flowbite/**/*.js"
+    "./src/**/*.{vue,js,ts,jsx,tsx}"
   ],
   theme: {
     extend: {},
     fontFamily: {
-      'sans': ['"Cartograph CF"']
+      'sans': ['"Cartograph CF"', 'ui-sans-serif', 'system-ui', 'sans-serif']
     }
   },
-  plugins: [
-    require('flowbite/plugin')
-  ]
+  plugins: []
 }
 
