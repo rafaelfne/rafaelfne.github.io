@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onMounted, onUnmounted, watch } from 'vue'
 
 defineProps<{
   name: string
@@ -24,16 +24,23 @@ function closeMenu() {
 }
 
 function handleKeydown(event: KeyboardEvent) {
-  if (event.key === 'Escape') {
+  if (event.key === 'Escape' && isMenuOpen.value) {
     closeMenu()
   }
 }
+
+onMounted(() => {
+  document.addEventListener('keydown', handleKeydown)
+})
+
+onUnmounted(() => {
+  document.removeEventListener('keydown', handleKeydown)
+})
 </script>
 
 <template>
   <header
     class="fixed top-0 left-0 right-0 z-50 bg-gray-900/95 backdrop-blur-sm border-b border-gray-800"
-    @keydown="handleKeydown"
   >
     <nav class="mx-auto max-w-7xl px-4 md:px-6 lg:px-8">
       <div class="flex h-16 items-center justify-between">
@@ -104,6 +111,7 @@ function handleKeydown(event: KeyboardEvent) {
         v-show="isMenuOpen"
         id="mobile-menu"
         class="md:hidden border-t border-gray-800"
+        :aria-hidden="!isMenuOpen"
       >
         <div class="space-y-1 px-2 pb-4 pt-2">
           <a

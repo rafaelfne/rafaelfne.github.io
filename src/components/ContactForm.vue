@@ -62,6 +62,8 @@ function focusFirstInvalid() {
   }
 }
 
+const submitError = ref('')
+
 async function handleSubmit() {
   if (!validateAll()) {
     focusFirstInvalid()
@@ -69,20 +71,27 @@ async function handleSubmit() {
   }
   
   isSubmitting.value = true
+  submitError.value = ''
   
-  // Simulate form submission
-  await new Promise(resolve => setTimeout(resolve, 500))
-  
-  isSubmitting.value = false
-  isSubmitted.value = true
-  
-  // Reset form
-  form.value = { name: '', email: '', message: '' }
-  errors.value = { name: '', email: '', message: '' }
+  try {
+    // Simulate form submission
+    await new Promise(resolve => setTimeout(resolve, 500))
+    
+    isSubmitted.value = true
+    
+    // Reset form
+    form.value = { name: '', email: '', message: '' }
+    errors.value = { name: '', email: '', message: '' }
+  } catch (error) {
+    submitError.value = 'Failed to send message. Please try again.'
+  } finally {
+    isSubmitting.value = false
+  }
 }
 
 function resetForm() {
   isSubmitted.value = false
+  submitError.value = ''
 }
 </script>
 
@@ -209,6 +218,15 @@ function resetForm() {
         >
           {{ errors.message }}
         </p>
+      </div>
+
+      <!-- Submit Error -->
+      <div
+        v-if="submitError"
+        class="rounded-lg bg-red-900/50 border border-red-700 p-3 text-center"
+        role="alert"
+      >
+        <p class="text-sm text-red-400">{{ submitError }}</p>
       </div>
 
       <!-- Submit Button -->
