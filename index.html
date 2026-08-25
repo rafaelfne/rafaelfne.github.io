@@ -480,6 +480,7 @@
       <button type="button" class="lens-btn k-cool" data-lens="entrega" aria-pressed="false" data-i18n="lensbtn.entrega"><b>Alguém que entrega</b><span>staff · principal</span></button>
       <button type="button" class="lens-btn k-warm" data-lens="lidera" aria-pressed="false" data-i18n="lensbtn.lidera"><b>Alguém que lidera</b><span>em · head técnico</span></button>
       <button type="button" class="lens-btn k-warm" data-lens="risco" aria-pressed="false" data-i18n="lensbtn.risco"><b>Alguém que aguenta auditoria</b><span>regulado · risco</span></button>
+      <button type="button" class="lens-btn k-warm" data-lens="ownership" aria-pressed="false" data-i18n="lensbtn.ownership"><b>Ownership</b><span>sócio · produto · m&amp;a</span></button>
     </div>
   </div>
 </nav>
@@ -492,7 +493,7 @@
       <span class="label" data-i18n="lbl.escala">Escala</span>
       <h2 id="scale-title" data-i18n="scale.title">Dimensão de impacto.</h2>
     </div>
-    <p class="scale-lede" id="scale-lede" data-i18n="scale.lede">Quatro anos numa corretora de valores regulada, oito ininterruptos em mercado financeiro, dezesseis de engenharia.</p>
+    <p class="scale-lede" id="scale-lede" data-i18n="scale.lede">Quatro anos numa corretora de valores regulada, dois e meio como sócio de uma startup vendida para ela, dezesseis de engenharia.</p>
     <div class="figures rv" id="figures" style="--d:.06s"></div>
   </section>
 
@@ -523,13 +524,13 @@
       <div class="cat" id="cat">
         <div class="cat-head" data-i18n="cat.head"><span>O atrito</span><span>O mecanismo</span><span>O que ficou</span></div>
 
-        <div class="cat-row" data-lens="entrega" data-i18n="cat.r0"><div><span class="k">O atrito</span><span class="p">Monolito impedia dar acesso a fornecedores por área</span></div><div><span class="k">O mecanismo</span><span class="m">Micro-frontends com módulos servidos por CDN</span></div><div><span class="k">O que ficou</span><span class="r">Fronteira técnica virou fronteira de permissão</span></div></div>
+        <div class="cat-row" data-lens="entrega ownership" data-i18n="cat.r0"><div><span class="k">O atrito</span><span class="p">Monolito impedia dar acesso a fornecedores por área</span></div><div><span class="k">O mecanismo</span><span class="m">Micro-frontends com módulos servidos por CDN</span></div><div><span class="k">O que ficou</span><span class="r">Fronteira técnica virou fronteira de permissão</span></div></div>
 
         <div class="cat-row" data-lens="lidera" data-i18n="cat.r1"><div><span class="k">O atrito</span><span class="p">Interrupção constante por mensagem direta</span></div><div><span class="k">O mecanismo</span><span class="m">Canal único como funil de demanda do time</span></div><div><span class="k">O que ficou</span><span class="r">A DM deixou de ser porta de entrada</span></div></div>
 
         <div class="cat-row" data-lens="lidera" data-i18n="cat.r2"><div><span class="k">O atrito</span><span class="p">Ninguém era dono da estabilidade na semana</span></div><div><span class="k">O mecanismo</span><span class="m">Rodízio com passagem de bastão explícita</span></div><div><span class="k">O que ficou</span><span class="r">Sobreviveu ao time que o criou</span></div></div>
 
-        <div class="cat-row" data-lens="lidera" data-i18n="cat.r3"><div><span class="k">O atrito</span><span class="p">Áreas de negócio não conseguiam ler o board</span></div><div><span class="k">O mecanismo</span><span class="m">Épicos reescritos por objetivo de negócio, a quatro mãos com Produto</span></div><div><span class="k">O que ficou</span><span class="r">Virou o padrão de escrita do backlog</span></div></div>
+        <div class="cat-row" data-lens="lidera ownership" data-i18n="cat.r3"><div><span class="k">O atrito</span><span class="p">Áreas de negócio não conseguiam ler o board</span></div><div><span class="k">O mecanismo</span><span class="m">Épicos reescritos por objetivo de negócio, a quatro mãos com Produto</span></div><div><span class="k">O que ficou</span><span class="r">Virou o padrão de escrita do backlog</span></div></div>
 
         <div class="cat-row" data-lens="lidera" data-i18n="cat.r4"><div><span class="k">O atrito</span><span class="p">Refinamento disperso, capacidade invisível</span></div><div><span class="k">O mecanismo</span><span class="m">Pontuação escalonada: sêniores no goal, resto em rodadas assíncronas</span></div><div><span class="k">O que ficou</span><span class="r">Mudança de escopo passou a ser visível</span></div></div>
 
@@ -539,15 +540,15 @@
 
         <div class="cat-row" data-lens="entrega risco" data-i18n="cat.r7"><div><span class="k">O atrito</span><span class="p">Virada big-bang em fluxo regulatório crítico</span></div><div><span class="k">O mecanismo</span><span class="m">Feature flag no BFF, canário em fração da base, preview em produção</span></div><div><span class="k">O que ficou</span><span class="r">Rollback deixou de ser evento</span></div></div>
 
-        <div class="cat-row" data-lens="entrega risco" data-i18n="cat.r8"><div><span class="k">O atrito</span><span class="p">Parceiro só conseguia certificar com credencial de produção</span></div><div><span class="k">O mecanismo</span><span class="m">Sandbox que simula liquidação, trocado por cabeçalho HTTP</span></div><div><span class="k">O que ficou</span><span class="r">Certificação completa sem tocar em produção</span></div></div>
+        <div class="cat-row" data-lens="entrega risco ownership" data-i18n="cat.r8"><div><span class="k">O atrito</span><span class="p">Parceiro só conseguia certificar com credencial de produção</span></div><div><span class="k">O mecanismo</span><span class="m">Sandbox que simula liquidação, trocado por cabeçalho HTTP</span></div><div><span class="k">O que ficou</span><span class="r">Certificação completa sem tocar em produção</span></div></div>
 
         <div class="cat-row" data-lens="risco entrega" data-i18n="cat.r9"><div><span class="k">O atrito</span><span class="p">Mudança em produção sem trilha auditável</span></div><div><span class="k">O mecanismo</span><span class="m">Plataforma que só dispara o deploy depois da aprovação</span></div><div><span class="k">O que ficou</span><span class="r">Adoção mandatória para toda mudança em produção</span></div></div>
 
         <div class="cat-row" data-lens="entrega risco" data-i18n="cat.r10"><div><span class="k">O atrito</span><span class="p">Decisão de arquitetura sem rastro do que era premissa</span></div><div><span class="k">O mecanismo</span><span class="m">ADR com marcadores de proveniência por afirmação</span></div><div><span class="k">O que ficou</span><span class="r">Quem herda sabe o que foi decidido e o que foi suposto</span></div></div>
 
-        <div class="cat-row" data-lens="entrega lidera" data-i18n="cat.r11"><div><span class="k">O atrito</span><span class="p">Regra de negócio acoplada ao permissionamento</span></div><div><span class="k">O mecanismo</span><span class="m">Separação explícita entre mecanismo e política</span></div><div><span class="k">O que ficou</span><span class="r">Política virou propriedade de Produto, não do código</span></div></div>
+        <div class="cat-row" data-lens="entrega lidera ownership" data-i18n="cat.r11"><div><span class="k">O atrito</span><span class="p">Regra de negócio acoplada ao permissionamento</span></div><div><span class="k">O mecanismo</span><span class="m">Separação explícita entre mecanismo e política</span></div><div><span class="k">O que ficou</span><span class="r">Política virou propriedade de Produto, não do código</span></div></div>
 
-        <div class="cat-row" data-lens="entrega" data-i18n="cat.r12"><div><span class="k">O atrito</span><span class="p">Evoluir a jornada exigia release do app do parceiro</span></div><div><span class="k">O mecanismo</span><span class="m">Renderização de tela a partir de contrato JSON</span></div><div><span class="k">O que ficou</span><span class="r">Jornada evolui sem passar pela loja de aplicativos</span></div></div>
+        <div class="cat-row" data-lens="entrega ownership" data-i18n="cat.r12"><div><span class="k">O atrito</span><span class="p">Evoluir a jornada exigia release do app do parceiro</span></div><div><span class="k">O mecanismo</span><span class="m">Renderização de tela a partir de contrato JSON</span></div><div><span class="k">O que ficou</span><span class="r">Jornada evolui sem passar pela loja de aplicativos</span></div></div>
 
         <div class="cat-row" data-lens="entrega" data-i18n="cat.r13"><div><span class="k">O atrito</span><span class="p">Documentação de API dispersa por time</span></div><div><span class="k">O mecanismo</span><span class="m">Interface gerada a partir da especificação OpenAPI</span></div><div><span class="k">O que ficou</span><span class="r">Ferramenta interna adotada além do time de origem</span></div></div>
       </div>
@@ -597,7 +598,7 @@
       <div class="readout" id="readout">
         <div class="readout-lane" id="ro-lane" data-i18n="ro.lane">selecione um ponto</div>
         <div class="readout-body">
-          <h3 id="ro-title" data-i18n="ro.title">23 pontos em oito anos</h3>
+          <h3 id="ro-title" data-i18n="ro.title">26 pontos em oito anos</h3>
           <p id="ro-text" data-i18n="ro.text">Passe o cursor — ou use Tab — sobre qualquer ponto do traço para ler o que aconteceu ali. Os pontos em azul são engenharia feita com as próprias mãos; os em cobre são decisão, articulação e gestão.</p>
         </div>
       </div>
@@ -614,7 +615,7 @@
     </div>
 
     <div class="signs rv" id="signs" style="--d:.08s">
-      <article class="sign" data-lens="entrega risco" data-i18n="sign.0">
+      <article class="sign" data-lens="entrega ownership risco" data-i18n="sign.0">
         <span class="n">01</span>
         <h3>Registra o que descartou</h3>
         <p>Não registra só a opção vencedora. As alternativas rejeitadas ficam no documento com o motivo — inclusive, e principalmente, quando eram as tecnicamente mais simples.</p>
@@ -624,7 +625,7 @@
         <h3>Valida a fonte antes do resultado</h3>
         <p>Em trabalho de auditoria e dado regulatório, enumera as hipóteses de erro antes de olhar o número. E não aceita substituto de fonte só porque chega mais rápido.</p>
       </article>
-      <article class="sign" data-lens="lidera risco" data-i18n="sign.2">
+      <article class="sign" data-lens="ownership lidera risco" data-i18n="sign.2">
         <span class="n">03</span>
         <h3>Antecipa o custo da própria recomendação</h3>
         <p>Quando propõe o caminho mais seguro, escreve o preço junto — antes de alguém perguntar. O trade-off comercial vem na mesma página que a proposta técnica.</p>
@@ -654,8 +655,8 @@
       <div class="stop rv" style="--d:.06s" data-i18n="stop.1">
         <span class="yr">2020 — 2022</span>
         <div>
-          <h3>MeuPortfol.io <em>· Tech Lead</em></h3>
-          <p>Liderança técnica das plataformas de gestão e consolidação de portfólios onshore e offshore. A empresa foi adquirida pela Warren em 2022.</p>
+          <h3>MeuPortfol.io <em>· Sócio e Tech Lead</em></h3>
+          <p>Sócio quase desde o início de uma startup de 15 pessoas — plataforma de consolidação de investimentos para family offices e gestores. Além da liderança técnica, atuação direta em definição de produto, venda, relacionamento com cliente e operação. Acompanhou de ponta a ponta a aquisição pela Warren, em 2022.</p>
         </div>
       </div>
       <div class="stop rv" style="--d:.12s" data-i18n="stop.2">
@@ -720,9 +721,10 @@
   "lensbtn.entrega": "<b>Someone who ships</b><span>staff · principal</span>",
   "lensbtn.lidera": "<b>Someone who leads</b><span>em · head of engineering</span>",
   "lensbtn.risco": "<b>Someone who holds up under audit</b><span>regulated · risk</span>",
+  "lensbtn.ownership": "<b>Ownership</b><span>partner · product · m&a</span>",
   "lbl.escala": "Scale",
   "scale.title": "Scale of impact.",
-  "scale.lede": "Four years inside a regulated brokerage, eight unbroken in financial markets, sixteen in engineering.",
+  "scale.lede": "Four years inside a regulated brokerage, two and a half as a partner in the startup that was sold to it, sixteen in engineering.",
   "lbl.escada": "The eight-year through line",
   "escada.h2": "Always the same problem, one level of abstraction higher.",
   "escada.p": "It started in 2018, at a digital bank, from one premise: <em>‘they were hiring software vendors and I needed to give each team access to parts of the project — the monolith blocked that.’</em> The technical answer was to isolate domains. The practical result was unblocking delivery speed across several teams in parallel. Since then, the same reasoning has climbed four steps up the architecture.",
@@ -761,7 +763,7 @@
   "key.cool": "hands-on",
   "key.warm": "decision & leadership",
   "ro.lane": "select a point",
-  "ro.title": "23 points across eight years",
+  "ro.title": "26 points across eight years",
   "ro.text": "Hover — or press Tab — over any point on the trace to read what happened there. Blue points are engineering done by hand; copper ones are decision, alignment and management.",
   "scope.foot": "positions inside each role are approximate — the order is faithful, the exact month of some items is still unverified",
   "lbl.modus": "Modus operandi",
@@ -774,7 +776,7 @@
   "lbl.traj": "Track record",
   "traj.h2": "The path here.",
   "stop.0": "<span class=\"yr\">2022 — today</span><div><h3>Warren Investimentos <em>· Engineering Lead → Engineering Manager → Architecture</em></h3><p>Joined through the acquisition of MeuPortfol.io. Led the Experience platform (~80k clients), the company's financial consolidation and the white-label opening to partner institutions. Since July 2026, in the cross-cutting architecture layer, owning security and identity and the Wealth-as-a-Service platform.</p></div>",
-  "stop.1": "<span class=\"yr\">2020 — 2022</span><div><h3>MeuPortfol.io <em>· Tech Lead</em></h3><p>Technical leadership of the platforms for managing and consolidating onshore and offshore investment portfolios. The company was acquired by Warren in 2022.</p></div>",
+  "stop.1": "<span class=\"yr\">2020 — 2022</span><div><h3>MeuPortfol.io <em>· Partner and Tech Lead</em></h3><p>A partner almost from the start in a 15-person startup — an investment consolidation platform for family offices and asset managers. Beyond technical leadership, hands-on in product definition, sales, client relationships and operations. Saw the acquisition by Warren through from end to end, in 2022.</p></div>",
   "stop.2": "<span class=\"yr\">2018 — 2020</span><div><h3>Banco Modal <em>· Senior Frontend Developer · Faria Lima, São Paulo</em></h3><p>Frontend of the digital bank in Vue 2 and the first micro-frontend architecture — step zero of the staircase above.</p></div>",
   "stop.3": "<span class=\"yr\">2009 — 2018</span><div><h3>WebCargo, own contracts, EF Motors</h3><p>Electronic tax documents for air freight — the first encounter with a regulatory requirement —, two years of contract development shipping iOS, Android, web and backend single-handed, and embedded software as a first job.</p></div>",
   "lbl.fecho": "Where things stand",
@@ -820,18 +822,27 @@
     { x: 2018.3, l: 3, k: 'entrega', t: 'Micro-frontends no banco digital', w: '2018 · Banco Modal',
       d: 'Vue sem Module Federation: framework como dependência externa injetada em runtime, registro dinâmico de rotas e store, módulos servidos por CDN e carregados por uma aplicação shell.',
       en: { t: 'Micro-frontends at the digital bank', w: '2018 · Banco Modal', d: 'Vue without Module Federation: the framework as an external dependency injected at runtime, dynamic route and store registration, modules served from a CDN and loaded by a shell application.' } },
-    { x: 2018.9, l: 2, k: 'lidera', t: 'Fronteira técnica por fornecedor', w: '2018 · Banco Modal',
+    { x: 2018.9, l: 2, k: 'lidera ownership', t: 'Fronteira técnica por fornecedor', w: '2018 · Banco Modal',
       d: 'A motivação do micro-frontend era organizacional: isolar conta-corrente, pagamentos e investimentos para conceder acesso segmentado a cada fábrica de software.',
       en: { t: 'A technical boundary per vendor', w: '2018 · Banco Modal', d: 'The motivation behind the micro-frontend was organizational: isolate checking account, payments and investments to grant segmented access to each software vendor.' } },
     { x: 2019.5, l: 3, k: 'entrega', t: 'Produto core do banco digital', w: '2019 · Banco Modal',
       d: 'Desenvolvimento ponta a ponta das interfaces do produto de crédito — a jornada de monetização do banco digital, construída sobre a mesma arquitetura de micro-frontends que isolava os domínios.',
       en: { t: 'Core product of the digital bank', w: '2019 · Banco Modal', d: 'End-to-end development of the credit product interfaces — the digital bank’s monetization journey, built on the same micro-frontend architecture that isolated the domains.' } },
-    { x: 2020.35, l: 2, k: 'lidera', t: 'Tech Lead na MeuPortfol.io', w: '2020 · MeuPortfol.io',
-      d: 'Liderança do time técnico responsável pela evolução das plataformas de gestão e consolidação de portfólios onshore e offshore.',
-      en: { t: 'Tech Lead at MeuPortfol.io', w: '2020 · MeuPortfol.io', d: 'Leading the technical team responsible for evolving the platforms that manage and consolidate onshore and offshore portfolios.' } },
+    { x: 2020.2, l: 1, k: 'lidera ownership', t: 'Sócio e definição de produto', w: '2020 · MeuPortfol.io',
+      d: 'Sócio quase desde o início de uma startup de 15 pessoas: plataforma de consolidação de investimentos para family offices e gestores. Definição de produto feita ao lado da operação e da venda — a régua do que entrava no roadmap era a mesma que sustentava o contrato.',
+      en: { t: 'Partner and product definition', w: '2020 · MeuPortfol.io', d: 'A partner almost from the start in a 15-person startup: an investment consolidation platform for family offices and asset managers. Product definition done next to operations and sales — the bar for what entered the roadmap was the same bar that held up the contract.' } },
+    { x: 2020.6, l: 2, k: 'lidera ownership', t: 'Liderança técnica de uma startup de 15', w: '2020 · MeuPortfol.io',
+      d: 'Liderança do time técnico responsável pela evolução das plataformas de gestão e consolidação de portfólios onshore e offshore, dentro de uma operação em que engenharia, produto e venda dividiam a mesma sala.',
+      en: { t: 'Technical leadership in a 15-person company', w: '2020 · MeuPortfol.io', d: 'Leading the technical team responsible for evolving the platforms that manage and consolidate onshore and offshore portfolios, inside an operation where engineering, product and sales shared the same room.' } },
     { x: 2021.2, l: 3, k: 'entrega', t: 'Arquitetura de consolidação', w: '2021 · MeuPortfol.io',
       d: 'Novas capacidades de consolidação de posições e rentabilidade para portfólios onshore e offshore.',
       en: { t: 'Consolidation architecture', w: '2021 · MeuPortfol.io', d: 'New consolidation capabilities for positions and returns across onshore and offshore portfolios.' } },
+    { x: 2021.7, l: 1, k: 'lidera ownership', t: 'Venda e relacionamento com cliente', w: '2021 · MeuPortfol.io',
+      d: 'Atuação direta na venda e no relacionamento com family offices e gestores. Ouvir a objeção do cliente e escrever o requisito no mesmo dia é um encurtamento de ciclo que só existe quando produto, venda e engenharia são a mesma pessoa.',
+      en: { t: 'Sales and client relationships', w: '2021 · MeuPortfol.io', d: 'Hands-on in sales and in the relationship with family offices and asset managers. Hearing the client objection and writing the requirement the same day is a cycle shortcut that only exists when product, sales and engineering are the same person.' } },
+    { x: 2022.35, l: 0, k: 'lidera risco ownership', t: 'M&A pelo lado vendido', w: '2022 · MeuPortfol.io',
+      d: 'Participação direta em todo o processo de aquisição pela Warren — diligência, negociação e integração — na condição de sócio da empresa comprada. Quatro anos depois, o mesmo processo do outro lado da mesa, conduzindo due diligence técnica como comprador.',
+      en: { t: 'M&A from the sell side', w: '2022 · MeuPortfol.io', d: 'Direct involvement in the whole acquisition by Warren — diligence, negotiation and integration — as a partner in the company being bought. Four years later, the same process from the other side of the table, running technical due diligence as the buyer.' } },
     { x: 2022.6, l: 2, k: 'lidera', t: 'Engineering Lead na Warren', w: 'jul/2022 · Warren',
       d: 'Entrada via aquisição da MeuPortfol.io. Liderança técnica da plataforma de Experiência, com cerca de 80 mil clientes.',
       en: { t: 'Engineering Lead at Warren', w: 'Jul 2022 · Warren', d: 'Arrived through the acquisition of MeuPortfol.io. Technical leadership of the Experience platform, serving around 80 thousand clients.' } },
@@ -844,13 +855,13 @@
     { x: 2023.5, l: 0, k: 'risco', t: 'Governança técnica sobre integrações', w: 'jun/2023 · Warren',
       d: 'Análise forense aplicada à cadeia de integrações: reconstruir a linha do tempo de uma falha, nomear a causa raiz e devolver a responsabilidade a quem a originou. Tratar falha de terceiro como responsabilidade rastreável, e não como fatalidade, é o que sustenta cobrança de SLA na cadeia.',
       en: { t: 'Technical governance over integrations', w: 'Jun 2023 · Warren', d: 'Forensic analysis applied to the integration chain: reconstruct the timeline of a failure, name the root cause and hand accountability back to where it originated. Treating a third-party failure as traceable accountability, rather than as fate, is what makes SLA enforcement possible across the chain.' } },
-    { x: 2023.7, l: 1, k: 'risco', t: 'CVM 179 e novo extrato', w: '2023 · Warren',
+    { x: 2023.7, l: 1, k: 'risco ownership', t: 'CVM 179 e novo extrato', w: '2023 · Warren',
       d: 'Transparência de custos, extrato consolidado, catálogo de carteiras e integrações com custodiantes — sobre a plataforma que é a fonte de verdade financeira da companhia.',
       en: { t: 'Cost transparency and a new statement', w: '2023 · Warren', d: 'Cost transparency under Brazilian securities regulation, a consolidated statement, a portfolio catalogue and custodian integrations — on top of the platform that is the company’s financial source of truth.' } },
     { x: 2023.85, l: 2, k: 'lidera', t: 'Proposta de squad de plataforma', w: 'out/2023 · Warren',
       d: 'Proposta de separar plataforma e aplicativo em uma squad com liderança e PM próprios. Adotada pela companhia e assumida em abril seguinte, já com composição e escopo definidos.',
       en: { t: 'Proposal for a platform squad', w: 'Oct 2023 · Warren', d: 'A proposal to split platform and app into a squad with its own leadership and PM. Adopted by the company and taken over the following April, with composition and scope already defined.' } },
-    { x: 2024.35, l: 1, k: 'lidera', t: 'Taxonomia de entregas', w: 'out/2024 · Warren',
+    { x: 2024.35, l: 1, k: 'lidera ownership', t: 'Taxonomia de entregas', w: 'out/2024 · Warren',
       d: 'Cada entrega classificada por benefício — crescimento, encantamento, eficiência, monetização, compliance — em vez de por tela. Virou material de retrospectiva.',
       en: { t: 'A taxonomy of deliveries', w: 'Oct 2024 · Warren', d: 'Every delivery classified by benefit — growth, delight, efficiency, monetization, compliance — instead of by screen. It became retrospective material.' } },
     { x: 2024.75, l: 3, k: 'entrega', t: 'Developer Experience acelerada por IA', w: '2025 · Warren',
@@ -871,7 +882,7 @@
     { x: 2025.78, l: 2, k: 'lidera', t: 'Engineering Manager', w: 'mai/2025 · Warren',
       d: 'Liderança transversal de múltiplos domínios críticos da corretora, com gestão direta e indireta de engenheiros, reportando ao CTO.',
       en: { t: 'Engineering Manager', w: 'May 2025 · Warren', d: 'Cross-cutting leadership of several critical brokerage domains, with direct and indirect management of engineers, reporting to the CTO.' } },
-    { x: 2026.15, l: 0, k: 'risco', t: 'Estratégia de identidade B2B2C', w: 'fev/2026 · Warren',
+    { x: 2026.15, l: 0, k: 'risco ownership', t: 'Estratégia de identidade B2B2C', w: 'fev/2026 · Warren',
       d: 'Dois caminhos segmentados por maturidade do parceiro — SDK white-label ou federação por Token Exchange. Usuário genérico e espelho descartados por mascararem a origem da operação.',
       en: { t: 'B2B2C identity strategy', w: 'Feb 2026 · Warren', d: 'Two paths segmented by partner maturity — a white-label SDK or federation through Token Exchange. Generic and mirror users were ruled out for masking the real origin of the operation.' } },
     { x: 2026.3, l: 3, k: 'entrega', t: 'Multi-tenant em runtime', w: '2026 · Warren',
@@ -892,7 +903,7 @@
     tudo: {
       deck: 'Dezesseis anos de engenharia, <b>oito deles ininterruptos em instituições financeiras reguladas</b>. O padrão que atravessa todos eles: escreve o critério — de senioridade, de auditoria, de identidade de parceiro — e depois <b>constrói o artefato que faz o critério valer sozinho</b>, sem depender de memória institucional.',
       scaleTitle: 'Dimensão de impacto.',
-      scaleLede: 'Quatro anos numa corretora de valores regulada, oito ininterruptos em mercado financeiro, dezesseis de engenharia.',
+      scaleLede: 'Quatro anos numa corretora de valores regulada, dois e meio como sócio de uma startup vendida para ela, dezesseis de engenharia.',
       figs: [
         { v: '24', u: '', l: 'engenheiros no pico da gestão' },
         { v: '7', u: '', l: 'domínios críticos sob liderança' },
@@ -938,7 +949,7 @@
     risco: {
       deck: '<b>Oito anos e cinco meses sem um único mês fora de instituição financeira regulada.</b> Leva decisão de arquitetura a Compliance, conduz investigação forense e transforma mudança em trilha auditável.',
       scaleTitle: 'O que aguenta auditoria.',
-      scaleLede: 'Levou decisão de arquitetura a Compliance e ela virou requisito de contrato. Conduziu due diligence técnica de M&A e transformou mudança em produção em trilha auditável obrigatória.',
+      scaleLede: 'Levou decisão de arquitetura a Compliance e ela virou requisito de contrato. Passou por due diligence de M&A dos dois lados da mesa — como sócio da empresa vendida e, depois, como comprador — e transformou mudança em produção em trilha auditável obrigatória.',
       figs: [
         { v: '3', u: '', l: 'reguladores no perímetro: CVM, BACEN, BSM' },
         { v: '4', u: '', l: 'frameworks regulatórios atendidos' },
@@ -949,13 +960,28 @@
       closeTitle: 'Arquitetura e conformidade não são duas conversas.',
       closeText: 'Dezesseis anos de engenharia, os últimos oito dentro de instituição financeira regulada — CVM, BACEN, BSM. Hoje é dono formal do domínio de segurança e identidade da corretora. É esse o terreno, e é nele que procura o próximo passo.',
       order: ['sec-escala', 'sec-assinaturas', 'sec-catalogo', 'sec-altitude', 'sec-escada', 'sec-pessoas', 'sec-trajetoria', 'sec-fecho']
+    },
+    ownership: {
+      deck: 'Sócio de uma startup de 15 pessoas até a venda para a companhia onde o trabalho continua hoje. <b>Definiu produto, vendeu, atendeu cliente e operou</b> — e sentou na mesa de M&A dos dois lados: como parte comprada e, depois, como comprador.',
+      scaleTitle: 'O que estava em jogo.',
+      scaleLede: 'Numa empresa de 15 pessoas não existe para quem escalar a conta. Produto, venda, relacionamento e operação ocupavam a mesma cadeira — e o resultado do trimestre era o resultado próprio.',
+      figs: [
+        { v: '15', u: '', l: 'pessoas na startup em que foi sócio' },
+        { v: '1', u: '', l: 'empresa construída e vendida' },
+        { v: '2', u: '', l: 'lados da mesa de M&A' },
+        { v: '4', u: '', l: 'frentes acumuladas: produto, venda, cliente e operação' }
+      ],
+      catTitle: 'Mecanismos que existem para o negócio, não para o código.',
+      closeTitle: 'Decisão técnica com o custo comercial junto.',
+      closeText: 'Quem já foi sócio calcula o preço da própria recomendação antes de fazê-la, porque já pagou essa conta. Hoje, na camada transversal de arquitetura de uma corretora regulada, é essa leitura que sustenta as decisões de plataforma: o caminho tecnicamente melhor só vale quando também se sustenta para quem vende, para quem opera e para o regulador.',
+      order: ['sec-escala', 'sec-trajetoria', 'sec-altitude', 'sec-catalogo', 'sec-assinaturas', 'sec-pessoas', 'sec-escada', 'sec-fecho']
     }
   };
   var LENSES_EN = {
     tudo: {
       deck: 'Sixteen years in engineering, <b>eight of them unbroken inside regulated financial institutions</b>. The pattern running through all of them: write the criterion — for seniority, for audit, for partner identity — and then <b>build the artifact that enforces it on its own</b>, with no reliance on institutional memory.',
       scaleTitle: 'Scale of impact.',
-      scaleLede: 'Four years inside a regulated brokerage, eight unbroken in financial markets, sixteen in engineering.',
+      scaleLede: 'Four years inside a regulated brokerage, two and a half as a partner in the startup that was sold to it, sixteen in engineering.',
       figs: [
         { v: '24', u: '', l: 'engineers at the peak of the org' },
         { v: '7', u: '', l: 'critical domains under leadership' },
@@ -1001,7 +1027,7 @@
     risco: {
       deck: '<b>Eight years and five months without a single month outside a regulated financial institution.</b> Takes architecture decisions to Compliance, runs forensic investigations and turns change into an audit trail.',
       scaleTitle: 'What holds up under audit.',
-      scaleLede: 'Took an architecture decision to Compliance and it became a contract requirement. Ran technical due diligence for an M&A and turned production change into a mandatory audit trail.',
+      scaleLede: 'Took an architecture decision to Compliance and it became a contract requirement. Went through M&A due diligence from both sides of the table — as a partner in the company sold, then as the buyer — and turned production change into a mandatory audit trail.',
       figs: [
         { v: '3', u: '', l: 'regulators in scope: CVM, BACEN, BSM' },
         { v: '4', u: '', l: 'regulatory frameworks satisfied' },
@@ -1012,6 +1038,21 @@
       closeTitle: 'Architecture and compliance are not two conversations.',
       closeText: 'Sixteen years in engineering, the last eight inside a regulated financial institution — under Brazilian securities, central bank and market supervision rules. Today the formal owner of the brokerage\'s security and identity domain. That is the ground, and that is where the next step is.',
       order: ['sec-escala', 'sec-assinaturas', 'sec-catalogo', 'sec-altitude', 'sec-escada', 'sec-pessoas', 'sec-trajetoria', 'sec-fecho']
+    },
+    ownership: {
+      deck: 'A partner in a 15-person startup until it was sold to the company where the work continues today. <b>Defined product, sold, handled clients and ran operations</b> — and sat at the M&A table from both sides: as the company acquired and, later, as the acquirer.',
+      scaleTitle: 'What was at stake.',
+      scaleLede: 'In a 15-person company there is nobody to escalate the bill to. Product, sales, client relationships and operations sat in the same chair — and the quarter\'s result was the owner\'s own.',
+      figs: [
+        { v: '15', u: '', l: 'people in the startup where the partnership was' },
+        { v: '1', u: '', l: 'company built and sold' },
+        { v: '2', u: '', l: 'sides of the M&A table' },
+        { v: '4', u: '', l: 'fronts held at once: product, sales, clients and operations' }
+      ],
+      catTitle: 'Mechanisms built for the business, not for the code.',
+      closeTitle: 'Technical decisions with the commercial cost attached.',
+      closeText: 'Someone who has been a partner prices their own recommendation before making it, because that bill has already been paid once. Today, in the cross-cutting architecture layer of a regulated brokerage, that is the reading behind every platform decision: the technically better path only counts when it also holds up for whoever sells, whoever operates and the regulator.',
+      order: ['sec-escala', 'sec-trajetoria', 'sec-altitude', 'sec-catalogo', 'sec-assinaturas', 'sec-pessoas', 'sec-escada', 'sec-fecho']
     }
   };
   function lensCfg(key) {
