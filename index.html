@@ -1,13 +1,1364 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Rafael | Tech Manager</title>
-  </head>
-  <body>
-    <div id="app"></div>
-    <script type="module" src="/src/main.ts"></script>
-  </body>
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Rafael Neves — Staff / Arquitetura de plataforma em corretora de valores. Define a regra e constrói o mecanismo que a faz valer. / Platform architecture in a regulated Brazilian brokerage.">
+<title>EM Hands-On</title>
+<meta name="author" content="Rafael Neves">
+<meta name="color-scheme" content="dark light">
+<meta property="og:type" content="profile">
+<meta property="og:title" content="Rafael Neves — Define a regra. Constrói o mecanismo.">
+<meta property="og:description" content="Dezesseis anos de engenharia, oito ininterruptos em instituições financeiras reguladas.">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:locale:alternate" content="en_US">
+</head>
+<body>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+
+<style>
+  /* dark-first: :root carrega o tema base (escuro) */
+  :root {
+    --ground: #0A0D12;
+    --surface: #121722;
+    --surface-2: #18202C;
+    --ink: #E9E6E2;
+    --ink-soft: #BEC4CC;
+    --muted: #8792A0;
+    --line: #1F2836;
+    --line-2: #2E3B4C;
+    --warm: #C98C63;
+    --cool: #6E93BC;
+    --on-accent: #0A0D12;
+    --glow: 0.9;
+    --paper-shade: rgba(255,255,255,0.02);
+    --portrait-plate: #0C1015;
+    --on-portrait: #DCE2EA;
+    --bar-bg: rgba(10,13,18,0.82);
+
+    --f-display: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
+    --f-body: "IBM Plex Sans", system-ui, -apple-system, sans-serif;
+    --f-mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  }
+
+  @media (prefers-color-scheme: light) {
+    :root:not([data-theme="dark"]) {
+      --ground: #E7EAEF;
+      --surface: #FFFFFF;
+      --surface-2: #F1F3F7;
+      --ink: #11151C;
+      --ink-soft: #3B434F;
+      --muted: #626D7B;
+      --line: #D8DDE5;
+      --line-2: #BAC3CE;
+      --warm: #8A5230;
+      --cool: #3B6289;
+      --on-accent: #FFFFFF;
+      --glow: 0.16;
+      --paper-shade: rgba(17,21,28,0.02);
+      --portrait-plate: #0C1015;
+      --bar-bg: rgba(231,234,239,0.86);
+    }
+  }
+
+  :root[data-theme="light"] {
+    --ground: #E7EAEF;
+    --surface: #FFFFFF;
+    --surface-2: #F1F3F7;
+    --ink: #11151C;
+    --ink-soft: #3B434F;
+    --muted: #626D7B;
+    --line: #D8DDE5;
+    --line-2: #BAC3CE;
+    --warm: #8A5230;
+    --cool: #3B6289;
+    --on-accent: #FFFFFF;
+    --glow: 0.16;
+    --paper-shade: rgba(17,21,28,0.02);
+    --portrait-plate: #0C1015;
+    --bar-bg: rgba(231,234,239,0.86);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--f-body);
+    font-size: 16px;
+    line-height: 1.62;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  a { color: inherit; }
+  button { font: inherit; }
+  :focus-visible { outline: 2px solid var(--warm); outline-offset: 3px; border-radius: 2px; }
+
+  .shell { max-width: 1080px; margin: 0 auto; padding-inline: 24px; }
+
+  .label {
+    font-family: var(--f-mono);
+    font-size: 10.5px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted);
+  }
+
+  /* ---------------- hero ---------------- */
+
+  .hero { position: relative; padding: 78px 0 52px; overflow: hidden; }
+  .hero-bg {
+    position: absolute; inset: -30% -10% auto -10%; height: 120%;
+    background:
+      radial-gradient(50% 60% at 20% 28%, color-mix(in srgb, var(--warm) 16%, transparent), transparent 70%),
+      radial-gradient(46% 55% at 80% 62%, color-mix(in srgb, var(--cool) 13%, transparent), transparent 72%);
+    opacity: var(--glow);
+    filter: blur(10px);
+    pointer-events: none;
+    animation: drift 22s ease-in-out infinite alternate;
+  }
+  @keyframes drift {
+    from { transform: translate3d(-2%, 0, 0) scale(1); }
+    to   { transform: translate3d(3%, -3%, 0) scale(1.08); }
+  }
+  .hero-grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(to right, var(--line) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--line) 1px, transparent 1px);
+    background-size: 68px 68px;
+    opacity: 0.4;
+    mask-image: linear-gradient(to bottom, rgba(0,0,0,0.7), transparent 78%);
+    -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0.7), transparent 78%);
+    pointer-events: none;
+  }
+  .hero-inner { position: relative; }
+  .hero-cols {
+    display: grid;
+    grid-template-columns: minmax(0, 1.55fr) minmax(0, 0.7fr);
+    gap: 48px;
+    align-items: center;
+  }
+  .hero-text { display: flex; flex-direction: column; gap: 22px; }
+  .hero-text > .topbar { margin-bottom: 0; }
+
+  .topbar { display: flex; align-items: flex-start; justify-content: space-between; gap: 20px; margin-bottom: 22px; }
+  .kicker { display: flex; flex-wrap: nowrap; align-items: center; gap: 10px; min-width: 0; }
+  .kicker .dot { flex: none; }
+  .kicker .label { min-width: 0; }
+  .langtoggle { display: flex; flex: none; border: 1px solid var(--line-2); border-radius: 3px; overflow: hidden; }
+  .langtoggle button {
+    background: transparent; border: 0; cursor: pointer;
+    font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.12em;
+    padding: 5px 11px; color: var(--muted);
+    transition: background .2s ease, color .2s ease;
+  }
+  .langtoggle button + button { border-left: 1px solid var(--line-2); }
+  .langtoggle button:hover { color: var(--ink); }
+  .langtoggle button[aria-pressed="true"] { background: var(--surface-2); color: var(--warm); }
+  .kicker .dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--cool);
+    animation: beat 2.6s ease-out infinite;
+  }
+  @keyframes beat {
+    0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--cool) 55%, transparent); }
+    70%,100% { box-shadow: 0 0 0 9px transparent; }
+  }
+
+  h1 {
+    font-family: var(--f-display);
+    font-weight: 800;
+    font-size: clamp(36px, 6.6vw, 76px);
+    line-height: 0.96;
+    letter-spacing: -0.035em;
+    margin: 0;
+    max-width: 17ch;
+    text-wrap: balance;
+  }
+  h1 .a { color: var(--warm); }
+  h1 .t { color: var(--cool); }
+
+  .deck { font-size: clamp(16.5px, 2vw, 19px); color: var(--ink-soft); max-width: 60ch; margin: 0; min-height: 4.6em; }
+  .deck b { color: var(--ink); font-weight: 600; }
+
+  .portrait {
+    margin: 0; justify-self: end;
+    display: flex; flex-direction: column; align-items: center; gap: 18px;
+    width: 100%; max-width: 300px;
+  }
+  .portrait-ring {
+    position: relative; width: 100%; aspect-ratio: 1;
+    border-radius: 50%; overflow: hidden;
+    background: var(--portrait-plate);
+    border: 1px solid var(--line-2);
+    box-shadow:
+      0 0 0 8px color-mix(in srgb, var(--cool) 9%, transparent),
+      0 26px 64px -30px rgba(0,0,0,0.85);
+  }
+  .portrait-ring img { display: block; width: 100%; height: 100%; object-fit: cover; }
+  .portrait-ring::after {
+    content: ""; position: absolute; inset: 0; border-radius: 50%;
+    box-shadow: inset 0 -40px 60px -40px rgba(8,11,16,0.9);
+    pointer-events: none;
+  }
+  .portrait figcaption {
+    display: flex; flex-direction: column; align-items: center; gap: 3px;
+    font-family: var(--f-mono);
+    font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--ink-soft); text-align: center;
+  }
+  .portrait figcaption em { font-style: normal; color: var(--warm); }
+
+  /* ---------------- barra de lentes ---------------- */
+
+  .lensbar {
+    position: sticky; top: 0; z-index: 30;
+    background: var(--bar-bg);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+  .lensbar-inner {
+    display: flex; flex-wrap: wrap; align-items: center; gap: 14px 18px;
+    padding-block: 12px;
+  }
+  .lensbar .prompt { flex: none; }
+  .lens-opts { display: flex; flex-wrap: wrap; gap: 8px; }
+  .lens-btn {
+    display: flex; flex-direction: column; gap: 1px;
+    padding: 7px 14px;
+    border: 1px solid var(--line-2);
+    border-radius: 3px;
+    background: transparent;
+    color: var(--muted);
+    cursor: pointer;
+    transition: border-color .22s ease, color .22s ease, background .22s ease;
+    text-align: left;
+  }
+  .lens-btn b { font-family: var(--f-body); font-size: 13.5px; font-weight: 600; letter-spacing: -0.005em; }
+  .lens-btn span { font-family: var(--f-mono); font-size: 9.5px; letter-spacing: 0.12em; text-transform: uppercase; opacity: .8; }
+  .lens-btn:hover { color: var(--ink-soft); border-color: var(--muted); }
+  .lens-btn[aria-pressed="true"] { background: var(--surface-2); }
+  .lens-btn.k-cool[aria-pressed="true"] { border-color: var(--cool); color: var(--cool); }
+  .lens-btn.k-warm[aria-pressed="true"] { border-color: var(--warm); color: var(--warm); }
+  .lens-btn.k-none[aria-pressed="true"] { border-color: var(--ink-soft); color: var(--ink); }
+
+  /* ---------------- seções ---------------- */
+
+  main { display: flex; flex-direction: column; }
+  main > section, main > footer { width: 100%; }
+  main > footer { order: 99; }
+  section { padding-block: 58px; }
+  .sec-head { display: flex; flex-direction: column; gap: 10px; margin-bottom: 30px; max-width: 64ch; }
+  h2 {
+    font-family: var(--f-display); font-weight: 700;
+    font-size: clamp(25px, 3.6vw, 36px);
+    line-height: 1.06; letter-spacing: -0.025em; margin: 0; text-wrap: balance;
+  }
+  .sec-head p { margin: 0; color: var(--ink-soft); font-size: 16.5px; }
+
+  .panel {
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    background: linear-gradient(var(--paper-shade), var(--paper-shade)), var(--surface);
+    overflow: hidden;
+  }
+  .panel-top {
+    display: flex; flex-wrap: wrap; gap: 12px 20px; align-items: center; justify-content: space-between;
+    padding: 14px 18px; border-bottom: 1px solid var(--line);
+  }
+  .panel-foot {
+    padding: 12px 18px; border-top: 1px solid var(--line);
+    font-family: var(--f-mono); font-size: 10.5px; letter-spacing: 0.06em; color: var(--muted);
+    display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: center;
+  }
+  .panel-foot button {
+    background: none; border: 0; padding: 0; cursor: pointer;
+    font-family: var(--f-mono); font-size: 10.5px; letter-spacing: 0.06em;
+    color: var(--warm); text-transform: uppercase;
+    border-bottom: 1px solid currentColor;
+  }
+  .h-scroll { overflow-x: auto; }
+  .h-scroll svg { display: block; width: 100%; height: auto; }
+
+  /* ---------------- escala ---------------- */
+
+  .scale-lede { margin: 0 0 22px; font-size: 18px; line-height: 1.5; color: var(--ink-soft); max-width: 66ch; }
+  .figures { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 4px; overflow: hidden; }
+  .fig { background: var(--surface); padding: 22px 18px; display: flex; flex-direction: column; gap: 5px; }
+  .fig b { font-family: var(--f-display); font-weight: 700; font-size: 33px; line-height: 1; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; color: var(--ink); }
+  .fig b .u { font-size: 17px; color: var(--muted); letter-spacing: 0; }
+  .fig span { font-size: 13.5px; line-height: 1.4; color: var(--muted); }
+
+  /* ---------------- escada ---------------- */
+
+  #stair { min-width: 740px; }
+  .stair-path { fill: none; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+  .stair-lvl { font-family: var(--f-mono); font-size: 10.5px; letter-spacing: 0.14em; fill: var(--muted); }
+  .stair-name { font-family: var(--f-display); font-weight: 700; font-size: 19px; letter-spacing: -0.02em; fill: var(--ink); }
+  .stair-desc { font-family: var(--f-body); font-size: 13px; fill: var(--ink-soft); }
+  .stair-tick { fill: var(--surface); stroke-width: 2.5; }
+
+  /* ---------------- catálogo ---------------- */
+
+  .cat { display: flex; flex-direction: column; }
+  .cat-head, .cat-row {
+    display: grid;
+    grid-template-columns: 1fr 1.12fr 0.94fr;
+    gap: 22px;
+    padding: 14px 18px;
+    border-top: 1px solid var(--line);
+  }
+  .cat-head {
+    border-top: none; background: var(--surface-2);
+    font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted);
+  }
+  .cat-row { font-size: 14.6px; transition: background .25s ease, opacity .3s ease; }
+  .cat-row:hover { background: var(--surface-2); }
+  .cat-row .p { color: var(--muted); }
+  .cat-row .m { color: var(--ink); font-weight: 500; }
+  .cat-row .r { color: var(--ink-soft); }
+  .cat-row .k { display: none; }
+  .cat-row[hidden] { display: none; }
+  .cat.duo .cat-head, .cat.duo .cat-row { grid-template-columns: 1fr 1.18fr; }
+  .cat.duo .cat-row .p { color: var(--warm); }
+
+  /* ---------------- osciloscópio ---------------- */
+
+  .keys { display: flex; flex-wrap: wrap; gap: 16px; }
+  .key { display: flex; align-items: center; gap: 8px; font-family: var(--f-mono); font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+  .key i { width: 9px; height: 9px; border-radius: 50%; display: inline-block; }
+  .key.warm i { background: var(--warm); }
+  .key.cool i { background: var(--cool); }
+
+  #scope { min-width: 760px; }
+  .lane-rule { stroke: var(--line); stroke-width: 1; }
+  .lane-band { fill: var(--surface-2); opacity: 0.55; }
+  .lane-text { font-family: var(--f-mono); font-size: 10.5px; letter-spacing: 0.14em; fill: var(--muted); }
+  .tick-text { font-family: var(--f-mono); font-size: 11px; fill: var(--muted); }
+  .mile-line { stroke: var(--line-2); stroke-width: 1; stroke-dasharray: 3 5; }
+  .mile-text { font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.1em; fill: var(--muted); }
+  .trace { fill: none; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; opacity: 0.65; }
+
+  .node { cursor: pointer; }
+  .node circle.hit { fill: transparent; }
+  .node circle.dot { transition: r .28s cubic-bezier(.22,1,.36,1), opacity .35s ease; }
+  .node.is-code circle.dot { fill: var(--cool); }
+  .node.is-lead circle.dot { fill: var(--warm); }
+  .node circle.halo { fill: none; stroke-width: 1.2; opacity: 0; transition: opacity .3s ease; }
+  .node.is-code circle.halo { stroke: var(--cool); }
+  .node.is-lead circle.halo { stroke: var(--warm); }
+  .node:hover circle.halo, .node.active circle.halo, .node:focus-visible circle.halo { opacity: .8; }
+  .node:hover circle.dot, .node.active circle.dot, .node:focus-visible circle.dot { r: 8.5; }
+  .node.is-now circle.pulse { fill: none; stroke: var(--cool); stroke-width: 1.4; }
+  .node.dimmed circle.dot { opacity: .22; }
+
+  .readout {
+    display: grid; grid-template-columns: 132px 1fr; gap: 18px;
+    padding: 18px; border-top: 1px solid var(--line); min-height: 108px; align-items: start;
+  }
+  .readout-lane {
+    font-family: var(--f-mono); font-size: 10.5px; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--muted); padding-top: 4px;
+    border-left: 2px solid var(--line-2); padding-left: 12px;
+    transition: border-color .3s ease, color .3s ease;
+  }
+  .readout.code .readout-lane { border-color: var(--cool); color: var(--cool); }
+  .readout.lead .readout-lane { border-color: var(--warm); color: var(--warm); }
+  .readout-body h3 { font-family: var(--f-display); font-weight: 700; font-size: 21px; letter-spacing: -0.02em; margin: 0 0 5px; line-height: 1.15; }
+  .readout-body p { margin: 0; color: var(--ink-soft); font-size: 15.3px; max-width: 68ch; }
+  .readout-body .when { font-family: var(--f-mono); font-size: 11px; color: var(--muted); }
+  .readout .fade { animation: fadein .34s cubic-bezier(.22,1,.36,1); }
+  @keyframes fadein { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: none; } }
+
+  /* ---------------- assinaturas ---------------- */
+
+  .signs { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 4px; overflow: hidden; }
+  .sign { background: var(--surface); padding: 26px 24px; display: flex; flex-direction: column; gap: 10px; }
+  .sign .n { font-family: var(--f-mono); font-size: 10.5px; letter-spacing: 0.14em; color: var(--warm); }
+  .sign h3 { font-family: var(--f-display); font-weight: 700; font-size: 20px; letter-spacing: -0.02em; margin: 0; line-height: 1.15; }
+  .sign p { margin: 0; color: var(--ink-soft); font-size: 15px; }
+
+  /* ---------------- trajetória ---------------- */
+
+  .stop { display: grid; grid-template-columns: 128px 1fr; gap: 22px; padding: 20px 0; border-top: 1px solid var(--line); align-items: baseline; }
+  .stop:first-child { border-top: none; }
+  .stop .yr { font-family: var(--f-mono); font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .stop h3 { font-family: var(--f-display); font-weight: 700; font-size: 19px; letter-spacing: -0.02em; margin: 0 0 3px; }
+  .stop h3 em { font-style: normal; color: var(--muted); font-weight: 500; font-size: 15px; font-family: var(--f-body); }
+  .stop p { margin: 0; color: var(--ink-soft); font-size: 15px; max-width: 62ch; }
+
+  /* ---------------- fecho ---------------- */
+
+  .closing { border: 1px solid var(--line); border-radius: 4px; background: var(--surface); padding: 34px 30px; display: flex; flex-direction: column; gap: 18px; }
+  .closing h2 { max-width: 28ch; }
+  .closing p { margin: 0; color: var(--ink-soft); max-width: 62ch; min-height: 3em; }
+  .contacts { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 4px; }
+  .contacts a {
+    font-family: var(--f-mono); font-size: 12.5px; text-decoration: none;
+    border: 1px solid var(--line-2); border-radius: 2px; padding: 8px 14px; color: var(--ink);
+    transition: border-color .25s ease, color .25s ease, transform .25s cubic-bezier(.22,1,.36,1);
+  }
+  .contacts a:hover { border-color: var(--warm); color: var(--warm); transform: translateY(-2px); }
+
+  footer { padding-block: 30px 60px; font-family: var(--f-mono); font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+
+  /* ---------------- reveal / troca de lente ---------------- */
+
+  .rv { opacity: 0; transform: translateY(18px); }
+  .rv.in { opacity: 1; transform: none; transition: opacity .75s cubic-bezier(.22,1,.36,1), transform .75s cubic-bezier(.22,1,.36,1); transition-delay: var(--d, 0s); }
+  .swap { animation: swapin .42s cubic-bezier(.22,1,.36,1); }
+  @keyframes swapin { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+  @media (prefers-reduced-motion: reduce) {
+    .rv, .rv.in { opacity: 1; transform: none; transition: none; }
+    .hero-bg, .kicker .dot { animation: none; }
+    .swap { animation: none; }
+    .node.is-now circle.pulse { display: none; }
+  }
+
+  @media (max-width: 860px) {
+    .hero-cols { grid-template-columns: 1fr; gap: 32px; }
+    .portrait { max-width: 186px; justify-self: start; align-items: flex-start; }
+    .portrait figcaption { align-items: flex-start; text-align: left; }
+  }
+
+  @media (max-width: 760px) {
+    .hero { padding: 52px 0 38px; }
+    section { padding-block: 44px; }
+    .signs { grid-template-columns: 1fr; }
+    .readout { grid-template-columns: 1fr; gap: 12px; }
+    .readout-lane { border-left: none; border-top: 2px solid var(--line-2); padding-left: 0; padding-top: 10px; }
+    .stop { grid-template-columns: 1fr; gap: 6px; }
+    .closing { padding: 26px 20px; }
+    .cat-head { display: none; }
+    .cat-row { grid-template-columns: 1fr; gap: 8px; padding: 18px; }
+    .cat-row .k {
+      display: block; font-family: var(--f-mono); font-size: 9.5px;
+      letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin-bottom: 2px;
+    }
+    .lensbar-inner { padding-block: 10px; }
+    .lens-btn { padding: 6px 11px; }
+  }
+</style>
+
+<header class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="shell hero-inner">
+    <div class="hero-cols">
+      <div class="hero-text">
+        <div class="topbar rv" style="--d:.05s">
+          <div class="kicker">
+            <span class="dot"></span>
+            <span class="label" data-i18n="kicker">Rafael Neves · Arquitetura de plataforma · Corretora de valores · Sorocaba/SP</span>
+          </div>
+          <div class="langtoggle" role="group" aria-label="Idioma / Language">
+            <button type="button" data-lang="pt" aria-pressed="true">PT</button>
+            <button type="button" data-lang="en" aria-pressed="false">EN</button>
+          </div>
+        </div>
+        <h1 class="rv" style="--d:.12s" data-i18n="h1">Define a <span class="a">regra</span>. Constrói o <span class="t">mecanismo</span>.</h1>
+        <p class="deck rv" id="deck" style="--d:.2s" data-i18n="deck">Dezesseis anos de engenharia, <b>oito deles ininterruptos em instituições financeiras reguladas</b>. O padrão que atravessa todos eles: escreve o critério — de senioridade, de auditoria, de identidade de parceiro — e depois <b>constrói o artefato que faz o critério valer sozinho</b>, sem depender de memória institucional.</p>
+      </div>
+      <figure class="portrait rv" style="--d:.34s">
+        <div class="portrait-ring"><img src="data:image/jpeg;base64,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" alt="Retrato de Rafael Neves" width="640" height="640"></div>
+        <figcaption data-i18n="figcap"><span>Rafael Neves</span><em>Staff · Arquitetura de plataforma</em></figcaption>
+      </figure>
+    </div>
+  </div>
+</header>
+
+<nav class="lensbar" aria-label="Leitura da página">
+  <div class="shell lensbar-inner">
+    <span class="label prompt" data-i18n="lens.prompt">Você veio procurando</span>
+    <div class="lens-opts" id="lens-opts" role="group">
+      <button type="button" class="lens-btn k-none" data-lens="tudo" aria-pressed="true" data-i18n="lensbtn.tudo"><b>A carreira inteira</b><span>visão completa</span></button>
+      <button type="button" class="lens-btn k-cool" data-lens="entrega" aria-pressed="false" data-i18n="lensbtn.entrega"><b>Alguém que entrega</b><span>staff · principal</span></button>
+      <button type="button" class="lens-btn k-warm" data-lens="lidera" aria-pressed="false" data-i18n="lensbtn.lidera"><b>Alguém que lidera</b><span>em · head técnico</span></button>
+      <button type="button" class="lens-btn k-warm" data-lens="risco" aria-pressed="false" data-i18n="lensbtn.risco"><b>Alguém que aguenta auditoria</b><span>regulado · risco</span></button>
+    </div>
+  </div>
+</nav>
+
+<main id="main">
+
+  <!-- ============ ESCALA ============ -->
+  <section class="shell" id="sec-escala">
+    <div class="sec-head rv">
+      <span class="label" data-i18n="lbl.escala">Escala</span>
+      <h2 id="scale-title" data-i18n="scale.title">Dimensão de impacto.</h2>
+    </div>
+    <p class="scale-lede" id="scale-lede" data-i18n="scale.lede">Quatro anos numa corretora de valores regulada, oito ininterruptos em mercado financeiro, dezesseis de engenharia.</p>
+    <div class="figures rv" id="figures" style="--d:.06s"></div>
+  </section>
+
+  <!-- ============ ESCADA ============ -->
+  <section class="shell" id="sec-escada">
+    <div class="sec-head rv">
+      <span class="label" data-i18n="lbl.escada">O fio condutor de oito anos</span>
+      <h2 data-i18n="escada.h2">É sempre o mesmo problema, um nível de abstração acima.</h2>
+      <p data-i18n="escada.p">Começou em 2018, num banco digital, partindo de uma premissa: <em>‘estavam contratando fábricas de software e eu precisava dar acesso a partes do projeto para cada time — o monolito travava isso.’</em> A solução técnica foi isolar domínios. O resultado prático foi destravar a velocidade de entrega de múltiplos times em paralelo. Desde então, o mesmo raciocínio subiu quatro degraus na arquitetura.</p>
+    </div>
+    <div class="panel rv" style="--d:.1s">
+      <div class="h-scroll">
+        <svg id="stair" viewBox="0 0 1000 340" role="img" aria-label="Escada de abstração: micro-frontend em 2018 no nível de módulo, BFF como camada fina em 2022 no nível de serviço, SDK embarcado em 2025 no nível de produto, e federação de identidade em 2026 no nível de plataforma."></svg>
+      </div>
+      <div class="panel-foot" data-i18n="escada.foot">isolamento de domínio como mecanismo de permissão — módulo → serviço → produto → plataforma</div>
+    </div>
+  </section>
+
+  <!-- ============ CATÁLOGO ============ -->
+  <section class="shell" id="sec-catalogo">
+    <div class="sec-head rv">
+      <span class="label" data-i18n="lbl.catalogo">O catálogo</span>
+      <h2 id="cat-title" data-i18n="cat.title">Catorze vezes. Repetição é método.</h2>
+      <p data-i18n="cat.p">Cada linha aqui começou como um gargalo de organização, de processo ou de compliance — e foi transformada em um artefato autossuficiente. O resultado prático é a redução drástica do custo operacional: o sistema passa a gerenciar o atrito, liberando a engenharia para focar na geração de receita.</p>
+    </div>
+
+    <div class="panel rv" style="--d:.08s">
+      <div class="cat" id="cat">
+        <div class="cat-head" data-i18n="cat.head"><span>O atrito</span><span>O mecanismo</span><span>O que ficou</span></div>
+
+        <div class="cat-row" data-lens="entrega" data-i18n="cat.r0"><div><span class="k">O atrito</span><span class="p">Monolito impedia dar acesso a fornecedores por área</span></div><div><span class="k">O mecanismo</span><span class="m">Micro-frontends com módulos servidos por CDN</span></div><div><span class="k">O que ficou</span><span class="r">Fronteira técnica virou fronteira de permissão</span></div></div>
+
+        <div class="cat-row" data-lens="lidera" data-i18n="cat.r1"><div><span class="k">O atrito</span><span class="p">Interrupção constante por mensagem direta</span></div><div><span class="k">O mecanismo</span><span class="m">Canal único como funil de demanda do time</span></div><div><span class="k">O que ficou</span><span class="r">A DM deixou de ser porta de entrada</span></div></div>
+
+        <div class="cat-row" data-lens="lidera" data-i18n="cat.r2"><div><span class="k">O atrito</span><span class="p">Ninguém era dono da estabilidade na semana</span></div><div><span class="k">O mecanismo</span><span class="m">Rodízio com passagem de bastão explícita</span></div><div><span class="k">O que ficou</span><span class="r">Sobreviveu ao time que o criou</span></div></div>
+
+        <div class="cat-row" data-lens="lidera" data-i18n="cat.r3"><div><span class="k">O atrito</span><span class="p">Áreas de negócio não conseguiam ler o board</span></div><div><span class="k">O mecanismo</span><span class="m">Épicos reescritos por objetivo de negócio, a quatro mãos com Produto</span></div><div><span class="k">O que ficou</span><span class="r">Virou o padrão de escrita do backlog</span></div></div>
+
+        <div class="cat-row" data-lens="lidera" data-i18n="cat.r4"><div><span class="k">O atrito</span><span class="p">Refinamento disperso, capacidade invisível</span></div><div><span class="k">O mecanismo</span><span class="m">Pontuação escalonada: sêniores no goal, resto em rodadas assíncronas</span></div><div><span class="k">O que ficou</span><span class="r">Mudança de escopo passou a ser visível</span></div></div>
+
+        <div class="cat-row" data-lens="lidera risco" data-i18n="cat.r5"><div><span class="k">O atrito</span><span class="p">Incidente terminava na correção, não na causa</span></div><div><span class="k">O mecanismo</span><span class="m">Board com SLA, war room e post-mortem obrigatório</span></div><div><span class="k">O que ficou</span><span class="r">Causa raiz virou requisito, não gentileza</span></div></div>
+
+        <div class="cat-row" data-lens="entrega risco" data-i18n="cat.r6"><div><span class="k">O atrito</span><span class="p">Ninguém sabia dizer o que estava em produção</span></div><div><span class="k">O mecanismo</span><span class="m">PR guarda-chuva com commits convencionais taggeados por issue</span></div><div><span class="k">O que ficou</span><span class="r">Branch, tracker e produção passaram a bater</span></div></div>
+
+        <div class="cat-row" data-lens="entrega risco" data-i18n="cat.r7"><div><span class="k">O atrito</span><span class="p">Virada big-bang em fluxo regulatório crítico</span></div><div><span class="k">O mecanismo</span><span class="m">Feature flag no BFF, canário em fração da base, preview em produção</span></div><div><span class="k">O que ficou</span><span class="r">Rollback deixou de ser evento</span></div></div>
+
+        <div class="cat-row" data-lens="entrega risco" data-i18n="cat.r8"><div><span class="k">O atrito</span><span class="p">Parceiro só conseguia certificar com credencial de produção</span></div><div><span class="k">O mecanismo</span><span class="m">Sandbox que simula liquidação, trocado por cabeçalho HTTP</span></div><div><span class="k">O que ficou</span><span class="r">Certificação completa sem tocar em produção</span></div></div>
+
+        <div class="cat-row" data-lens="risco entrega" data-i18n="cat.r9"><div><span class="k">O atrito</span><span class="p">Mudança em produção sem trilha auditável</span></div><div><span class="k">O mecanismo</span><span class="m">Plataforma que só dispara o deploy depois da aprovação</span></div><div><span class="k">O que ficou</span><span class="r">Adoção mandatória para toda mudança em produção</span></div></div>
+
+        <div class="cat-row" data-lens="entrega risco" data-i18n="cat.r10"><div><span class="k">O atrito</span><span class="p">Decisão de arquitetura sem rastro do que era premissa</span></div><div><span class="k">O mecanismo</span><span class="m">ADR com marcadores de proveniência por afirmação</span></div><div><span class="k">O que ficou</span><span class="r">Quem herda sabe o que foi decidido e o que foi suposto</span></div></div>
+
+        <div class="cat-row" data-lens="entrega lidera" data-i18n="cat.r11"><div><span class="k">O atrito</span><span class="p">Regra de negócio acoplada ao permissionamento</span></div><div><span class="k">O mecanismo</span><span class="m">Separação explícita entre mecanismo e política</span></div><div><span class="k">O que ficou</span><span class="r">Política virou propriedade de Produto, não do código</span></div></div>
+
+        <div class="cat-row" data-lens="entrega" data-i18n="cat.r12"><div><span class="k">O atrito</span><span class="p">Evoluir a jornada exigia release do app do parceiro</span></div><div><span class="k">O mecanismo</span><span class="m">Renderização de tela a partir de contrato JSON</span></div><div><span class="k">O que ficou</span><span class="r">Jornada evolui sem passar pela loja de aplicativos</span></div></div>
+
+        <div class="cat-row" data-lens="entrega" data-i18n="cat.r13"><div><span class="k">O atrito</span><span class="p">Documentação de API dispersa por time</span></div><div><span class="k">O mecanismo</span><span class="m">Interface gerada a partir da especificação OpenAPI</span></div><div><span class="k">O que ficou</span><span class="r">Ferramenta interna adotada além do time de origem</span></div></div>
+      </div>
+      <div class="panel-foot" id="cat-foot" hidden></div>
+    </div>
+  </section>
+
+  <!-- ============ PESSOAS ============ -->
+  <section class="shell" id="sec-pessoas">
+    <div class="sec-head rv">
+      <span class="label" data-i18n="lbl.pessoas">Gestão de pessoas</span>
+      <h2 data-i18n="pessoas.h2">Com gente, o método não muda.</h2>
+      <p data-i18n="pessoas.p">Com pessoas, o princípio de engenharia é o mesmo: escrever o critério e construir o mecanismo que o faz valer sem depender de microgerenciamento. No pico da operação: 24 engenheiros, três disciplinas, cinco níveis de senioridade e uma co-liderança consolidada. O impacto direto? Uma engenharia previsível, que absorve escala e pressão regulatória sem repassar o caos para a área de Produto.</p>
+    </div>
+
+    <div class="panel rv" style="--d:.08s">
+      <div class="cat duo">
+        <div class="cat-head" data-i18n="pessoas.head"><span>A regra que definiu</span><span>O mecanismo que construiu</span></div>
+        <div class="cat-row" data-i18n="ppl.r0"><div><span class="k">A regra</span><span class="p">Sênior é quem revisa o PR do júnior e se responsabiliza por prazo que não é só dele</span></div><div><span class="k">O mecanismo</span><span class="m">Trilha de senioridade escrita e aplicada — inclusive contra pedido de promoção antecipada</span></div></div>
+        <div class="cat-row" data-i18n="ppl.r1"><div><span class="k">A regra</span><span class="p">Quem chega para gerir não opera no escuro</span></div><div><span class="k">O mecanismo</span><span class="m">Onboarding estruturado de um gestor parceiro, com transferência de responsabilidades menos técnicas para consolidar uma co-liderança complementar</span></div></div>
+        <div class="cat-row" data-i18n="ppl.r2"><div><span class="k">A regra</span><span class="p">Contratação não é impressão, é comparação</span></div><div><span class="k">O mecanismo</span><span class="m">Job description técnica e relatório estruturado por candidato para a decisão final</span></div></div>
+        <div class="cat-row" data-i18n="ppl.r3"><div><span class="k">A regra</span><span class="p">Estabilidade tem dono na semana, não no organograma</span></div><div><span class="k">O mecanismo</span><span class="m">Rodízio com passagem de bastão explícita, que sobreviveu ao time que o criou</span></div></div>
+        <div class="cat-row" data-i18n="ppl.r4"><div><span class="k">A regra</span><span class="p">Blindar o time da pressão não é deixá-lo sem visibilidade do problema</span></div><div><span class="k">O mecanismo</span><span class="m">Papel de PM/EM definido por escrito, com limite de trabalho em progresso</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ OSCILOSCÓPIO ============ -->
+  <section class="shell" id="sec-altitude">
+    <div class="sec-head rv">
+      <span class="label" data-i18n="lbl.altitude">Amplitude de atuação</span>
+      <h2 data-i18n="altitude.h2">A visão sistêmica atravessa todas as camadas — do C‑level ao código‑fonte.</h2>
+      <p data-i18n="altitude.p">Cada ponto é uma entrega real, posicionada na altitude em que aconteceu. A leitura importante não é nenhum ponto isolado: é a oscilação, e o fato de que a faixa mais baixa nunca esvazia.</p>
+    </div>
+
+    <div class="panel rv" style="--d:.1s">
+      <div class="panel-top">
+        <span class="label" data-i18n="scope.axis">Altitude × tempo · 2018 – 2026</span>
+        <div class="keys">
+          <span class="key cool"><i></i><span data-i18n="key.cool">mão na massa</span></span>
+          <span class="key warm"><i></i><span data-i18n="key.warm">decisão e liderança</span></span>
+        </div>
+      </div>
+      <div class="h-scroll">
+        <svg id="scope" viewBox="0 0 1000 400" role="img" aria-label="Gráfico de altitude por tempo: entregas entre 2018 e 2026 distribuídas em quatro camadas — C-level e regulador, stakeholders e produto, time e organização, código e arquitetura."></svg>
+      </div>
+      <div class="readout" id="readout">
+        <div class="readout-lane" id="ro-lane" data-i18n="ro.lane">selecione um ponto</div>
+        <div class="readout-body">
+          <h3 id="ro-title" data-i18n="ro.title">23 pontos em oito anos</h3>
+          <p id="ro-text" data-i18n="ro.text">Passe o cursor — ou use Tab — sobre qualquer ponto do traço para ler o que aconteceu ali. Os pontos em azul são engenharia feita com as próprias mãos; os em cobre são decisão, articulação e gestão.</p>
+        </div>
+      </div>
+      <div class="panel-foot" id="scope-foot" data-i18n="scope.foot">as posições dentro de cada cargo são aproximadas — a ordem é fiel, o mês exato de alguns itens ainda não foi conferido</div>
+    </div>
+  </section>
+
+  <!-- ============ ASSINATURAS ============ -->
+  <section class="shell" id="sec-assinaturas">
+    <div class="sec-head rv">
+      <span class="label" data-i18n="lbl.modus">Modus Operandi</span>
+      <h2 data-i18n="modus.h2">Quatro princípios inegociáveis na tomada de decisão.</h2>
+      <p data-i18n="modus.p">Em projetos de alta complexidade, o maior ativo de um engenheiro é a segurança que ele garante a quem o patrocina. Esses são os hábitos que mitigam riscos estratégicos muito antes de a primeira linha de código ir para produção.</p>
+    </div>
+
+    <div class="signs rv" id="signs" style="--d:.08s">
+      <article class="sign" data-lens="entrega risco" data-i18n="sign.0">
+        <span class="n">01</span>
+        <h3>Registra o que descartou</h3>
+        <p>Não registra só a opção vencedora. As alternativas rejeitadas ficam no documento com o motivo — inclusive, e principalmente, quando eram as tecnicamente mais simples.</p>
+      </article>
+      <article class="sign" data-lens="risco" data-i18n="sign.1">
+        <span class="n">02</span>
+        <h3>Valida a fonte antes do resultado</h3>
+        <p>Em trabalho de auditoria e dado regulatório, enumera as hipóteses de erro antes de olhar o número. E não aceita substituto de fonte só porque chega mais rápido.</p>
+      </article>
+      <article class="sign" data-lens="lidera risco" data-i18n="sign.2">
+        <span class="n">03</span>
+        <h3>Antecipa o custo da própria recomendação</h3>
+        <p>Quando propõe o caminho mais seguro, escreve o preço junto — antes de alguém perguntar. O trade-off comercial vem na mesma página que a proposta técnica.</p>
+      </article>
+      <article class="sign" data-lens="risco entrega" data-i18n="sign.3">
+        <span class="n">04</span>
+        <h3>Declara onde a análise parou</h3>
+        <p>Relatório fecha dizendo o que não foi possível determinar e por quê. Prefere a lacuna declarada à conclusão que ninguém consegue checar.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ============ TRAJETÓRIA ============ -->
+  <section class="shell" id="sec-trajetoria">
+    <div class="sec-head rv">
+      <span class="label" data-i18n="lbl.traj">Trajetória</span>
+      <h2 data-i18n="traj.h2">Como chegou aqui.</h2>
+    </div>
+    <div>
+      <div class="stop rv" data-i18n="stop.0">
+        <span class="yr">2022 — hoje</span>
+        <div>
+          <h3>Warren Investimentos <em>· Engineering Lead → Engineering Manager → Arquitetura</em></h3>
+          <p>Entrou pela aquisição da MeuPortfol.io. Liderou a plataforma de Experiência (~80 mil clientes), a consolidação financeira da companhia e a abertura white-label para instituições parceiras. Desde julho de 2026, na camada transversal de arquitetura, com a propriedade de segurança e identidade e da plataforma de Wealth-as-a-Service.</p>
+        </div>
+      </div>
+      <div class="stop rv" style="--d:.06s" data-i18n="stop.1">
+        <span class="yr">2020 — 2022</span>
+        <div>
+          <h3>MeuPortfol.io <em>· Tech Lead</em></h3>
+          <p>Liderança técnica das plataformas de gestão e consolidação de portfólios onshore e offshore. A empresa foi adquirida pela Warren em 2022.</p>
+        </div>
+      </div>
+      <div class="stop rv" style="--d:.12s" data-i18n="stop.2">
+        <span class="yr">2018 — 2020</span>
+        <div>
+          <h3>Banco Modal <em>· Senior Frontend Developer · Faria Lima</em></h3>
+          <p>Frontend do banco digital em Vue 2 e a primeira arquitetura de micro-frontends — o degrau zero da escada lá em cima.</p>
+        </div>
+      </div>
+      <div class="stop rv" style="--d:.18s" data-i18n="stop.3">
+        <span class="yr">2009 — 2018</span>
+        <div>
+          <h3>WebCargo, contratos próprios, EF Motors</h3>
+          <p>Documentos fiscais eletrônicos para transporte aéreo — a primeira convivência com requisito regulatório —, dois anos de desenvolvimento sob contrato entregando iOS, Android, web e backend sozinho, e software embarcado como primeiro emprego.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FECHO ============ -->
+  <section class="shell" id="sec-fecho">
+    <div class="closing rv">
+      <span class="label" data-i18n="lbl.fecho">O momento atual</span>
+      <h2 id="close-title" data-i18n="close.title">A transição já aconteceu no organograma.</h2>
+      <p id="close-text" data-i18n="close.text">Desde julho de 2026, camada transversal de arquitetura — com a propriedade formal dos dois domínios que cortam todas as squads: segurança e identidade, e a plataforma de Wealth-as-a-Service. Saída da gestão de linha sem sair da mesa de decisões. É esse nível de orquestração técnica que chega agora ao mercado, liderando arquitetura em posições de Staff e Principal. O foco é um só: potencializar e acelerar a entrega de plataformas robustas — orquestrando a tecnologia para que a visão estratégica não fique apenas no desenho, mas se converta rapidamente em software rodando.</p>
+      <div class="contacts">
+        <a href="mailto:rafael.fne@gmail.com">rafael.fne@gmail.com</a>
+        <a href="https://linkedin.com/in/rafaelneves-me" target="_blank" rel="noopener">linkedin.com/in/rafaelneves-me</a>
+        <a href="https://github.com/rafaelfne" target="_blank" rel="noopener">github.com/rafaelfne</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="shell" data-i18n="footer">Rafael Neves © 2026 · Log incremental de uma carreira em execução.</footer>
+
+</main>
+
+<script>
+(function () {
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var NS = 'http://www.w3.org/2000/svg';
+  function el(name, attrs) {
+    var n = document.createElementNS(NS, name);
+    for (var k in attrs) { if (attrs[k] !== undefined) n.setAttribute(k, attrs[k]); }
+    return n;
+  }
+  function txt(node, s) { node.textContent = s; return node; }
+
+  /* ================= IDIOMA ================= */
+  var LANG = 'pt';
+  var PT = {};
+  Array.prototype.forEach.call(document.querySelectorAll('[data-i18n]'), function (n) {
+    PT[n.getAttribute('data-i18n')] = n.innerHTML;
+  });
+  var EN = {
+  "kicker": "Rafael Neves · Platform architecture · Securities brokerage · Brazil",
+  "h1": "Sets the <span class=\"a\">rule</span>. Builds the <span class=\"t\">mechanism</span>.",
+  "deck": "Sixteen years in engineering, <b>eight of them unbroken inside regulated financial institutions</b>. The pattern running through all of them: write the criterion — for seniority, for audit, for partner identity — and then <b>build the artifact that enforces it on its own</b>, with no reliance on institutional memory.",
+  "figcap": "<span>Rafael Neves</span><em>Staff · Platform architecture</em>",
+  "lens.prompt": "You came looking for",
+  "lensbtn.tudo": "<b>The whole career</b><span>full view</span>",
+  "lensbtn.entrega": "<b>Someone who ships</b><span>staff · principal</span>",
+  "lensbtn.lidera": "<b>Someone who leads</b><span>em · head of engineering</span>",
+  "lensbtn.risco": "<b>Someone who holds up under audit</b><span>regulated · risk</span>",
+  "lbl.escala": "Scale",
+  "scale.title": "Scale of impact.",
+  "scale.lede": "Four years inside a regulated brokerage, eight unbroken in financial markets, sixteen in engineering.",
+  "lbl.escada": "The eight-year through line",
+  "escada.h2": "Always the same problem, one level of abstraction higher.",
+  "escada.p": "It started in 2018, at a digital bank, from one premise: <em>‘they were hiring software vendors and I needed to give each team access to parts of the project — the monolith blocked that.’</em> The technical answer was to isolate domains. The practical result was unblocking delivery speed across several teams in parallel. Since then, the same reasoning has climbed four steps up the architecture.",
+  "escada.foot": "domain isolation as a permission mechanism — module → service → product → platform",
+  "lbl.catalogo": "The catalogue",
+  "cat.title": "Fourteen times. Repetition is method.",
+  "cat.p": "Every line here started as a bottleneck in organization, process or compliance — and was turned into a self-sustaining artifact. The practical result is a sharp cut in operating cost: the system absorbs the friction, freeing engineering to focus on revenue.",
+  "cat.head": "<span>The friction</span><span>The mechanism</span><span>What stayed</span>",
+  "cat.r0": "<div><span class=\"k\">The friction</span><span class=\"p\">A monolith blocked granting vendors access by area</span></div><div><span class=\"k\">The mechanism</span><span class=\"m\">Micro-frontends with modules served from a CDN</span></div><div><span class=\"k\">What stayed</span><span class=\"r\">A technical boundary became a permission boundary</span></div>",
+  "cat.r1": "<div><span class=\"k\">The friction</span><span class=\"p\">Constant interruption by direct message</span></div><div><span class=\"k\">The mechanism</span><span class=\"m\">A single channel as the team's demand funnel</span></div><div><span class=\"k\">What stayed</span><span class=\"r\">DMs stopped being the way in</span></div>",
+  "cat.r2": "<div><span class=\"k\">The friction</span><span class=\"p\">Nobody owned service stability in a given week</span></div><div><span class=\"k\">The mechanism</span><span class=\"m\">A rotation with an explicit handover of the baton</span></div><div><span class=\"k\">What stayed</span><span class=\"r\">Outlived the team that created it</span></div>",
+  "cat.r3": "<div><span class=\"k\">The friction</span><span class=\"p\">Business areas could not read the board</span></div><div><span class=\"k\">The mechanism</span><span class=\"m\">Epics rewritten around business goals, four hands with Product</span></div><div><span class=\"k\">What stayed</span><span class=\"r\">Became the standard for writing the backlog</span></div>",
+  "cat.r4": "<div><span class=\"k\">The friction</span><span class=\"p\">Scattered refinement, invisible capacity</span></div><div><span class=\"k\">The mechanism</span><span class=\"m\">Tiered pointing: seniors on the goal, the rest in async rounds</span></div><div><span class=\"k\">What stayed</span><span class=\"r\">Scope change became visible</span></div>",
+  "cat.r5": "<div><span class=\"k\">The friction</span><span class=\"p\">Incidents ended at the fix, not at the cause</span></div><div><span class=\"k\">The mechanism</span><span class=\"m\">A board with SLA, war room and mandatory post-mortem</span></div><div><span class=\"k\">What stayed</span><span class=\"r\">Root cause became a requirement, not a courtesy</span></div>",
+  "cat.r6": "<div><span class=\"k\">The friction</span><span class=\"p\">Nobody could say what was actually in production</span></div><div><span class=\"k\">The mechanism</span><span class=\"m\">Umbrella PRs with conventional commits tagged by issue</span></div><div><span class=\"k\">What stayed</span><span class=\"r\">Branch, tracker and production finally matched</span></div>",
+  "cat.r7": "<div><span class=\"k\">The friction</span><span class=\"p\">Big-bang cutover on a critical regulated flow</span></div><div><span class=\"k\">The mechanism</span><span class=\"m\">Feature flag at the BFF, canary on a slice of the base, preview in production</span></div><div><span class=\"k\">What stayed</span><span class=\"r\">Rollback stopped being an event</span></div>",
+  "cat.r8": "<div><span class=\"k\">The friction</span><span class=\"p\">Partners could only certify with production credentials</span></div><div><span class=\"k\">The mechanism</span><span class=\"m\">A sandbox simulating settlement, switched by HTTP header</span></div><div><span class=\"k\">What stayed</span><span class=\"r\">Full certification without touching production</span></div>",
+  "cat.r9": "<div><span class=\"k\">The friction</span><span class=\"p\">Production changes with no audit trail</span></div><div><span class=\"k\">The mechanism</span><span class=\"m\">A platform that only fires the deploy after approval</span></div><div><span class=\"k\">What stayed</span><span class=\"r\">Mandatory adoption for every production change</span></div>",
+  "cat.r10": "<div><span class=\"k\">The friction</span><span class=\"p\">Architecture decisions with no trace of what was assumed</span></div><div><span class=\"k\">The mechanism</span><span class=\"m\">ADRs with provenance markers on each claim</span></div><div><span class=\"k\">What stayed</span><span class=\"r\">Whoever inherits knows what was decided and what was assumed</span></div>",
+  "cat.r11": "<div><span class=\"k\">The friction</span><span class=\"p\">Business rules coupled into the permission layer</span></div><div><span class=\"k\">The mechanism</span><span class=\"m\">An explicit split between mechanism and policy</span></div><div><span class=\"k\">What stayed</span><span class=\"r\">Policy became Product's property, not the code's</span></div>",
+  "cat.r12": "<div><span class=\"k\">The friction</span><span class=\"p\">Evolving the journey required a release of the partner's app</span></div><div><span class=\"k\">The mechanism</span><span class=\"m\">Screens rendered from a JSON contract</span></div><div><span class=\"k\">What stayed</span><span class=\"r\">The journey evolves without going through the app store</span></div>",
+  "cat.r13": "<div><span class=\"k\">The friction</span><span class=\"p\">API documentation scattered across teams</span></div><div><span class=\"k\">The mechanism</span><span class=\"m\">An interface generated from the OpenAPI spec</span></div><div><span class=\"k\">What stayed</span><span class=\"r\">An internal tool adopted beyond the team that built it</span></div>",
+  "lbl.pessoas": "People management",
+  "pessoas.h2": "With people, the method doesn't change.",
+  "pessoas.p": "With people, the engineering principle is the same: write the criterion and build the mechanism that enforces it without relying on micromanagement. At peak: 24 engineers, three disciplines, five seniority levels and a consolidated co-leadership. The direct impact? Predictable engineering that absorbs scale and regulatory pressure without passing the chaos on to Product.",
+  "pessoas.head": "<span>The rule set</span><span>The mechanism built</span>",
+  "ppl.r0": "<div><span class=\"k\">The rule</span><span class=\"p\">A senior is whoever reviews the junior's PR and owns a deadline that isn't only theirs</span></div><div><span class=\"k\">The mechanism</span><span class=\"m\">A written seniority track, applied — including against a request for early promotion</span></div>",
+  "ppl.r1": "<div><span class=\"k\">The rule</span><span class=\"p\">Whoever arrives to manage should not operate in the dark</span></div><div><span class=\"k\">The mechanism</span><span class=\"m\">Structured onboarding of a partner manager, transferring the less technical responsibilities to consolidate a complementary co-leadership</span></div>",
+  "ppl.r2": "<div><span class=\"k\">The rule</span><span class=\"p\">Hiring is comparison, not impression</span></div><div><span class=\"k\">The mechanism</span><span class=\"m\">A technical job description and a structured report per candidate for the final call</span></div>",
+  "ppl.r3": "<div><span class=\"k\">The rule</span><span class=\"p\">Stability has an owner for the week, not on the org chart</span></div><div><span class=\"k\">The mechanism</span><span class=\"m\">A rotation with explicit handover, which outlived the team that created it</span></div>",
+  "ppl.r4": "<div><span class=\"k\">The rule</span><span class=\"p\">Shielding the team from pressure is not leaving it blind to the problem</span></div><div><span class=\"k\">The mechanism</span><span class=\"m\">The PM/EM role defined in writing, with a work-in-progress limit</span></div>",
+  "lbl.altitude": "Range of operation",
+  "altitude.h2": "Systems thinking cuts through every layer — from C‑level to source code.",
+  "altitude.p": "Each point is a real delivery, placed at the altitude where it happened. The reading that matters is not any single point: it is the oscillation, and the fact that the bottom band never empties.",
+  "scope.axis": "Altitude × time · 2018 – 2026",
+  "key.cool": "hands-on",
+  "key.warm": "decision & leadership",
+  "ro.lane": "select a point",
+  "ro.title": "23 points across eight years",
+  "ro.text": "Hover — or press Tab — over any point on the trace to read what happened there. Blue points are engineering done by hand; copper ones are decision, alignment and management.",
+  "scope.foot": "positions inside each role are approximate — the order is faithful, the exact month of some items is still unverified",
+  "lbl.modus": "Modus operandi",
+  "modus.h2": "Four non-negotiable principles in decision-making.",
+  "modus.p": "In high-complexity work, an engineer's greatest asset is the certainty they give whoever is backing them. These are the habits that defuse strategic risk long before the first line of code reaches production.",
+  "sign.0": "<span class=\"n\">01</span><h3>Records what was ruled out</h3><p>Not just the winning option. Rejected alternatives stay in the document with the reason — including, and especially, when they were the technically simpler ones.</p>",
+  "sign.1": "<span class=\"n\">02</span><h3>Validates the source before the result</h3><p>In audit and regulated-data work, error hypotheses get listed before anyone looks at the number. And a substitute source is not accepted just because it arrives faster.</p>",
+  "sign.2": "<span class=\"n\">03</span><h3>Prices its own recommendation up front</h3><p>When the safer path is proposed, the cost comes with it — before anyone asks. The commercial trade-off sits on the same page as the technical proposal.</p>",
+  "sign.3": "<span class=\"n\">04</span><h3>States where the analysis stopped</h3><p>Reports close by naming what could not be determined, and why. A declared gap beats a conclusion nobody can check.</p>",
+  "lbl.traj": "Track record",
+  "traj.h2": "The path here.",
+  "stop.0": "<span class=\"yr\">2022 — today</span><div><h3>Warren Investimentos <em>· Engineering Lead → Engineering Manager → Architecture</em></h3><p>Joined through the acquisition of MeuPortfol.io. Led the Experience platform (~80k clients), the company's financial consolidation and the white-label opening to partner institutions. Since July 2026, in the cross-cutting architecture layer, owning security and identity and the Wealth-as-a-Service platform.</p></div>",
+  "stop.1": "<span class=\"yr\">2020 — 2022</span><div><h3>MeuPortfol.io <em>· Tech Lead</em></h3><p>Technical leadership of the platforms for managing and consolidating onshore and offshore investment portfolios. The company was acquired by Warren in 2022.</p></div>",
+  "stop.2": "<span class=\"yr\">2018 — 2020</span><div><h3>Banco Modal <em>· Senior Frontend Developer · Faria Lima, São Paulo</em></h3><p>Frontend of the digital bank in Vue 2 and the first micro-frontend architecture — step zero of the staircase above.</p></div>",
+  "stop.3": "<span class=\"yr\">2009 — 2018</span><div><h3>WebCargo, own contracts, EF Motors</h3><p>Electronic tax documents for air freight — the first encounter with a regulatory requirement —, two years of contract development shipping iOS, Android, web and backend single-handed, and embedded software as a first job.</p></div>",
+  "lbl.fecho": "Where things stand",
+  "close.title": "The transition already happened on the org chart.",
+  "close.text": "Since July 2026, in the cross-cutting architecture layer — owning the two domains that cut across every squad: security and identity, and the Wealth-as-a-Service platform. Out of line management without leaving the table where decisions are made. That level of technical orchestration is what now reaches the market, leading architecture in Staff and Principal roles. One focus: accelerating the delivery of robust platforms — orchestrating technology so the strategy does not stay on the diagram, but turns into running software.",
+  "footer": "Rafael Neves © 2026 · Incremental log of a career in execution."
+};
+
+  function L(o) { return (LANG === 'en' && o.en) ? o.en : o; }
+
+  function applyStatic() {
+    Array.prototype.forEach.call(document.querySelectorAll('[data-i18n]'), function (n) {
+      var k = n.getAttribute('data-i18n');
+      var v = (LANG === 'en') ? EN[k] : PT[k];
+      if (v != null) n.innerHTML = v;
+    });
+    document.documentElement.setAttribute('lang', LANG === 'en' ? 'en' : 'pt-BR');
+  }
+
+  /* ================= DADOS ================= */
+
+  var STEPS = [
+    { lvl: 'MÓDULO', yr: '2018', name: 'Micro-frontend', desc: 'Um domínio por equipe, via CDN.',
+      en: { lvl: 'MODULE', yr: '2018', name: 'Micro-frontend', desc: 'One domain per team, via CDN.' } },
+    { lvl: 'SERVIÇO', yr: '2022', name: 'BFF como camada fina', desc: 'Regra de negócio de volta ao domínio.',
+      en: { lvl: 'SERVICE', yr: '2022', name: 'BFF as a thin layer', desc: 'Business rules back in the domain.' } },
+    { lvl: 'PRODUTO', yr: '2025', name: 'SDK embarcado', desc: 'A jornada inteira no app do parceiro.',
+      en: { lvl: 'PRODUCT', yr: '2025', name: 'Embedded SDK', desc: 'The whole journey inside the partner app.' } },
+    { lvl: 'PLATAFORMA', yr: '2026', name: 'Federação de identidade', desc: 'Identidade como fronteira de tenant.',
+      en: { lvl: 'PLATFORM', yr: '2026', name: 'Identity federation', desc: 'Identity as the tenant boundary.' } }
+  ];
+
+  var LANES_PT = ['C-level & regulador', 'Stakeholders & produto', 'Time & organização', 'Código & arquitetura'];
+  var LANES_EN = ['C-level & regulator', 'Stakeholders & product', 'Team & organization', 'Code & architecture'];
+  function lanes() { return LANG === 'en' ? LANES_EN : LANES_PT; }
+
+  var MILES = [
+    { x: 2022.5, t: 'aquisição → warren', en: { t: 'acquisition → warren' } },
+    { x: 2026.55, t: 'arquitetura', en: { t: 'architecture' } }
+  ];
+
+  var NODES = [
+    { x: 2018.3, l: 3, k: 'entrega', t: 'Micro-frontends no banco digital', w: '2018 · Banco Modal',
+      d: 'Vue sem Module Federation: framework como dependência externa injetada em runtime, registro dinâmico de rotas e store, módulos servidos por CDN e carregados por uma aplicação shell.',
+      en: { t: 'Micro-frontends at the digital bank', w: '2018 · Banco Modal', d: 'Vue without Module Federation: the framework as an external dependency injected at runtime, dynamic route and store registration, modules served from a CDN and loaded by a shell application.' } },
+    { x: 2018.9, l: 2, k: 'lidera', t: 'Fronteira técnica por fornecedor', w: '2018 · Banco Modal',
+      d: 'A motivação do micro-frontend era organizacional: isolar conta-corrente, pagamentos e investimentos para conceder acesso segmentado a cada fábrica de software.',
+      en: { t: 'A technical boundary per vendor', w: '2018 · Banco Modal', d: 'The motivation behind the micro-frontend was organizational: isolate checking account, payments and investments to grant segmented access to each software vendor.' } },
+    { x: 2019.5, l: 3, k: 'entrega', t: 'Produto core do banco digital', w: '2019 · Banco Modal',
+      d: 'Desenvolvimento ponta a ponta das interfaces do produto de crédito — a jornada de monetização do banco digital, construída sobre a mesma arquitetura de micro-frontends que isolava os domínios.',
+      en: { t: 'Core product of the digital bank', w: '2019 · Banco Modal', d: 'End-to-end development of the credit product interfaces — the digital bank’s monetization journey, built on the same micro-frontend architecture that isolated the domains.' } },
+    { x: 2020.35, l: 2, k: 'lidera', t: 'Tech Lead na MeuPortfol.io', w: '2020 · MeuPortfol.io',
+      d: 'Liderança do time técnico responsável pela evolução das plataformas de gestão e consolidação de portfólios onshore e offshore.',
+      en: { t: 'Tech Lead at MeuPortfol.io', w: '2020 · MeuPortfol.io', d: 'Leading the technical team responsible for evolving the platforms that manage and consolidate onshore and offshore portfolios.' } },
+    { x: 2021.2, l: 3, k: 'entrega', t: 'Arquitetura de consolidação', w: '2021 · MeuPortfol.io',
+      d: 'Novas capacidades de consolidação de posições e rentabilidade para portfólios onshore e offshore.',
+      en: { t: 'Consolidation architecture', w: '2021 · MeuPortfol.io', d: 'New consolidation capabilities for positions and returns across onshore and offshore portfolios.' } },
+    { x: 2022.6, l: 2, k: 'lidera', t: 'Engineering Lead na Warren', w: 'jul/2022 · Warren',
+      d: 'Entrada via aquisição da MeuPortfol.io. Liderança técnica da plataforma de Experiência, com cerca de 80 mil clientes.',
+      en: { t: 'Engineering Lead at Warren', w: 'Jul 2022 · Warren', d: 'Arrived through the acquisition of MeuPortfol.io. Technical leadership of the Experience platform, serving around 80 thousand clients.' } },
+    { x: 2022.95, l: 3, k: 'entrega', t: 'Dez BFFs a partir de uma base', w: '2022 · Warren',
+      d: 'Um repositório base derivando os BFFs de onboarding, suitability, trading, consolidação, carteiras, produtos e mais — todos com o mesmo padrão de camada fina.',
+      en: { t: 'Ten BFFs from a single base', w: '2022 · Warren', d: 'One base repository deriving the BFFs for onboarding, suitability, trading, consolidation, portfolios, products and more — all on the same thin-layer pattern.' } },
+    { x: 2023.25, l: 3, k: 'entrega', t: 'Regras de volta ao domínio', w: '2023 · Warren',
+      d: 'Root cause de incidentes recorrentes: regras de negócio haviam vazado para os BFFs por domínios fracos. Repatriou as regras e padronizou os BFFs como camada fina.',
+      en: { t: 'Rules back in the domain', w: '2023 · Warren', d: 'Root cause of recurring incidents: business rules had leaked into the BFFs through weak domains. The rules were repatriated and the BFFs standardized as a thin layer.' } },
+    { x: 2023.5, l: 0, k: 'risco', t: 'Governança técnica sobre integrações', w: 'jun/2023 · Warren',
+      d: 'Análise forense aplicada à cadeia de integrações: reconstruir a linha do tempo de uma falha, nomear a causa raiz e devolver a responsabilidade a quem a originou. Tratar falha de terceiro como responsabilidade rastreável, e não como fatalidade, é o que sustenta cobrança de SLA na cadeia.',
+      en: { t: 'Technical governance over integrations', w: 'Jun 2023 · Warren', d: 'Forensic analysis applied to the integration chain: reconstruct the timeline of a failure, name the root cause and hand accountability back to where it originated. Treating a third-party failure as traceable accountability, rather than as fate, is what makes SLA enforcement possible across the chain.' } },
+    { x: 2023.7, l: 1, k: 'risco', t: 'CVM 179 e novo extrato', w: '2023 · Warren',
+      d: 'Transparência de custos, extrato consolidado, catálogo de carteiras e integrações com custodiantes — sobre a plataforma que é a fonte de verdade financeira da companhia.',
+      en: { t: 'Cost transparency and a new statement', w: '2023 · Warren', d: 'Cost transparency under Brazilian securities regulation, a consolidated statement, a portfolio catalogue and custodian integrations — on top of the platform that is the company’s financial source of truth.' } },
+    { x: 2023.85, l: 2, k: 'lidera', t: 'Proposta de squad de plataforma', w: 'out/2023 · Warren',
+      d: 'Proposta de separar plataforma e aplicativo em uma squad com liderança e PM próprios. Adotada pela companhia e assumida em abril seguinte, já com composição e escopo definidos.',
+      en: { t: 'Proposal for a platform squad', w: 'Oct 2023 · Warren', d: 'A proposal to split platform and app into a squad with its own leadership and PM. Adopted by the company and taken over the following April, with composition and scope already defined.' } },
+    { x: 2024.35, l: 1, k: 'lidera', t: 'Taxonomia de entregas', w: 'out/2024 · Warren',
+      d: 'Cada entrega classificada por benefício — crescimento, encantamento, eficiência, monetização, compliance — em vez de por tela. Virou material de retrospectiva.',
+      en: { t: 'A taxonomy of deliveries', w: 'Oct 2024 · Warren', d: 'Every delivery classified by benefit — growth, delight, efficiency, monetization, compliance — instead of by screen. It became retrospective material.' } },
+    { x: 2024.75, l: 3, k: 'entrega', t: 'Developer Experience acelerada por IA', w: '2025 · Warren',
+      d: 'Interface de documentação gerada a partir da especificação OpenAPI, construída com apoio de IA em cerca de 16 horas e publicada internamente. Padronizou como os times descrevem suas APIs e virou a base da documentação usada na certificação de parceiros.',
+      en: { t: 'Developer experience accelerated by AI', w: '2025 · Warren', d: 'A documentation interface generated from the OpenAPI spec, built with AI assistance in about 16 hours and published internally. It standardized how teams describe their APIs and became the basis of the documentation used in partner certification.' } },
+    { x: 2025.05, l: 3, k: 'entrega risco', t: 'Keycloak em web e mobile', w: '2025 · Warren',
+      d: 'Migração da autenticação legada em MongoDB para IAM centralizado: estratégia de token, completude de guards por rota, plano de cutover e handoff em ADR com marcadores de proveniência.',
+      en: { t: 'Keycloak across web and mobile', w: '2025 · Warren', d: 'Migrating legacy MongoDB-backed authentication to a centralized IAM: token strategy, per-route guard completeness, cutover plan and an ADR handoff with provenance markers.' } },
+    { x: 2025.2, l: 3, k: 'entrega risco', t: 'Impersonation via RFC 8693', w: '2025 · Warren',
+      d: 'OAuth 2.0 Token Exchange cobrindo dois canais — staff interno e parceiro white-label — com TTL diferenciado por canal e tabela de auditoria dedicada.',
+      en: { t: 'Impersonation via RFC 8693', w: '2025 · Warren', d: 'OAuth 2.0 Token Exchange covering two distinct channels — internal staff and white-label partners — with per-channel TTLs and a dedicated audit table.' } },
+    { x: 2025.45, l: 3, k: 'entrega risco', t: 'Arquitetura fail-safe para deploys críticos', w: 'mai/2025 · Warren',
+      d: 'Plataforma construída solo em três semanas, em Next.js e PostgreSQL, integrada ao GitHub. O diferencial é o modelo de confiança: o pipeline de deploy não roda por default — é o Gatekeeper que o dispara, depois das aprovações formais. Compliance embutido no código.',
+      en: { t: 'Fail-safe architecture for critical deploys', w: 'May 2025 · Warren', d: 'A platform built single-handed in three weeks, in Next.js and PostgreSQL, integrated with GitHub. The differentiator is the trust model: the deploy pipeline does not run by default — the Gatekeeper fires it, after formal approvals. Compliance embedded in the code.' } },
+    { x: 2025.62, l: 0, k: 'risco', t: 'Governança de engenharia', w: '2025 · Warren',
+      d: 'Papel formal acumulado após o lançamento da plataforma de mudanças: adoção mandatória e conformidade com quatro frameworks regulatórios.',
+      en: { t: 'Engineering governance', w: '2025 · Warren', d: 'A formal role taken on after the change-management platform launched: mandatory adoption and compliance with four regulatory frameworks.' } },
+    { x: 2025.78, l: 2, k: 'lidera', t: 'Engineering Manager', w: 'mai/2025 · Warren',
+      d: 'Liderança transversal de múltiplos domínios críticos da corretora, com gestão direta e indireta de engenheiros, reportando ao CTO.',
+      en: { t: 'Engineering Manager', w: 'May 2025 · Warren', d: 'Cross-cutting leadership of several critical brokerage domains, with direct and indirect management of engineers, reporting to the CTO.' } },
+    { x: 2026.15, l: 0, k: 'risco', t: 'Estratégia de identidade B2B2C', w: 'fev/2026 · Warren',
+      d: 'Dois caminhos segmentados por maturidade do parceiro — SDK white-label ou federação por Token Exchange. Usuário genérico e espelho descartados por mascararem a origem da operação.',
+      en: { t: 'B2B2C identity strategy', w: 'Feb 2026 · Warren', d: 'Two paths segmented by partner maturity — a white-label SDK or federation through Token Exchange. Generic and mirror users were ruled out for masking the real origin of the operation.' } },
+    { x: 2026.3, l: 3, k: 'entrega', t: 'Multi-tenant em runtime', w: '2026 · Warren',
+      d: 'Clean Architecture em quatro camadas com resolução de contexto de tenant por requisição via injeção de dependência — contextos de clientes distintos nunca se misturam.',
+      en: { t: 'Multi-tenancy resolved at runtime', w: '2026 · Warren', d: 'Clean Architecture in four layers with per-request tenant context resolution through dependency injection — contexts from different clients never mix.' } },
+    { x: 2026.42, l: 3, k: 'entrega risco', t: 'Sandbox como produto', w: 'mai/2026 · Warren',
+      d: 'Simulação de liquidação, aporte e resgate na camada de BFF, com chaveamento de ambiente por cabeçalho HTTP. Identificou e corrigiu risco de vazamento entre tenants no particionamento.',
+      en: { t: 'The sandbox as a product', w: 'May 2026 · Warren', d: 'Settlement, deposit and withdrawal simulated at the BFF layer, with environment switching by HTTP header. A cross-tenant leak risk in the partitioning was found and fixed.' } },
+    { x: 2026.5, l: 0, k: 'risco', t: 'Auditoria de segurança e mitigação de risco', w: 'jul/2026 · Warren',
+      d: 'Prática de resposta a credencial exposta em ambiente cloud: reconstrução da linha do tempo, script próprio de análise, identificação do vetor e dimensionamento de impacto — com o limite da investigação declarado no relatório. Chave antiga sem restrição é dívida de segurança, não detalhe de configuração.',
+      en: { t: 'Security audit and risk mitigation', w: 'Jul 2026 · Warren', d: 'Incident practice for exposed cloud credentials: timeline reconstruction, a purpose-built analysis script, attack-vector identification and impact sizing — with the limit of the investigation stated in the report itself. An old unrestricted key is security debt, not a configuration detail.' } },
+    { x: 2026.62, l: 1, k: 'lidera entrega', t: 'Camada de arquitetura', w: 'jul/2026 · Warren',
+      d: 'Saída da gestão de linha para a camada transversal de arquitetura, com a propriedade dos domínios de segurança e identidade e da plataforma de Wealth-as-a-Service.',
+      en: { t: 'The architecture layer', w: 'Jul 2026 · Warren', d: 'Out of line management and into the cross-cutting architecture layer, owning the security and identity domain and the Wealth-as-a-Service platform.' } }
+  ];
+
+  var LENSES_PT = {
+    tudo: {
+      deck: 'Dezesseis anos de engenharia, <b>oito deles ininterruptos em instituições financeiras reguladas</b>. O padrão que atravessa todos eles: escreve o critério — de senioridade, de auditoria, de identidade de parceiro — e depois <b>constrói o artefato que faz o critério valer sozinho</b>, sem depender de memória institucional.',
+      scaleTitle: 'Dimensão de impacto.',
+      scaleLede: 'Quatro anos numa corretora de valores regulada, oito ininterruptos em mercado financeiro, dezesseis de engenharia.',
+      figs: [
+        { v: '24', u: '', l: 'engenheiros no pico da gestão' },
+        { v: '7', u: '', l: 'domínios críticos sob liderança' },
+        { v: '80', u: 'k', pre: '~', l: 'clientes na plataforma' },
+        { v: '4', u: '', l: 'frameworks regulatórios atendidos' },
+        { v: '8', u: 'a', v2: '5', u2: 'm', l: 'em mercado financeiro' }
+      ],
+      catTitle: 'Catorze vezes. Repetição é método.',
+      closeTitle: 'A transição já aconteceu no organograma.',
+      closeText: 'Desde julho de 2026, camada transversal de arquitetura — com a propriedade formal dos dois domínios que cortam todas as squads: segurança e identidade, e a plataforma de Wealth-as-a-Service. Saída da gestão de linha sem sair da mesa de decisões. É esse nível de orquestração técnica que chega agora ao mercado, liderando arquitetura em posições de Staff e Principal. O foco é um só: potencializar e acelerar a entrega de plataformas robustas — orquestrando a tecnologia para que a visão estratégica não fique apenas no desenho, mas se converta rapidamente em software rodando.',
+      order: ['sec-escala', 'sec-escada', 'sec-catalogo', 'sec-pessoas', 'sec-altitude', 'sec-assinaturas', 'sec-trajetoria', 'sec-fecho']
+    },
+    entrega: {
+      deck: 'Escreve o critério e depois <b>constrói a coisa que o cumpre — sozinho, quando precisa</b>. Oito anos ininterruptos entregando sistema dentro de instituição financeira regulada, do JWT à tela.',
+      scaleTitle: 'Dimensão da execução.',
+      scaleLede: 'Escreveu solo, em três semanas, a plataforma de mudanças que hoje é obrigatória para todo deploy da companhia — e desenhou a identidade multi-tenant que sustenta a operação com instituições parceiras.',
+      figs: [
+        { v: '3', u: '', l: 'semanas, sozinho, do commit ao obrigatório' },
+        { v: '10', u: '', l: 'BFFs derivados de um repositório base, em produção' },
+        { v: '80', u: 'k', pre: '~', l: 'clientes na plataforma que liderou' },
+        { v: '4', u: '', l: 'protocolos de identidade em produção' }
+      ],
+      catTitle: 'Construído com as próprias mãos.',
+      closeTitle: 'A decisão e a implementação na mesma pessoa.',
+      closeText: 'Hoje na camada transversal de arquitetura, com a propriedade de segurança e identidade e da plataforma de Wealth-as-a-Service. O que procura fora é o formato em que quem decide a arquitetura também a escreve: Staff, Principal, ou um EM que continua entregando.',
+      order: ['sec-escala', 'sec-escada', 'sec-catalogo', 'sec-altitude', 'sec-assinaturas', 'sec-pessoas', 'sec-trajetoria', 'sec-fecho']
+    },
+    lidera: {
+      deck: 'Escreveu os <b>critérios de senioridade do time</b>, conduziu o onboarding de um gestor parceiro e propôs a reorganização que a companhia adotou — sem largar o teclado em nenhum momento.',
+      scaleTitle: 'O tamanho do time.',
+      scaleLede: 'Chegou a 24 engenheiros em três disciplinas e cinco níveis, reportando ao CTO — e transformou cada atrito de time em um mecanismo que segue rodando sem depender de quem o criou.',
+      figs: [
+        { v: '24', u: '', l: 'engenheiros no pico, três disciplinas' },
+        { v: '5', u: '', l: 'níveis de senioridade, do assistente ao especialista' },
+        { v: '7', u: '', l: 'domínios críticos sob liderança transversal' },
+        { v: '1', u: '', l: 'gestor parceiro integrado para atuação complementar' }
+      ],
+      catTitle: 'Atrito de time que virou artefato.',
+      closeTitle: 'Gestão que não terminou no organograma.',
+      closeText: 'Chegou a 24 engenheiros e saiu da gestão de linha em julho de 2026 para a camada de arquitetura — sem parar de integrar lideranças complementares, escrever critério e cobrar post-mortem. Para uma vaga de liderança, o diferencial não é ter gerido 24 pessoas: é decidir arquitetura sabendo o que aquilo custa em pessoas, prazo e regulador.',
+      order: ['sec-escala', 'sec-pessoas', 'sec-catalogo', 'sec-assinaturas', 'sec-escada', 'sec-altitude', 'sec-trajetoria', 'sec-fecho']
+    },
+    risco: {
+      deck: '<b>Oito anos e cinco meses sem um único mês fora de instituição financeira regulada.</b> Leva decisão de arquitetura a Compliance, conduz investigação forense e transforma mudança em trilha auditável.',
+      scaleTitle: 'O que aguenta auditoria.',
+      scaleLede: 'Levou decisão de arquitetura a Compliance e ela virou requisito de contrato. Conduziu due diligence técnica de M&A e transformou mudança em produção em trilha auditável obrigatória.',
+      figs: [
+        { v: '3', u: '', l: 'reguladores no perímetro: CVM, BACEN, BSM' },
+        { v: '4', u: '', l: 'frameworks regulatórios atendidos' },
+        { v: '2', u: '', l: 'domínios transversais sob propriedade formal' },
+        { v: '8', u: 'a', v2: '5', u2: 'm', l: 'ininterruptos em mercado regulado' }
+      ],
+      catTitle: 'Mecanismos que deixam rastro.',
+      closeTitle: 'Arquitetura e conformidade não são duas conversas.',
+      closeText: 'Dezesseis anos de engenharia, os últimos oito dentro de instituição financeira regulada — CVM, BACEN, BSM. Hoje é dono formal do domínio de segurança e identidade da corretora. É esse o terreno, e é nele que procura o próximo passo.',
+      order: ['sec-escala', 'sec-assinaturas', 'sec-catalogo', 'sec-altitude', 'sec-escada', 'sec-pessoas', 'sec-trajetoria', 'sec-fecho']
+    }
+  };
+  var LENSES_EN = {
+    tudo: {
+      deck: 'Sixteen years in engineering, <b>eight of them unbroken inside regulated financial institutions</b>. The pattern running through all of them: write the criterion — for seniority, for audit, for partner identity — and then <b>build the artifact that enforces it on its own</b>, with no reliance on institutional memory.',
+      scaleTitle: 'Scale of impact.',
+      scaleLede: 'Four years inside a regulated brokerage, eight unbroken in financial markets, sixteen in engineering.',
+      figs: [
+        { v: '24', u: '', l: 'engineers at the peak of the org' },
+        { v: '7', u: '', l: 'critical domains under leadership' },
+        { v: '80', u: 'k', pre: '~', l: 'clients on the platform' },
+        { v: '4', u: '', l: 'regulatory frameworks satisfied' },
+        { v: '8', u: 'y', v2: '5', u2: 'm', l: 'in financial markets' }
+      ],
+      catTitle: 'Fourteen times. Repetition is method.',
+      closeTitle: 'The transition already happened on the org chart.',
+      closeText: 'Since July 2026, in the cross-cutting architecture layer — owning the two domains that cut across every squad: security and identity, and the Wealth-as-a-Service platform. Out of line management without leaving the table where decisions are made. That level of technical orchestration is what now reaches the market, leading architecture in Staff and Principal roles. One focus: accelerating the delivery of robust platforms — orchestrating technology so the strategy does not stay on the diagram, but turns into running software.',
+      order: ['sec-escala', 'sec-escada', 'sec-catalogo', 'sec-pessoas', 'sec-altitude', 'sec-assinaturas', 'sec-trajetoria', 'sec-fecho']
+    },
+    entrega: {
+      deck: 'Writes the criterion and then <b>builds the thing that enforces it — single-handed, when that is what it takes</b>. Eight unbroken years shipping systems inside a regulated financial institution, from the JWT to the screen.',
+      scaleTitle: 'Scale of execution.',
+      scaleLede: 'Built single-handed, in three weeks, the change-management platform that is now mandatory for every deploy in the company — and designed the multi-tenant identity that carries the operation with partner institutions.',
+      figs: [
+        { v: '3', u: '', l: 'weeks, alone, from first commit to mandatory' },
+        { v: '10', u: '', l: 'BFFs derived from one base repository, in production' },
+        { v: '80', u: 'k', pre: '~', l: 'clients on the platform it led' },
+        { v: '4', u: '', l: 'identity protocols running in production' }
+      ],
+      catTitle: 'Built by hand.',
+      closeTitle: 'The decision and the implementation in the same person.',
+      closeText: 'Today in the cross-cutting architecture layer, owning security and identity and the Wealth-as-a-Service platform. What comes next is the format where whoever decides the architecture also writes it: Staff, Principal, or an EM who keeps shipping.',
+      order: ['sec-escala', 'sec-escada', 'sec-catalogo', 'sec-altitude', 'sec-assinaturas', 'sec-pessoas', 'sec-trajetoria', 'sec-fecho']
+    },
+    lidera: {
+      deck: 'Wrote the <b>seniority criteria for the team</b>, ran the onboarding of a partner manager and proposed the reorganization the company adopted — without ever stepping away from the keyboard.',
+      scaleTitle: 'Scale of the team.',
+      scaleLede: 'Reached 24 engineers across three disciplines and five seniority levels, reporting to the CTO — and turned every point of team friction into a mechanism that keeps running without depending on whoever built it.',
+      figs: [
+        { v: '24', u: '', l: 'engineers at peak, three disciplines' },
+        { v: '5', u: '', l: 'seniority levels, from assistant to specialist' },
+        { v: '7', u: '', l: 'critical domains under cross-cutting leadership' },
+        { v: '1', u: '', l: 'partner manager integrated for complementary coverage' }
+      ],
+      catTitle: 'Team friction turned into artifact.',
+      closeTitle: 'Management that did not end on the org chart.',
+      closeText: 'Reached 24 engineers and stepped out of line management in July 2026 into the architecture layer — without stopping integrating complementary leadership, writing criteria and demanding post-mortems. For a leadership role the differentiator is not having managed 24 people: it is deciding architecture while knowing what it costs in people, deadlines and regulators.',
+      order: ['sec-escala', 'sec-pessoas', 'sec-catalogo', 'sec-assinaturas', 'sec-escada', 'sec-altitude', 'sec-trajetoria', 'sec-fecho']
+    },
+    risco: {
+      deck: '<b>Eight years and five months without a single month outside a regulated financial institution.</b> Takes architecture decisions to Compliance, runs forensic investigations and turns change into an audit trail.',
+      scaleTitle: 'What holds up under audit.',
+      scaleLede: 'Took an architecture decision to Compliance and it became a contract requirement. Ran technical due diligence for an M&A and turned production change into a mandatory audit trail.',
+      figs: [
+        { v: '3', u: '', l: 'regulators in scope: CVM, BACEN, BSM' },
+        { v: '4', u: '', l: 'regulatory frameworks satisfied' },
+        { v: '2', u: '', l: 'cross-cutting domains formally owned' },
+        { v: '8', u: 'y', v2: '5', u2: 'm', l: 'unbroken in regulated markets' }
+      ],
+      catTitle: 'Mechanisms that leave a trail.',
+      closeTitle: 'Architecture and compliance are not two conversations.',
+      closeText: 'Sixteen years in engineering, the last eight inside a regulated financial institution — under Brazilian securities, central bank and market supervision rules. Today the formal owner of the brokerage\'s security and identity domain. That is the ground, and that is where the next step is.',
+      order: ['sec-escala', 'sec-assinaturas', 'sec-catalogo', 'sec-altitude', 'sec-escada', 'sec-pessoas', 'sec-trajetoria', 'sec-fecho']
+    }
+  };
+  function lensCfg(key) {
+    var src = (LANG === 'en') ? LENSES_EN : LENSES_PT;
+    return src[key] || src.tudo;
+  }
+  var CATFOOT = {
+    pt: { a: 'mostrando ', b: ' de ', c: ' mecanismos nesta lente ', link: 'ver os catorze' },
+    en: { a: 'showing ', b: ' of ', c: ' mechanisms in this lens ', link: 'see all fourteen' }
+  };
+
+  /* ================= ESCADA ================= */
+  var stairSvg = document.getElementById('stair');
+  var X = [12, 257, 502, 747], SW = 245;
+  var Y = [288, 222, 156, 90];
+  var stairPlayed = false;
+
+  function buildStair(animate) {
+    while (stairSvg.firstChild) stairSvg.removeChild(stairSvg.firstChild);
+
+    var defs = el('defs', {});
+    var g = el('linearGradient', { id: 'stairGrad', x1: '0', y1: '0', x2: '1', y2: '0' });
+    var a = el('stop', { offset: '0%' }); a.setAttribute('stop-color', 'var(--cool)');
+    var b = el('stop', { offset: '100%' }); b.setAttribute('stop-color', 'var(--warm)');
+    g.appendChild(a); g.appendChild(b); defs.appendChild(g); stairSvg.appendChild(defs);
+
+    var d = 'M ' + X[0] + ' ' + Y[0];
+    for (var i = 0; i < 4; i++) {
+      d += ' H ' + (X[i] + SW);
+      if (i < 3) d += ' V ' + Y[i + 1];
+    }
+    var path = el('path', { d: d, class: 'stair-path', stroke: 'url(#stairGrad)' });
+    stairSvg.appendChild(path);
+
+    var labels = [];
+    STEPS.forEach(function (raw, i) {
+      var s = L(raw);
+      var gr = el('g', {});
+      gr.appendChild(txt(el('text', { x: X[i] + 4, y: Y[i] - 66, class: 'stair-lvl' }), s.yr + ' · ' + s.lvl));
+      gr.appendChild(txt(el('text', { x: X[i] + 4, y: Y[i] - 42, class: 'stair-name' }), s.name));
+      gr.appendChild(txt(el('text', { x: X[i] + 4, y: Y[i] - 20, class: 'stair-desc' }), s.desc));
+      gr.appendChild(el('circle', {
+        cx: X[i] + 4, cy: Y[i], r: 5, class: 'stair-tick',
+        stroke: i === 3 ? 'var(--warm)' : (i === 0 ? 'var(--cool)' : 'var(--line-2)')
+      }));
+      if (animate && !reduce) { gr.style.opacity = 0; gr.style.transform = 'translateY(10px)'; }
+      stairSvg.appendChild(gr);
+      labels.push(gr);
+    });
+
+    if (animate && !reduce) {
+      var len = path.getTotalLength();
+      path.style.strokeDasharray = len;
+      path.style.strokeDashoffset = len;
+      path.style.transition = 'stroke-dashoffset 1.9s cubic-bezier(.33,.9,.3,1)';
+      requestAnimationFrame(function () { path.style.strokeDashoffset = '0'; });
+      labels.forEach(function (l, i) {
+        l.style.transition = 'opacity .6s ease, transform .7s cubic-bezier(.22,1,.36,1)';
+        setTimeout(function () { l.style.opacity = 1; l.style.transform = 'none'; }, 280 + i * 380);
+      });
+    }
+  }
+
+  new IntersectionObserver(function (es) {
+    es.forEach(function (e) {
+      if (!e.isIntersecting || stairPlayed) return;
+      stairPlayed = true;
+      buildStair(true);
+    });
+  }, { threshold: 0.3 }).observe(stairSvg);
+
+  /* ================= OSCILOSCÓPIO ================= */
+  var X0 = 2018.0, X1 = 2026.8;
+  var PAD_L = 62, PAD_R = 24, W = 1000;
+  var LANE_Y = [72, 152, 232, 312];
+  function sx(v) { return PAD_L + (v - X0) / (X1 - X0) * (W - PAD_L - PAD_R); }
+
+  var svg = document.getElementById('scope');
+  var ro = document.getElementById('readout');
+  var roLane = document.getElementById('ro-lane');
+  var roTitle = document.getElementById('ro-title');
+  var roText = document.getElementById('ro-text');
+  var groups = [], active = null, scopePlayed = false;
+
+  function show(item) {
+    if (active === item) return;
+    if (active) active.g.classList.remove('active');
+    active = item;
+    item.g.classList.add('active');
+    ro.classList.remove('code', 'lead');
+    ro.classList.add(item.code ? 'code' : 'lead');
+    var data = L(item.data);
+    roLane.textContent = lanes()[item.data.l];
+    roTitle.textContent = data.t;
+    roText.innerHTML = '<span class="when">' + data.w + '</span><br>' + data.d;
+    var body = roTitle.parentNode;
+    body.classList.remove('fade');
+    void body.offsetWidth;
+    if (!reduce) body.classList.add('fade');
+  }
+
+  function buildScope(animate) {
+    while (svg.firstChild) svg.removeChild(svg.firstChild);
+    groups = []; active = null;
+
+    LANE_Y.forEach(function (y, i) {
+      if (i % 2 === 1) svg.appendChild(el('rect', { x: 0, y: y - 38, width: W, height: 76, class: 'lane-band' }));
+      svg.appendChild(el('line', { x1: PAD_L - 46, y1: y, x2: W - PAD_R + 10, y2: y, class: 'lane-rule' }));
+      svg.appendChild(txt(el('text', { x: PAD_L - 46, y: y - 15, class: 'lane-text' }), lanes()[i].toUpperCase()));
+    });
+
+    MILES.forEach(function (raw) {
+      var m = L(raw), x = sx(raw.x);
+      svg.appendChild(el('line', { x1: x, y1: 40, x2: x, y2: 340, class: 'mile-line' }));
+      var near = x > W * 0.82;
+      svg.appendChild(txt(el('text', {
+        x: near ? x - 7 : x + 7, y: 50, class: 'mile-text', 'text-anchor': near ? 'end' : 'start'
+      }), m.t.toUpperCase()));
+    });
+
+    for (var yr = 2018; yr <= 2026; yr++) {
+      svg.appendChild(txt(el('text', { x: sx(yr), y: 372, class: 'tick-text', 'text-anchor': 'middle' }), yr));
+    }
+
+    var pts = NODES.slice().sort(function (a, b) { return a.x - b.x; })
+      .map(function (n) { return { x: sx(n.x), y: LANE_Y[n.l] }; });
+    var d = 'M ' + pts[0].x + ' ' + pts[0].y;
+    for (var i = 1; i < pts.length; i++) {
+      var p0 = pts[i - 1], p1 = pts[i], mx = (p0.x + p1.x) / 2;
+      d += ' C ' + mx + ' ' + p0.y + ', ' + mx + ' ' + p1.y + ', ' + p1.x + ' ' + p1.y;
+    }
+
+    var defs2 = el('defs', {});
+    var grad = el('linearGradient', { id: 'traceGrad', x1: '0', y1: '0', x2: '1', y2: '0' });
+    var s1 = el('stop', { offset: '0%' }); s1.setAttribute('stop-color', 'var(--line-2)');
+    var s2 = el('stop', { offset: '55%' }); s2.setAttribute('stop-color', 'var(--warm)');
+    var s3 = el('stop', { offset: '100%' }); s3.setAttribute('stop-color', 'var(--cool)');
+    grad.appendChild(s1); grad.appendChild(s2); grad.appendChild(s3);
+    defs2.appendChild(grad); svg.appendChild(defs2);
+
+    var trace = el('path', { d: d, class: 'trace', stroke: 'url(#traceGrad)' });
+    svg.appendChild(trace);
+
+    NODES.forEach(function (n, idx) {
+      var isCode = n.l === 3;
+      var isNow = idx === NODES.length - 1;
+      var g2 = el('g', {
+        class: 'node ' + (isCode ? 'is-code' : 'is-lead') + (isNow ? ' is-now' : ''),
+        tabindex: '0', role: 'button', 'aria-label': L(n).t
+      });
+      var cx = sx(n.x), cy = LANE_Y[n.l];
+
+      if (isNow && !reduce) {
+        var pulse = el('circle', { cx: cx, cy: cy, r: 7, class: 'pulse' });
+        pulse.appendChild(el('animate', { attributeName: 'r', values: '7;20', dur: '2.4s', repeatCount: 'indefinite' }));
+        pulse.appendChild(el('animate', { attributeName: 'opacity', values: '0.7;0', dur: '2.4s', repeatCount: 'indefinite' }));
+        g2.appendChild(pulse);
+      }
+      g2.appendChild(el('circle', { cx: cx, cy: cy, r: 13, class: 'halo' }));
+      var dot = el('circle', { cx: cx, cy: cy, r: 6, class: 'dot' });
+      dot.style.opacity = (animate && !reduce) ? 0 : 1;
+      g2.appendChild(dot);
+      g2.appendChild(el('circle', { cx: cx, cy: cy, r: 17, class: 'hit' }));
+      svg.appendChild(g2);
+
+      var item = { g: g2, dot: dot, data: n, code: isCode };
+      g2.addEventListener('mouseenter', function () { show(item); });
+      g2.addEventListener('focus', function () { show(item); });
+      g2.addEventListener('click', function () { show(item); });
+      groups.push(item);
+    });
+
+    if (animate && !reduce) {
+      var len = trace.getTotalLength();
+      trace.style.strokeDasharray = len;
+      trace.style.strokeDashoffset = len;
+      trace.style.transition = 'stroke-dashoffset 2.4s cubic-bezier(.33,.9,.3,1)';
+      requestAnimationFrame(function () { trace.style.strokeDashoffset = '0'; });
+      groups.forEach(function (item, i) {
+        item.dot.style.transition = 'opacity .5s ease';
+        setTimeout(function () { item.dot.style.opacity = 1; }, 380 + i * 76);
+      });
+    }
+    dimNodes(current);
+  }
+
+  new IntersectionObserver(function (es) {
+    es.forEach(function (e) {
+      if (!e.isIntersecting || scopePlayed) return;
+      scopePlayed = true;
+      buildScope(true);
+    });
+  }, { threshold: 0.2 }).observe(svg);
+
+  /* ================= LENTES ================= */
+  var deck = document.getElementById('deck');
+  var scaleTitle = document.getElementById('scale-title');
+  var scaleLede = document.getElementById('scale-lede');
+  var figures = document.getElementById('figures');
+  var catTitle = document.getElementById('cat-title');
+  var catFoot = document.getElementById('cat-foot');
+  var closeTitle = document.getElementById('close-title');
+  var closeText = document.getElementById('close-text');
+  var catRows = Array.prototype.slice.call(document.querySelectorAll('#cat .cat-row'));
+  var signs = Array.prototype.slice.call(document.querySelectorAll('#signs .sign'));
+  var lensButtons = Array.prototype.slice.call(document.querySelectorAll('.lens-btn'));
+  var current = 'tudo';
+
+  function pulseNode(node) {
+    if (reduce || !node) return;
+    node.classList.remove('swap');
+    void node.offsetWidth;
+    node.classList.add('swap');
+  }
+
+  function renderFigures(cfg) {
+    figures.innerHTML = '';
+    cfg.figs.forEach(function (f) {
+      var box = document.createElement('div');
+      box.className = 'fig';
+      var b = document.createElement('b');
+      var html = '';
+      if (f.pre) html += '<span class="u">' + f.pre + '</span>';
+      html += f.v;
+      if (f.u) html += '<span class="u">' + f.u + '</span>';
+      if (f.v2) html += ' ' + f.v2 + '<span class="u">' + f.u2 + '</span>';
+      b.innerHTML = html;
+      var s = document.createElement('span');
+      s.textContent = f.l;
+      box.appendChild(b); box.appendChild(s);
+      figures.appendChild(box);
+    });
+    pulseNode(figures);
+  }
+
+  function dimNodes(key) {
+    groups.forEach(function (item) {
+      var tags = (item.data.k || '').split(' ');
+      var on = key === 'tudo' || tags.indexOf(key) !== -1;
+      item.g.classList.toggle('dimmed', !on);
+    });
+  }
+
+  function applyLens(key) {
+    var cfg = lensCfg(key);
+    current = key;
+    document.documentElement.setAttribute('data-lens', key);
+
+    deck.innerHTML = cfg.deck; pulseNode(deck);
+    scaleTitle.textContent = cfg.scaleTitle;
+    scaleLede.textContent = cfg.scaleLede; pulseNode(scaleLede);
+    catTitle.textContent = cfg.catTitle;
+    closeTitle.textContent = cfg.closeTitle;
+    closeText.textContent = cfg.closeText; pulseNode(closeText);
+    renderFigures(cfg);
+
+    cfg.order.forEach(function (id, i) {
+      var node = document.getElementById(id);
+      if (node) node.style.order = i;
+    });
+
+    var shown = 0;
+    catRows.forEach(function (row) {
+      var tags = (row.getAttribute('data-lens') || '').split(' ');
+      var on = key === 'tudo' || tags.indexOf(key) !== -1;
+      row.hidden = !on;
+      if (on) shown++;
+    });
+    var cf = CATFOOT[LANG] || CATFOOT.pt;
+    if (key === 'tudo') {
+      catFoot.hidden = true;
+      catFoot.innerHTML = '';
+    } else {
+      catFoot.hidden = false;
+      catFoot.innerHTML = cf.a + shown + cf.b + catRows.length + cf.c;
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.textContent = cf.link;
+      btn.addEventListener('click', function () { selectLens('tudo'); });
+      catFoot.appendChild(btn);
+    }
+
+    signs.forEach(function (s) {
+      var tags = (s.getAttribute('data-lens') || '').split(' ');
+      var idx = tags.indexOf(key);
+      s.style.order = (key === 'tudo' || idx === -1) ? 5 : idx;
+    });
+
+    dimNodes(key);
+
+    lensButtons.forEach(function (b) {
+      b.setAttribute('aria-pressed', String(b.getAttribute('data-lens') === key));
+    });
+  }
+
+  function selectLens(key) {
+    applyLens(key);
+    try { sessionStorage.setItem('lente', key); } catch (e) {}
+  }
+
+  lensButtons.forEach(function (b) {
+    b.addEventListener('click', function () { selectLens(b.getAttribute('data-lens')); });
+  });
+
+  /* ================= TROCA DE IDIOMA ================= */
+  var langButtons = Array.prototype.slice.call(document.querySelectorAll('.langtoggle button'));
+
+  function setLang(code, remember) {
+    LANG = (code === 'en') ? 'en' : 'pt';
+    applyStatic();
+    langButtons.forEach(function (b) {
+      b.setAttribute('aria-pressed', String(b.getAttribute('data-lang') === LANG));
+    });
+    if (stairPlayed) buildStair(false);
+    if (scopePlayed) buildScope(false);
+    applyLens(current);
+    if (remember) { try { sessionStorage.setItem('idioma', LANG); } catch (e) {} }
+  }
+
+  langButtons.forEach(function (b) {
+    b.addEventListener('click', function () { setLang(b.getAttribute('data-lang'), true); });
+  });
+
+  /* ================= BOOT ================= */
+  var savedLang = null, savedLens = null;
+  try {
+    savedLang = sessionStorage.getItem('idioma');
+    savedLens = sessionStorage.getItem('lente');
+  } catch (e) {}
+  if (!savedLang) {
+    var nav = (navigator.language || 'pt').toLowerCase();
+    savedLang = (nav.indexOf('pt') === 0) ? 'pt' : 'en';
+  }
+  current = LENSES_PT[savedLens] ? savedLens : 'tudo';
+  setLang(savedLang, false);
+
+  /* ================= reveals ================= */
+  var io1 = new IntersectionObserver(function (es) {
+    es.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      e.target.classList.add('in');
+      io1.unobserve(e.target);
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+  document.querySelectorAll('.rv').forEach(function (n) { io1.observe(n); });
+})();
+</script>
+
+</body>
 </html>
