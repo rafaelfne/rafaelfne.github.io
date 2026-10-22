@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<meta name="description" content="Como conectar e desconectar a Vercel do Virgílio e o que aparece no diagnóstico.">
+<meta name="author" content="Rafael Neves">
+<meta name="color-scheme" content="dark light">
+<title>Documentação · Virgílio para Vercel</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%201024%201024%22%3E%3Crect%20x%3D%22100%22%20y%3D%22100%22%20width%3D%22824%22%20height%3D%22824%22%20rx%3D%22186%22%20fill%3D%22%23f7f5f0%22%2F%3E%3Cg%20transform%3D%22translate(210%20233)%20scale(9.3)%22%20fill%3D%22none%22%20stroke-linecap%3D%22round%22%3E%3Cline%20x1%3D%2213%22%20y1%3D%2221%22%20x2%3D%2224.3%22%20y2%3D%2242.7%22%20stroke%3D%22%231f2228%22%20stroke-width%3D%228%22%2F%3E%3Cline%20x1%3D%2233%22%20y1%3D%2250%22%20x2%3D%2252%22%20y2%3D%2210%22%20stroke%3D%22%231d3fa3%22%20stroke-width%3D%228.5%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&amp;family=IBM+Plex+Mono:wght@400;500&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;display=swap">
+<style>
+:root{--ground:#0A0D12;--surface:#121722;--surface-2:#18202C;--ink:#E9E6E2;--ink-soft:#BEC4CC;--muted:#8792A0;--line:#1F2836;--line-2:#2E3B4C;--warm:#C98C63;--cool:#6E93BC;--on-accent:#0A0D12;--glow:.9;--f-display:"Bricolage Grotesque","Helvetica Neue",Arial,sans-serif;--f-body:"IBM Plex Sans",system-ui,-apple-system,sans-serif;--f-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace}
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]){--ground:#E7EAEF;--surface:#FFFFFF;--surface-2:#F1F3F7;--ink:#11151C;--ink-soft:#3B434F;--muted:#626D7B;--line:#D8DDE5;--line-2:#BAC3CE;--warm:#8A5230;--cool:#3B6289;--on-accent:#FFFFFF;--glow:.16}}
+:root[data-theme="light"]{--ground:#E7EAEF;--surface:#FFFFFF;--surface-2:#F1F3F7;--ink:#11151C;--ink-soft:#3B434F;--muted:#626D7B;--line:#D8DDE5;--line-2:#BAC3CE;--warm:#8A5230;--cool:#3B6289;--on-accent:#FFFFFF;--glow:.16}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.62;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration-color:var(--line-2);text-underline-offset:3px}
+a:hover{text-decoration-color:var(--warm)}
+:focus-visible{outline:2px solid var(--warm);outline-offset:3px;border-radius:2px}
+.shell{max-width:880px;margin:0 auto;padding-inline:24px}
+.label{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.hero{position:relative;padding:56px 0 40px;overflow:hidden;border-bottom:1px solid var(--line)}
+.hero-bg{position:absolute;inset:-30% -10% auto;height:120%;background:radial-gradient(50% 60% at 20% 28%,color-mix(in srgb,var(--warm) 16%,transparent),transparent 70%),radial-gradient(46% 55% at 80% 62%,color-mix(in srgb,var(--cool) 13%,transparent),transparent 72%);opacity:var(--glow);filter:blur(10px);pointer-events:none}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(to right,var(--line) 1px,transparent 1px),linear-gradient(to bottom,var(--line) 1px,transparent 1px);background-size:68px 68px;opacity:.4;-webkit-mask-image:linear-gradient(rgba(0,0,0,.7),transparent 78%);mask-image:linear-gradient(rgba(0,0,0,.7),transparent 78%);pointer-events:none}
+.hero-inner{position:relative;display:flex;flex-direction:column;gap:20px}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.kicker{display:flex;align-items:center;gap:10px;text-decoration:none}
+.kicker .dot{width:6px;height:6px;border-radius:50%;background:var(--cool)}
+nav.pages{display:flex;flex-wrap:wrap;border:1px solid var(--line-2);border-radius:3px;overflow:hidden}
+nav.pages a{font-family:var(--f-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;padding:5px 11px;color:var(--muted);text-decoration:none}
+nav.pages a+a{border-left:1px solid var(--line-2)}
+nav.pages a:hover{color:var(--ink)}
+nav.pages a[aria-current="page"]{background:var(--surface-2);color:var(--warm)}
+.title-row{display:flex;align-items:center;gap:18px}
+.mark{width:64px;height:64px;flex:0 0 auto;border-radius:15px;box-shadow:0 0 0 1px var(--line-2)}
+h1{font-family:var(--f-display);font-weight:800;font-size:clamp(34px,6vw,60px);line-height:.98;letter-spacing:-.035em;margin:0;text-wrap:balance}
+.role{font-family:var(--f-display);font-weight:700;font-size:clamp(19px,2.6vw,26px);letter-spacing:-.02em;line-height:1.2;margin:0;text-wrap:balance}
+.role .a{color:var(--warm)}.role .t{color:var(--cool)}
+.deck{font-size:clamp(16.5px,2vw,18.5px);color:var(--ink-soft);max-width:62ch;margin:0}
+.deck b{color:var(--ink);font-weight:600}
+.actions{display:flex;flex-wrap:wrap;gap:10px}
+.btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--f-mono);font-size:12px;letter-spacing:.06em;padding:9px 14px;border:1px solid var(--line-2);border-radius:3px;background:var(--surface);text-decoration:none;color:var(--ink)}
+.btn.primary{background:var(--cool);border-color:var(--cool);color:var(--on-accent)}
+.btn:hover{border-color:var(--warm)}
+.meta-row{display:flex;flex-wrap:wrap;gap:8px 10px;font-family:var(--f-mono);font-size:11.5px;color:var(--muted)}
+.meta-row span{border:1px solid var(--line);padding:4px 10px;border-radius:2px;background:var(--surface)}
+main section{padding-block:40px;border-bottom:1px solid var(--line)}
+main section:last-child{border-bottom:0}
+h2{font-family:var(--f-display);font-weight:700;font-size:clamp(23px,3.2vw,31px);line-height:1.08;letter-spacing:-.025em;margin:0 0 14px;text-wrap:balance}
+h3{font-family:var(--f-display);font-weight:700;font-size:19px;letter-spacing:-.02em;line-height:1.2;margin:26px 0 6px}
+p,li{color:var(--ink-soft)}
+p{margin:0 0 12px;max-width:68ch}
+ul,ol{margin:0 0 12px;padding-left:22px;max-width:68ch}
+li{margin-bottom:6px}
+li b,p b{color:var(--ink);font-weight:600}
+code{font-family:var(--f-mono);font-size:.88em;background:var(--surface-2);border:1px solid var(--line);border-radius:3px;padding:.08em .38em;color:var(--ink);word-break:break-word}
+pre{font-family:var(--f-mono);font-size:13.5px;line-height:1.55;background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:14px 16px;overflow-x:auto;margin:0 0 14px;color:var(--ink)}
+pre code{background:none;border:0;padding:0;font-size:inherit}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px;margin-top:6px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:18px 18px 8px}
+.card h3{margin-top:0}
+.card .label{display:block;margin-bottom:8px}
+.note{border-left:3px solid var(--warm);background:var(--surface);padding:14px 16px;border-radius:0 4px 4px 0;margin:14px 0}
+.note p:last-child{margin-bottom:0}
+.small{font-size:14px;color:var(--muted)}
+.lang-switch{margin-top:4px}
+section[lang="en"] h2{color:var(--ink)}
+footer{border-top:1px solid var(--line);padding:28px 0 48px;font-size:14px;color:var(--muted)}
+footer p{color:var(--muted);margin:0 0 6px}
+@media (max-width:560px){.shell{padding-inline:16px}.hero{padding-top:36px}.mark{width:52px;height:52px;border-radius:12px}nav.pages a{padding:5px 8px;font-size:10.5px}}
+</style>
+</head>
+<body>
+<header class="hero">
+<div class="hero-bg" aria-hidden="true"></div>
+<div class="hero-grid" aria-hidden="true"></div>
+<div class="shell hero-inner">
+<div class="topbar">
+<a class="kicker" href="/virgilio/"><span class="dot" aria-hidden="true"></span><span class="label">Virgílio · Integração Vercel</span></a>
+<nav class="pages" aria-label="Páginas da integração"><a href="/virgilio/">Início</a><a href="/virgilio/docs/" aria-current="page">Docs</a><a href="/virgilio/eula/">Termos</a><a href="/virgilio/privacidade/">Privacidade</a></nav>
+</div>
+
+<div class="title-row"><svg class="mark" viewBox="100 100 824 824" aria-hidden="true"><rect x="100" y="100" width="824" height="824" rx="186" fill="#f7f5f0"/><g transform="translate(210 233) scale(9.3)" fill="none" stroke-linecap="round"><line x1="13" y1="21" x2="24.3" y2="42.7" stroke="#1f2228" stroke-width="8"/><line x1="33" y1="50" x2="52" y2="10" stroke="#1d3fa3" stroke-width="8.5"/></g></svg><h1>Documentação</h1></div>
+<p class="deck">Como conectar a Vercel ao Virgílio, o que você aprova, o que aparece no diagnóstico e como desconectar.</p>
+<div class="meta-row"><span><a href="#antes">Antes de começar</a></span><span><a href="#cli">Pela CLI</a></span><span><a href="#desktop">Pelo app</a></span><span><a href="#aprovacao">Aprovação</a></span><span><a href="#diagnose">Diagnóstico</a></span><span><a href="#projeto">O que muda</a></span><span><a href="#desconectar">Desconectar</a></span></div>
+
+</div>
+</header>
+<main class="shell">
+
+<section id="antes">
+<h2>Antes de começar</h2>
+<ul>
+<li>O Virgílio instalado no seu app Next.js. As instruções estão no <a href="https://github.com/Omnex-Labs/virgilio">repositório do kit</a>.</li>
+<li>O projeto já importado na Vercel.</li>
+<li>Acesso de dono ou de quem pode instalar integrações no time da Vercel.</li>
+</ul>
+<div class="note">
+<p><b>Plano Hobby.</b> O plano Hobby da Vercel não permite uso comercial. Se o app gera receita ou atende clientes, use o plano Pro.</p>
+</div>
+</section>
+
+<section id="cli">
+<h2>Conectar pela CLI</h2>
+<p>Na pasta do projeto, rode:</p>
+<pre><code>virgilio connections connect vercel</code></pre>
+<ol>
+<li>O Virgílio abre o navegador na tela de aprovação da Vercel.</li>
+<li>Você escolhe a conta ou o time, escolhe os projetos e aprova.</li>
+<li>A Vercel volta para <code>rafaelneves.me/virgilio-callback/</code>, que devolve a autorização para o Virgílio no seu computador.</li>
+<li>O Virgílio troca o código de autorização pelo acesso, por meio do servidor de troca, e guarda o acesso no cofre de senhas do sistema.</li>
+<li>O terminal confirma a conexão.</li>
+</ol>
+</section>
+
+<section id="desktop">
+<h2>Conectar pelo app desktop</h2>
+<p>Abra o app do Virgílio, vá em <b>Conexões</b>, escolha <b>Vercel</b> e clique em conectar. O caminho a partir daí é o mesmo da CLI: aprovação no navegador, retorno automático e confirmação no app.</p>
+</section>
+
+<section id="aprovacao">
+<h2>A tela de aprovação da Vercel</h2>
+<p>É uma tela da própria Vercel, não do Virgílio. Nela você vê:</p>
+<ul>
+<li>O nome da integração, <b>Virgílio</b>, e quem a desenvolve.</li>
+<li>A conta ou o time onde ela será instalada.</li>
+<li>A escolha entre todos os projetos ou só alguns. Recomendamos escolher só o projeto do app que o Virgílio cuida.</li>
+<li>A lista de permissões. O que cada uma faz está explicado na <a href="/virgilio/">página da integração</a>.</li>
+</ul>
+<p>Para mudar os projetos depois, abra a integração em Integrations no painel da Vercel e ajuste o acesso.</p>
+</section>
+
+<section id="diagnose">
+<h2>O que aparece no <code>virgilio diagnose</code></h2>
+<p>Com a Vercel conectada, o diagnóstico ganha uma parte sobre a hospedagem:</p>
+<ul>
+<li><b>Último deploy</b>: se deu certo ou falhou, quando foi e de qual commit veio.</li>
+<li><b>Log de build</b>: o trecho que importa quando o build falha, explicado em português, com o próximo passo.</li>
+<li><b>Variáveis</b>: quais variáveis de produção existem e quais estão faltando. O Virgílio mostra só os nomes, nunca os valores.</li>
+<li><b>Plano e custo</b>: o plano do time e o consumo do período, quando a Vercel libera a cobrança para o seu plano.</li>
+</ul>
+<p>O diagnóstico só lê. O Virgílio publica de novo apenas quando você pede.</p>
+</section>
+
+<section id="projeto">
+<h2>O que muda no seu projeto</h2>
+<p>Com a sua confirmação, o Virgílio faz duas mudanças no projeto da Vercel:</p>
+<ul>
+<li>O comando de build passa a ser <code>virgilio migrations gate &amp;&amp; next build</code>. Se uma migração do banco falhar, o deploy para antes de publicar.</li>
+<li>A variável <code>VIRGILIO_DB_URL</code> é gravada no ambiente de produção pelo próprio Virgílio, para o portão de migração alcançar o banco.</li>
+</ul>
+<p>As outras variáveis e configurações do projeto ficam como estão.</p>
+</section>
+
+<section id="desconectar">
+<h2>Desconectar</h2>
+<p>Pela CLI:</p>
+<pre><code>virgilio connections disconnect vercel</code></pre>
+<p>O Virgílio remove a própria instalação na Vercel e apaga o acesso do cofre do seu computador.</p>
+<p>Pelo painel da Vercel: abra <b>Integrations</b>, escolha o Virgílio e remova a integração. O acesso para de funcionar na hora, e o próximo comando do Virgílio que precisar da Vercel pede para conectar de novo.</p>
+<p>O comando de build com o portão e a variável <code>VIRGILIO_DB_URL</code> continuam no projeto depois de desconectar. Para tirar, edite as configurações do projeto na Vercel.</p>
+</section>
+
+<section>
+<h2>Ajuda</h2>
+<p>Abra uma <a href="https://github.com/Omnex-Labs/virgilio/issues">issue no GitHub</a> ou escreva para <a href="mailto:rafael.fne@gmail.com">rafael.fne@gmail.com</a>.</p>
+</section>
+
+</main>
+<footer class="shell">
+<p>Virgílio é desenvolvido por Rafael Neves (Omnex Labs). Contato: <a href="mailto:rafael.fne@gmail.com">rafael.fne@gmail.com</a></p>
+<p>Código aberto em <a href="https://github.com/Omnex-Labs/virgilio">github.com/Omnex-Labs/virgilio</a> · Suporte em <a href="https://github.com/Omnex-Labs/virgilio/issues">issues do GitHub</a> · <a href="/">rafaelneves.me</a></p>
+</footer>
+</body>
+</html>
