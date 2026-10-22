@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<meta name="description" content="Integração do Virgílio com a Vercel: o que lê, o que escreve e como você controla o acesso.">
+<meta name="author" content="Rafael Neves">
+<meta name="color-scheme" content="dark light">
+<title>Virgílio para Vercel</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%201024%201024%22%3E%3Crect%20x%3D%22100%22%20y%3D%22100%22%20width%3D%22824%22%20height%3D%22824%22%20rx%3D%22186%22%20fill%3D%22%23f7f5f0%22%2F%3E%3Cg%20transform%3D%22translate(210%20233)%20scale(9.3)%22%20fill%3D%22none%22%20stroke-linecap%3D%22round%22%3E%3Cline%20x1%3D%2213%22%20y1%3D%2221%22%20x2%3D%2224.3%22%20y2%3D%2242.7%22%20stroke%3D%22%231f2228%22%20stroke-width%3D%228%22%2F%3E%3Cline%20x1%3D%2233%22%20y1%3D%2250%22%20x2%3D%2252%22%20y2%3D%2210%22%20stroke%3D%22%231d3fa3%22%20stroke-width%3D%228.5%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&amp;family=IBM+Plex+Mono:wght@400;500&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;display=swap">
+<style>
+:root{--ground:#0A0D12;--surface:#121722;--surface-2:#18202C;--ink:#E9E6E2;--ink-soft:#BEC4CC;--muted:#8792A0;--line:#1F2836;--line-2:#2E3B4C;--warm:#C98C63;--cool:#6E93BC;--on-accent:#0A0D12;--glow:.9;--f-display:"Bricolage Grotesque","Helvetica Neue",Arial,sans-serif;--f-body:"IBM Plex Sans",system-ui,-apple-system,sans-serif;--f-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace}
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]){--ground:#E7EAEF;--surface:#FFFFFF;--surface-2:#F1F3F7;--ink:#11151C;--ink-soft:#3B434F;--muted:#626D7B;--line:#D8DDE5;--line-2:#BAC3CE;--warm:#8A5230;--cool:#3B6289;--on-accent:#FFFFFF;--glow:.16}}
+:root[data-theme="light"]{--ground:#E7EAEF;--surface:#FFFFFF;--surface-2:#F1F3F7;--ink:#11151C;--ink-soft:#3B434F;--muted:#626D7B;--line:#D8DDE5;--line-2:#BAC3CE;--warm:#8A5230;--cool:#3B6289;--on-accent:#FFFFFF;--glow:.16}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.62;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration-color:var(--line-2);text-underline-offset:3px}
+a:hover{text-decoration-color:var(--warm)}
+:focus-visible{outline:2px solid var(--warm);outline-offset:3px;border-radius:2px}
+.shell{max-width:880px;margin:0 auto;padding-inline:24px}
+.label{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.hero{position:relative;padding:56px 0 40px;overflow:hidden;border-bottom:1px solid var(--line)}
+.hero-bg{position:absolute;inset:-30% -10% auto;height:120%;background:radial-gradient(50% 60% at 20% 28%,color-mix(in srgb,var(--warm) 16%,transparent),transparent 70%),radial-gradient(46% 55% at 80% 62%,color-mix(in srgb,var(--cool) 13%,transparent),transparent 72%);opacity:var(--glow);filter:blur(10px);pointer-events:none}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(to right,var(--line) 1px,transparent 1px),linear-gradient(to bottom,var(--line) 1px,transparent 1px);background-size:68px 68px;opacity:.4;-webkit-mask-image:linear-gradient(rgba(0,0,0,.7),transparent 78%);mask-image:linear-gradient(rgba(0,0,0,.7),transparent 78%);pointer-events:none}
+.hero-inner{position:relative;display:flex;flex-direction:column;gap:20px}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.kicker{display:flex;align-items:center;gap:10px;text-decoration:none}
+.kicker .dot{width:6px;height:6px;border-radius:50%;background:var(--cool)}
+nav.pages{display:flex;flex-wrap:wrap;border:1px solid var(--line-2);border-radius:3px;overflow:hidden}
+nav.pages a{font-family:var(--f-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;padding:5px 11px;color:var(--muted);text-decoration:none}
+nav.pages a+a{border-left:1px solid var(--line-2)}
+nav.pages a:hover{color:var(--ink)}
+nav.pages a[aria-current="page"]{background:var(--surface-2);color:var(--warm)}
+.title-row{display:flex;align-items:center;gap:18px}
+.mark{width:64px;height:64px;flex:0 0 auto;border-radius:15px;box-shadow:0 0 0 1px var(--line-2)}
+h1{font-family:var(--f-display);font-weight:800;font-size:clamp(34px,6vw,60px);line-height:.98;letter-spacing:-.035em;margin:0;text-wrap:balance}
+.role{font-family:var(--f-display);font-weight:700;font-size:clamp(19px,2.6vw,26px);letter-spacing:-.02em;line-height:1.2;margin:0;text-wrap:balance}
+.role .a{color:var(--warm)}.role .t{color:var(--cool)}
+.deck{font-size:clamp(16.5px,2vw,18.5px);color:var(--ink-soft);max-width:62ch;margin:0}
+.deck b{color:var(--ink);font-weight:600}
+.actions{display:flex;flex-wrap:wrap;gap:10px}
+.btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--f-mono);font-size:12px;letter-spacing:.06em;padding:9px 14px;border:1px solid var(--line-2);border-radius:3px;background:var(--surface);text-decoration:none;color:var(--ink)}
+.btn.primary{background:var(--cool);border-color:var(--cool);color:var(--on-accent)}
+.btn:hover{border-color:var(--warm)}
+.meta-row{display:flex;flex-wrap:wrap;gap:8px 10px;font-family:var(--f-mono);font-size:11.5px;color:var(--muted)}
+.meta-row span{border:1px solid var(--line);padding:4px 10px;border-radius:2px;background:var(--surface)}
+main section{padding-block:40px;border-bottom:1px solid var(--line)}
+main section:last-child{border-bottom:0}
+h2{font-family:var(--f-display);font-weight:700;font-size:clamp(23px,3.2vw,31px);line-height:1.08;letter-spacing:-.025em;margin:0 0 14px;text-wrap:balance}
+h3{font-family:var(--f-display);font-weight:700;font-size:19px;letter-spacing:-.02em;line-height:1.2;margin:26px 0 6px}
+p,li{color:var(--ink-soft)}
+p{margin:0 0 12px;max-width:68ch}
+ul,ol{margin:0 0 12px;padding-left:22px;max-width:68ch}
+li{margin-bottom:6px}
+li b,p b{color:var(--ink);font-weight:600}
+code{font-family:var(--f-mono);font-size:.88em;background:var(--surface-2);border:1px solid var(--line);border-radius:3px;padding:.08em .38em;color:var(--ink);word-break:break-word}
+pre{font-family:var(--f-mono);font-size:13.5px;line-height:1.55;background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:14px 16px;overflow-x:auto;margin:0 0 14px;color:var(--ink)}
+pre code{background:none;border:0;padding:0;font-size:inherit}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px;margin-top:6px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:18px 18px 8px}
+.card h3{margin-top:0}
+.card .label{display:block;margin-bottom:8px}
+.note{border-left:3px solid var(--warm);background:var(--surface);padding:14px 16px;border-radius:0 4px 4px 0;margin:14px 0}
+.note p:last-child{margin-bottom:0}
+.small{font-size:14px;color:var(--muted)}
+.lang-switch{margin-top:4px}
+section[lang="en"] h2{color:var(--ink)}
+footer{border-top:1px solid var(--line);padding:28px 0 48px;font-size:14px;color:var(--muted)}
+footer p{color:var(--muted);margin:0 0 6px}
+@media (max-width:560px){.shell{padding-inline:16px}.hero{padding-top:36px}.mark{width:52px;height:52px;border-radius:12px}nav.pages a{padding:5px 8px;font-size:10.5px}}
+</style>
+</head>
+<body>
+<header class="hero">
+<div class="hero-bg" aria-hidden="true"></div>
+<div class="hero-grid" aria-hidden="true"></div>
+<div class="shell hero-inner">
+<div class="topbar">
+<a class="kicker" href="/virgilio/"><span class="dot" aria-hidden="true"></span><span class="label">Virgílio · Integração Vercel</span></a>
+<nav class="pages" aria-label="Páginas da integração"><a href="/virgilio/" aria-current="page">Início</a><a href="/virgilio/docs/">Docs</a><a href="/virgilio/eula/">Termos</a><a href="/virgilio/privacidade/">Privacidade</a></nav>
+</div>
+
+<div class="title-row"><svg class="mark" viewBox="100 100 824 824" aria-hidden="true"><rect x="100" y="100" width="824" height="824" rx="186" fill="#f7f5f0"/><g transform="translate(210 233) scale(9.3)" fill="none" stroke-linecap="round"><line x1="13" y1="21" x2="24.3" y2="42.7" stroke="#1f2228" stroke-width="8"/><line x1="33" y1="50" x2="52" y2="10" stroke="#1d3fa3" stroke-width="8.5"/></g></svg><h1>Virgílio</h1></div>
+<p class="role">Rede de segurança para o app <span class="t">que a IA construiu</span>, agora <span class="a">ligada à Vercel</span>.</p>
+<p class="deck">O Virgílio é um kit aberto que instala proteções num app Next.js feito com Lovable, Cursor ou Claude Code e leva esse app até produção. Esta integração conecta a sua conta da Vercel ao Virgílio, para que ele veja o que acontece na hospedagem e explique <b>em português</b> o que quebrou e o que fazer.</p>
+<div class="actions">
+<a class="btn primary" href="/virgilio/docs/">Como conectar</a>
+<a class="btn" href="https://github.com/Omnex-Labs/virgilio">Código no GitHub</a>
+</div>
+<div class="meta-row"><span>Next.js</span><span>Supabase</span><span>Vercel</span><span>código aberto</span></div>
+
+</div>
+</header>
+<main class="shell">
+
+<section>
+<h2>O que o Virgílio faz</h2>
+<p>Quem constrói com IA chega rápido num app que funciona. O difícil vem depois: colocar no ar sem medo, saber o que quebrou e voltar a funcionar. O Virgílio instala no projeto o que um time experiente teria:</p>
+<ul>
+<li><b>Guardrails no CI</b>, que barram o erro antes de ele chegar em produção.</li>
+<li><b>Portão de migração</b>: o deploy só segue se as mudanças no banco passarem.</li>
+<li><b>Backup do banco</b> com teste de restauração.</li>
+<li><b>Diagnóstico</b>: o erro de produção traduzido para português, com o próximo passo.</li>
+</ul>
+</section>
+
+<section>
+<h2>O que a integração faz na sua Vercel</h2>
+<p>A integração dá ao Virgílio acesso aos projetos que você escolher na instalação. Abaixo, cada permissão em linguagem simples.</p>
+<div class="cols">
+<div class="card">
+<span class="label">Lê</span>
+<ul>
+<li>Seu usuário e o time da Vercel, para saber de quem é a conta.</li>
+<li>Os projetos que você escolheu e as configurações deles.</li>
+<li>Os deploys e o log de cada build.</li>
+<li>Os nomes das variáveis de ambiente de produção, para avisar quando falta alguma.</li>
+<li>O plano e o custo do time, quando a Vercel libera a cobrança para o seu plano.</li>
+</ul>
+</div>
+<div class="card">
+<span class="label">Escreve, só quando você manda</span>
+<ul>
+<li>Publica o projeto de novo.</li>
+<li>Coloca o portão de migração no comando de build.</li>
+<li>Grava as variáveis do próprio Virgílio no ambiente de produção.</li>
+<li>Registra checks de deploy (recurso em teste).</li>
+<li>Remove a própria instalação quando você desconecta.</li>
+</ul>
+</div>
+</div>
+</section>
+
+<section>
+<h2>Você decide o alcance</h2>
+<ul>
+<li>Na instalação, a Vercel pergunta quais projetos o Virgílio pode acessar. Ele só enxerga esses.</li>
+<li>Nada muda na sua conta sem um comando seu.</li>
+<li>O acesso fica guardado no cofre de senhas do seu computador. O Virgílio não guarda credenciais em servidor próprio.</li>
+<li>Você revoga quando quiser, pelo Virgílio ou pelo painel da Vercel. O acesso para de funcionar na hora.</li>
+<li>O código é aberto, inclusive o pequeno servidor que troca o código de autorização pelo acesso. Dá para auditar tudo em <a href="https://github.com/Omnex-Labs/virgilio">github.com/Omnex-Labs/virgilio</a>.</li>
+</ul>
+<div class="note">
+<p><b>Plano Hobby da Vercel.</b> O plano Hobby é para uso pessoal e não permite uso comercial. Se o seu app vende, cobra ou atende clientes, ele precisa estar no plano Pro.</p>
+</div>
+</section>
+
+<section>
+<h2>Saiba mais</h2>
+<ul>
+<li><a href="/virgilio/docs/">Documentação</a>: conectar, desconectar e o que aparece no diagnóstico.</li>
+<li><a href="/virgilio/eula/">Termos de uso</a></li>
+<li><a href="/virgilio/privacidade/">Política de privacidade</a></li>
+<li><a href="https://github.com/Omnex-Labs/virgilio/issues">Suporte e relato de problemas</a></li>
+</ul>
+</section>
+
+</main>
+<footer class="shell">
+<p>Virgílio é desenvolvido por Rafael Neves (Omnex Labs). Contato: <a href="mailto:rafael.fne@gmail.com">rafael.fne@gmail.com</a></p>
+<p>Código aberto em <a href="https://github.com/Omnex-Labs/virgilio">github.com/Omnex-Labs/virgilio</a> · Suporte em <a href="https://github.com/Omnex-Labs/virgilio/issues">issues do GitHub</a> · <a href="/">rafaelneves.me</a></p>
+</footer>
+</body>
+</html>
