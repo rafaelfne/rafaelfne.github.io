@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<meta name="description" content="Política de privacidade da integração Virgílio para Vercel.">
+<meta name="author" content="Rafael Neves">
+<meta name="color-scheme" content="dark light">
+<title>Privacidade · Virgílio para Vercel</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%201024%201024%22%3E%3Crect%20x%3D%22100%22%20y%3D%22100%22%20width%3D%22824%22%20height%3D%22824%22%20rx%3D%22186%22%20fill%3D%22%23f7f5f0%22%2F%3E%3Cg%20transform%3D%22translate(210%20233)%20scale(9.3)%22%20fill%3D%22none%22%20stroke-linecap%3D%22round%22%3E%3Cline%20x1%3D%2213%22%20y1%3D%2221%22%20x2%3D%2224.3%22%20y2%3D%2242.7%22%20stroke%3D%22%231f2228%22%20stroke-width%3D%228%22%2F%3E%3Cline%20x1%3D%2233%22%20y1%3D%2250%22%20x2%3D%2252%22%20y2%3D%2210%22%20stroke%3D%22%231d3fa3%22%20stroke-width%3D%228.5%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&amp;family=IBM+Plex+Mono:wght@400;500&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;display=swap">
+<style>
+:root{--ground:#0A0D12;--surface:#121722;--surface-2:#18202C;--ink:#E9E6E2;--ink-soft:#BEC4CC;--muted:#8792A0;--line:#1F2836;--line-2:#2E3B4C;--warm:#C98C63;--cool:#6E93BC;--on-accent:#0A0D12;--glow:.9;--f-display:"Bricolage Grotesque","Helvetica Neue",Arial,sans-serif;--f-body:"IBM Plex Sans",system-ui,-apple-system,sans-serif;--f-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace}
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]){--ground:#E7EAEF;--surface:#FFFFFF;--surface-2:#F1F3F7;--ink:#11151C;--ink-soft:#3B434F;--muted:#626D7B;--line:#D8DDE5;--line-2:#BAC3CE;--warm:#8A5230;--cool:#3B6289;--on-accent:#FFFFFF;--glow:.16}}
+:root[data-theme="light"]{--ground:#E7EAEF;--surface:#FFFFFF;--surface-2:#F1F3F7;--ink:#11151C;--ink-soft:#3B434F;--muted:#626D7B;--line:#D8DDE5;--line-2:#BAC3CE;--warm:#8A5230;--cool:#3B6289;--on-accent:#FFFFFF;--glow:.16}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.62;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration-color:var(--line-2);text-underline-offset:3px}
+a:hover{text-decoration-color:var(--warm)}
+:focus-visible{outline:2px solid var(--warm);outline-offset:3px;border-radius:2px}
+.shell{max-width:880px;margin:0 auto;padding-inline:24px}
+.label{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.hero{position:relative;padding:56px 0 40px;overflow:hidden;border-bottom:1px solid var(--line)}
+.hero-bg{position:absolute;inset:-30% -10% auto;height:120%;background:radial-gradient(50% 60% at 20% 28%,color-mix(in srgb,var(--warm) 16%,transparent),transparent 70%),radial-gradient(46% 55% at 80% 62%,color-mix(in srgb,var(--cool) 13%,transparent),transparent 72%);opacity:var(--glow);filter:blur(10px);pointer-events:none}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(to right,var(--line) 1px,transparent 1px),linear-gradient(to bottom,var(--line) 1px,transparent 1px);background-size:68px 68px;opacity:.4;-webkit-mask-image:linear-gradient(rgba(0,0,0,.7),transparent 78%);mask-image:linear-gradient(rgba(0,0,0,.7),transparent 78%);pointer-events:none}
+.hero-inner{position:relative;display:flex;flex-direction:column;gap:20px}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.kicker{display:flex;align-items:center;gap:10px;text-decoration:none}
+.kicker .dot{width:6px;height:6px;border-radius:50%;background:var(--cool)}
+nav.pages{display:flex;flex-wrap:wrap;border:1px solid var(--line-2);border-radius:3px;overflow:hidden}
+nav.pages a{font-family:var(--f-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;padding:5px 11px;color:var(--muted);text-decoration:none}
+nav.pages a+a{border-left:1px solid var(--line-2)}
+nav.pages a:hover{color:var(--ink)}
+nav.pages a[aria-current="page"]{background:var(--surface-2);color:var(--warm)}
+.title-row{display:flex;align-items:center;gap:18px}
+.mark{width:64px;height:64px;flex:0 0 auto;border-radius:15px;box-shadow:0 0 0 1px var(--line-2)}
+h1{font-family:var(--f-display);font-weight:800;font-size:clamp(34px,6vw,60px);line-height:.98;letter-spacing:-.035em;margin:0;text-wrap:balance}
+.role{font-family:var(--f-display);font-weight:700;font-size:clamp(19px,2.6vw,26px);letter-spacing:-.02em;line-height:1.2;margin:0;text-wrap:balance}
+.role .a{color:var(--warm)}.role .t{color:var(--cool)}
+.deck{font-size:clamp(16.5px,2vw,18.5px);color:var(--ink-soft);max-width:62ch;margin:0}
+.deck b{color:var(--ink);font-weight:600}
+.actions{display:flex;flex-wrap:wrap;gap:10px}
+.btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--f-mono);font-size:12px;letter-spacing:.06em;padding:9px 14px;border:1px solid var(--line-2);border-radius:3px;background:var(--surface);text-decoration:none;color:var(--ink)}
+.btn.primary{background:var(--cool);border-color:var(--cool);color:var(--on-accent)}
+.btn:hover{border-color:var(--warm)}
+.meta-row{display:flex;flex-wrap:wrap;gap:8px 10px;font-family:var(--f-mono);font-size:11.5px;color:var(--muted)}
+.meta-row span{border:1px solid var(--line);padding:4px 10px;border-radius:2px;background:var(--surface)}
+main section{padding-block:40px;border-bottom:1px solid var(--line)}
+main section:last-child{border-bottom:0}
+h2{font-family:var(--f-display);font-weight:700;font-size:clamp(23px,3.2vw,31px);line-height:1.08;letter-spacing:-.025em;margin:0 0 14px;text-wrap:balance}
+h3{font-family:var(--f-display);font-weight:700;font-size:19px;letter-spacing:-.02em;line-height:1.2;margin:26px 0 6px}
+p,li{color:var(--ink-soft)}
+p{margin:0 0 12px;max-width:68ch}
+ul,ol{margin:0 0 12px;padding-left:22px;max-width:68ch}
+li{margin-bottom:6px}
+li b,p b{color:var(--ink);font-weight:600}
+code{font-family:var(--f-mono);font-size:.88em;background:var(--surface-2);border:1px solid var(--line);border-radius:3px;padding:.08em .38em;color:var(--ink);word-break:break-word}
+pre{font-family:var(--f-mono);font-size:13.5px;line-height:1.55;background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:14px 16px;overflow-x:auto;margin:0 0 14px;color:var(--ink)}
+pre code{background:none;border:0;padding:0;font-size:inherit}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px;margin-top:6px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:18px 18px 8px}
+.card h3{margin-top:0}
+.card .label{display:block;margin-bottom:8px}
+.note{border-left:3px solid var(--warm);background:var(--surface);padding:14px 16px;border-radius:0 4px 4px 0;margin:14px 0}
+.note p:last-child{margin-bottom:0}
+.small{font-size:14px;color:var(--muted)}
+.lang-switch{margin-top:4px}
+section[lang="en"] h2{color:var(--ink)}
+footer{border-top:1px solid var(--line);padding:28px 0 48px;font-size:14px;color:var(--muted)}
+footer p{color:var(--muted);margin:0 0 6px}
+@media (max-width:560px){.shell{padding-inline:16px}.hero{padding-top:36px}.mark{width:52px;height:52px;border-radius:12px}nav.pages a{padding:5px 8px;font-size:10.5px}}
+</style>
+</head>
+<body>
+<header class="hero">
+<div class="hero-bg" aria-hidden="true"></div>
+<div class="hero-grid" aria-hidden="true"></div>
+<div class="shell hero-inner">
+<div class="topbar">
+<a class="kicker" href="/virgilio/"><span class="dot" aria-hidden="true"></span><span class="label">Virgílio · Integração Vercel</span></a>
+<nav class="pages" aria-label="Páginas da integração"><a href="/virgilio/">Início</a><a href="/virgilio/docs/">Docs</a><a href="/virgilio/eula/">Termos</a><a href="/virgilio/privacidade/" aria-current="page">Privacidade</a></nav>
+</div>
+
+<div class="title-row"><svg class="mark" viewBox="100 100 824 824" aria-hidden="true"><rect x="100" y="100" width="824" height="824" rx="186" fill="#f7f5f0"/><g transform="translate(210 233) scale(9.3)" fill="none" stroke-linecap="round"><line x1="13" y1="21" x2="24.3" y2="42.7" stroke="#1f2228" stroke-width="8"/><line x1="33" y1="50" x2="52" y2="10" stroke="#1d3fa3" stroke-width="8.5"/></g></svg><h1>Privacidade</h1></div>
+<p class="deck">Política de privacidade da integração Virgílio para Vercel. Versão de 22 de outubro de 2026.</p>
+<p class="lang-switch small"><a href="#en">English version below</a></p>
+
+</div>
+</header>
+<main class="shell">
+
+<section>
+<h2>Quem responde</h2>
+<p>Rafael Neves (Omnex Labs), desenvolvedor do Virgílio. Contato: <a href="mailto:rafael.fne@gmail.com">rafael.fne@gmail.com</a>.</p>
+
+<h2>Quais dados a integração acessa</h2>
+<ul>
+<li>A identificação do seu usuário e do seu time na Vercel.</li>
+<li>Os projetos que você escolheu na instalação.</li>
+<li>Os deploys desses projetos.</li>
+<li>Os logs de build e de execução desses projetos.</li>
+<li>Os nomes das variáveis de ambiente, sem os valores.</li>
+<li>O plano e o consumo do time, só quando a permissão de cobrança existe na instalação.</li>
+</ul>
+<p>Esses dados servem para o diagnóstico, para o portão de migração e para publicar de novo quando você pede. Nada além disso.</p>
+
+<h2>Onde os dados ficam</h2>
+<p>Só no seu computador. O acesso à Vercel fica no cofre de senhas do sistema operacional. O que o Virgílio lê da Vercel é processado na sua máquina e não é enviado para servidor do Virgílio.</p>
+<p>Se você usa um agente de IA junto com o Virgílio, como Claude Code ou Cursor, o que você pede para esse agente analisar segue a política de privacidade do serviço dele.</p>
+
+<h2>O que o servidor de troca vê</h2>
+<p>Na conexão, a Vercel entrega um código de autorização. Um servidor mínimo do Virgílio, hospedado no Railway, troca esse código pelo acesso, porque a troca exige um segredo que não pode ficar no seu computador. Nesse momento o servidor vê o código e o acesso. Ele não grava nem registra nenhum dos dois e devolve o resultado direto para o Virgílio na sua máquina. O código dele é aberto no <a href="https://github.com/Omnex-Labs/virgilio">repositório do kit</a>.</p>
+
+<h2>Compartilhamento</h2>
+<p>Nenhum dado é vendido ou compartilhado com terceiros.</p>
+
+<h2>Como revogar</h2>
+<p>Rode <code>virgilio connections disconnect vercel</code> ou remova o Virgílio em Integrations no painel da Vercel. O acesso para de funcionar na hora e é apagado do cofre do seu computador.</p>
+
+<h2>Seus direitos</h2>
+<p>Você tem os direitos previstos na Lei Geral de Proteção de Dados (Lei 13.709/2018). Como os dados ficam na sua máquina, você controla o acesso a eles e pode apagá-los quando quiser. Para qualquer pedido ou dúvida, escreva para <a href="mailto:rafael.fne@gmail.com">rafael.fne@gmail.com</a>.</p>
+
+<h2>Mudanças</h2>
+<p>Novas versões desta política são publicadas nesta página, com data.</p>
+</section>
+
+<section id="en" lang="en">
+<h2>Privacy policy (English)</h2>
+<p class="small">Privacy policy for the Virgílio integration for Vercel. Version of October 22, 2026. If this version and the Portuguese one differ, the Portuguese version prevails.</p>
+
+<h3>Who is responsible</h3>
+<p>Rafael Neves (Omnex Labs), developer of Virgílio. Contact: <a href="mailto:rafael.fne@gmail.com">rafael.fne@gmail.com</a>.</p>
+
+<h3>Data the integration accesses</h3>
+<ul>
+<li>Your Vercel user and team identification.</li>
+<li>The projects you chose at installation.</li>
+<li>Deployments of those projects.</li>
+<li>Build and runtime logs of those projects.</li>
+<li>Environment variable names, without their values.</li>
+<li>The team's plan and usage, only when the billing permission is part of the installation.</li>
+</ul>
+<p>This data is used for diagnostics, for the migration gate and to redeploy when you ask. Nothing else.</p>
+
+<h3>Where the data lives</h3>
+<p>Only on your computer. The Vercel token is kept in your operating system's keychain. What Virgílio reads from Vercel is processed on your machine and is not sent to any Virgílio server.</p>
+<p>If you use an AI agent alongside Virgílio, such as Claude Code or Cursor, whatever you ask that agent to analyze is governed by that service's privacy policy.</p>
+
+<h3>What the exchange server sees</h3>
+<p>When you connect, Vercel returns an authorization code. A minimal Virgílio server, hosted on Railway, exchanges that code for the access token, because the exchange requires a secret that cannot live on your computer. At that moment the server sees the code and the token. It neither stores nor logs them, and returns the result straight to Virgílio on your machine. Its source code is open in the <a href="https://github.com/Omnex-Labs/virgilio">kit repository</a>.</p>
+
+<h3>Sharing</h3>
+<p>No data is sold or shared with third parties.</p>
+
+<h3>How to revoke</h3>
+<p>Run <code>virgilio connections disconnect vercel</code> or remove Virgílio under Integrations in the Vercel dashboard. Access stops working immediately and the token is deleted from your computer's keychain.</p>
+
+<h3>Your rights</h3>
+<p>You have the rights provided by Brazil's General Data Protection Law (LGPD, Law 13,709/2018). Since the data stays on your machine, you control access to it and can delete it at any time. For any request or question, write to <a href="mailto:rafael.fne@gmail.com">rafael.fne@gmail.com</a>.</p>
+
+<h3>Changes</h3>
+<p>New versions of this policy are published on this page, with a date.</p>
+</section>
+
+</main>
+<footer class="shell">
+<p>Virgílio é desenvolvido por Rafael Neves (Omnex Labs). Contato: <a href="mailto:rafael.fne@gmail.com">rafael.fne@gmail.com</a></p>
+<p>Código aberto em <a href="https://github.com/Omnex-Labs/virgilio">github.com/Omnex-Labs/virgilio</a> · Suporte em <a href="https://github.com/Omnex-Labs/virgilio/issues">issues do GitHub</a> · <a href="/">rafaelneves.me</a></p>
+</footer>
+</body>
+</html>
