@@ -556,6 +556,7 @@
     <span class="label prompt" data-i18n="lens.prompt">Você veio procurando</span>
     <div class="lens-opts" id="lens-opts" role="group">
       <button type="button" class="lens-btn k-none" data-lens="tudo" aria-pressed="true" data-i18n="lensbtn.tudo"><b>A carreira inteira</b><span>visão completa</span></button>
+      <button type="button" class="lens-btn k-cool" data-lens="ia" aria-pressed="false" data-i18n="lensbtn.ia"><b>Alguém que constrói com IA</b><span>ia · agentes · llm</span></button>
       <button type="button" class="lens-btn k-cool" data-lens="entrega" aria-pressed="false" data-i18n="lensbtn.entrega"><b>Alguém que entrega</b><span>staff · principal</span></button>
       <button type="button" class="lens-btn k-warm" data-lens="lidera" aria-pressed="false" data-i18n="lensbtn.lidera"><b>Alguém que lidera</b><span>em · head técnico</span></button>
       <button type="button" class="lens-btn k-warm" data-lens="risco" aria-pressed="false" data-i18n="lensbtn.risco"><b>Alguém que aguenta auditoria</b><span>regulado · risco</span></button>
@@ -665,7 +666,7 @@
     </div>
 
     <div class="signs rv" id="signs" style="--d:.08s">
-      <article class="sign" data-lens="entrega ownership risco" data-i18n="sign.0"><span class="n">01</span>
+      <article class="sign" data-lens="ia entrega ownership risco" data-i18n="sign.0"><span class="n">01</span>
         <h3>Registro o que descartei</h3>
         <p>Não registro só a opção vencedora. As rejeitadas ficam no documento, com o motivo. Principalmente quando eram as tecnicamente mais simples.</p>
       </article>
@@ -677,7 +678,7 @@
         <h3>Antecipo o custo da minha recomendação</h3>
         <p>Quando proponho o caminho mais seguro, escrevo o preço junto, antes de alguém perguntar. O custo comercial vai na mesma página que a proposta técnica.</p>
       </article>
-      <article class="sign" data-lens="risco entrega" data-i18n="sign.3"><span class="n">04</span>
+      <article class="sign" data-lens="risco entrega ia" data-i18n="sign.3"><span class="n">04</span>
         <h3>Declaro onde a análise parou</h3>
         <p>Meu relatório fecha dizendo o que não deu para determinar, e por quê. Lacuna declarada vale mais que conclusão que ninguém consegue checar.</p>
       </article>
@@ -782,6 +783,7 @@
   "figcap": "<span>Rafael Neves</span><em>Staff · Platform architecture</em>",
   "lens.prompt": "You came looking for",
   "lensbtn.tudo": "<b>The whole career</b><span>full view</span>",
+  "lensbtn.ia": "<b>Someone who builds with AI</b><span>ai · agents · llm</span>",
   "lensbtn.entrega": "<b>Someone who ships</b><span>staff · principal</span>",
   "lensbtn.lidera": "<b>Someone who leads</b><span>em · head of engineering</span>",
   "lensbtn.risco": "<b>Someone who holds up under audit</b><span>regulated · risk</span>",
@@ -925,7 +927,7 @@
     { x: 2024.35, l: 1, k: 'lidera ownership', t: 'Taxonomia de entregas', w: 'out/2024 · Warren',
       d: 'Passei a classificar cada entrega por benefício, não por tela. Crescimento, encantamento, eficiência, monetização, compliance. Virou material de retrospectiva.',
       en: { t: 'A taxonomy of deliveries', w: 'Oct 2024 · Warren', d: 'I started classifying every delivery by benefit rather than by screen. Growth, delight, efficiency, monetization, compliance. It became retrospective material.' } },
-    { x: 2024.75, l: 3, k: 'entrega', t: 'Developer Experience acelerada por IA', w: '2025 · Warren',
+    { x: 2024.75, l: 3, k: 'entrega ia', t: 'Developer Experience acelerada por IA', w: '2025 · Warren',
       d: 'Construí com apoio de IA, em umas 16 horas, uma interface de documentação gerada a partir da especificação OpenAPI, e publiquei internamente. Padronizou como os times descrevem suas APIs e virou a base da documentação de certificação de parceiros.',
       en: { t: 'Developer experience accelerated by AI', w: '2025 · Warren', d: 'With AI assistance I built, in about 16 hours, a documentation interface generated from the OpenAPI spec, and published it internally. It standardized how teams describe their APIs and became the basis of the partner certification docs.' } },
     { x: 2025.05, l: 3, k: 'entrega risco', t: 'Keycloak em web e mobile', w: '2025 · Warren',
@@ -934,10 +936,10 @@
     { x: 2025.2, l: 3, k: 'entrega risco', t: 'Impersonation via RFC 8693', w: '2025 · Warren',
       d: 'Implementei OAuth 2.0 Token Exchange cobrindo dois canais, staff interno e parceiro white-label, com TTL diferente em cada um e tabela de auditoria própria.',
       en: { t: 'Impersonation via RFC 8693', w: '2025 · Warren', d: 'I implemented OAuth 2.0 Token Exchange covering two channels, internal staff and white-label partners, with a different TTL on each and its own audit table.' } },
-    { x: 2025.45, l: 3, k: 'entrega risco', t: 'Arquitetura fail-safe para deploys críticos', w: 'mai/2025 · Warren',
+    { x: 2025.45, l: 3, k: 'entrega risco ia', t: 'Arquitetura fail-safe para deploys críticos', w: 'mai/2025 · Warren',
       d: 'Construí a plataforma sozinho em três semanas, em Next.js e PostgreSQL, integrada ao GitHub. O que a diferencia é o modelo de confiança. O pipeline de deploy não roda por default. Quem dispara é o Gatekeeper, depois das aprovações formais. Compliance embutido no código.',
       en: { t: 'Fail-safe architecture for critical deploys', w: 'May 2025 · Warren', d: 'I built the platform single-handed in three weeks, in Next.js and PostgreSQL, integrated with GitHub. What sets it apart is the trust model. The deploy pipeline does not run by default. The Gatekeeper fires it, after formal approvals. Compliance embedded in the code.' } },
-    { x: 2025.62, l: 0, k: 'risco', t: 'Governança de engenharia', w: '2025 · Warren',
+    { x: 2025.62, l: 0, k: 'risco ia', t: 'Governança de engenharia', w: '2025 · Warren',
       d: 'Acumulei o papel formal depois que a plataforma de mudanças entrou no ar. Adoção mandatória e conformidade com quatro frameworks regulatórios.',
       en: { t: 'Engineering governance', w: '2025 · Warren', d: 'I took on the formal role after the change-management platform went live. Mandatory adoption and compliance with four regulatory frameworks.' } },
     { x: 2025.78, l: 2, k: 'lidera', t: 'Engineering Manager', w: 'mai/2025 · Warren',
@@ -949,7 +951,7 @@
     { x: 2026.3, l: 3, k: 'entrega', t: 'Multi-tenant em runtime', w: '2026 · Warren',
       d: 'Arquitetei em Clean Architecture de quatro camadas, com o contexto de tenant resolvido por requisição via injeção de dependência. Contexto de um cliente nunca encosta no de outro.',
       en: { t: 'Multi-tenancy resolved at runtime', w: '2026 · Warren', d: 'I architected it in four-layer Clean Architecture, with tenant context resolved per request through dependency injection. One client context never touches another.' } },
-    { x: 2026.42, l: 3, k: 'entrega risco', t: 'Sandbox como produto', w: 'mai/2026 · Warren',
+    { x: 2026.42, l: 3, k: 'entrega risco ia', t: 'Sandbox como produto', w: 'mai/2026 · Warren',
       d: 'Desenhei o sandbox como produto. Liquidação, aporte e resgate simulados na camada de BFF, com troca de ambiente por cabeçalho HTTP. O parceiro certifica a integração inteira sem credencial de produção.',
       en: { t: 'The sandbox as a product', w: 'May 2026 · Warren', d: 'I designed the sandbox as a product. Settlement, deposits and withdrawals simulated at the BFF layer, with environment switching by HTTP header. Partners certify the whole integration without production credentials.' } },
     { x: 2026.5, l: 0, k: 'risco', t: 'Auditoria de segurança e mitigação de risco', w: 'jul/2026 · Warren',
@@ -975,6 +977,22 @@
       closeTitle: 'A transição já aconteceu no organograma.',
       closeText: 'Desde julho de 2026 estou na camada transversal de arquitetura. Respondo por dois domínios que cortam todas as squads: segurança e identidade, e a plataforma de Wealth-as-a-Service. Saí da gestão de linha e continuei na mesa onde as decisões são tomadas. É esse trabalho que levo agora para o mercado, como Staff ou Principal. Meu foco é transformar desenho de arquitetura em software rodando.',
       order: ['sec-escala', 'sec-escada', 'sec-catalogo', 'sec-pessoas', 'sec-altitude', 'sec-assinaturas', 'sec-trajetoria', 'sec-lab', 'sec-fecho']
+    },
+    ia: {
+      deck: 'Dezesseis anos de engenharia e nenhum deles longe do código. Hoje construo produto com LLM tratando o modelo como dependência: interface, adapter, avaliação noturna e <b>trava determinística em volta do que o agente escreve</b>. É a mesma disciplina que aprendi em oito anos de sistema financeiro regulado.',
+      scaleTitle: 'O que a IA mudou no meu trabalho.',
+      scaleLede: 'Uma ferramenta interna saiu em 16 horas. Uma plataforma de mudanças com aprovação obrigatória saiu em três semanas, feita sozinho. Fora do expediente, construí uma plataforma de agentes de WhatsApp com avaliação noturna e estou construindo o Virgílio, que leva a mesma trava a quem constrói app com IA.',
+      figs: [
+        { v: '16', u: 'h', l: 'para uma ferramenta interna, construída com IA' },
+        { v: '3', u: '', l: 'semanas, sozinho, até a plataforma de mudanças virar obrigatória' },
+        { v: '2', u: '', l: 'provedores de LLM atrás de uma única interface' },
+        { v: '24', u: '', l: 'engenheiros geridos como EM' }
+      ],
+      role: '<span class="t">Engenharia de produto com IA</span>, com base em <span class="a">sistema regulado</span>.',
+      catTitle: 'O que a prática me ensinou.',
+      closeTitle: 'A IA acelera a entrega. A trava decide o que chega em produção.',
+      closeText: 'Procuro um lugar para liderar engenharia de produtos com LLM: desenhar a arquitetura, escrever o código, montar as avaliações e levar o time junto. Dezesseis anos de software me ensinaram que velocidade sem rede vira dívida, e é isso que levo para esse trabalho.',
+      order: ['sec-escala', 'sec-lab', 'sec-catalogo', 'sec-assinaturas', 'sec-altitude', 'sec-escada', 'sec-pessoas', 'sec-trajetoria', 'sec-fecho']
     },
     entrega: {
       deck: 'Oito anos entregando sistema dentro de instituição financeira regulada, do JWT à tela. <b>Desenho a arquitetura e escrevo o código</b>, sem tradução no meio do caminho.',
@@ -1051,6 +1069,22 @@
       closeTitle: 'The transition already happened on the org chart.',
       closeText: 'Since July 2026 I sit in the cross-cutting architecture layer. I own two domains that cut across every squad: security and identity, and the Wealth-as-a-Service platform. I stepped out of line management and stayed at the table where decisions are made. That is the work I now bring to the market, as Staff or Principal. My focus is turning architecture design into running software.',
       order: ['sec-escala', 'sec-escada', 'sec-catalogo', 'sec-pessoas', 'sec-altitude', 'sec-assinaturas', 'sec-trajetoria', 'sec-lab', 'sec-fecho']
+    },
+    ia: {
+      deck: 'Sixteen years in engineering, none of them away from the code. Today I build LLM products treating the model as a dependency: interface, adapter, nightly evaluation and <b>deterministic gates around what the agent writes</b>. It is the same discipline I learned in eight years of regulated financial systems.',
+      scaleTitle: 'What AI changed in my work.',
+      scaleLede: 'An internal tool shipped in 16 hours. A change-management platform with mandatory approval shipped in three weeks, built alone. Outside work I built a WhatsApp agent platform with nightly evals, and I am building Virgílio, which brings the same gate to people who build apps with AI.',
+      figs: [
+        { v: '16', u: 'h', l: 'for an internal tool, built with AI' },
+        { v: '3', u: '', l: 'weeks, alone, until the change platform became mandatory' },
+        { v: '2', u: '', l: 'LLM providers behind a single interface' },
+        { v: '24', u: '', l: 'engineers managed as an EM' }
+      ],
+      role: '<span class="t">AI product engineering</span>, grounded in <span class="a">regulated systems</span>.',
+      catTitle: 'What experience taught me.',
+      closeTitle: 'AI speeds up delivery. The gate decides what reaches production.',
+      closeText: 'I am looking for a place to lead engineering on LLM products: design the architecture, write the code, build the evals and bring the team along. Sixteen years of software taught me that speed without a safety net turns into debt, and that is what I bring to this work.',
+      order: ['sec-escala', 'sec-lab', 'sec-catalogo', 'sec-assinaturas', 'sec-altitude', 'sec-escada', 'sec-pessoas', 'sec-trajetoria', 'sec-fecho']
     },
     entrega: {
       deck: 'Eight years shipping systems inside a regulated financial institution, from the JWT to the screen. <b>I design the architecture and write the code</b>, with no translation along the way.',
@@ -1306,6 +1340,7 @@
 
   /* ================= LENTES ================= */
   var deck = document.getElementById('deck');
+  var roleEl = document.querySelector('[data-i18n="role"]');
   var scaleTitle = document.getElementById('scale-title');
   var scaleLede = document.getElementById('scale-lede');
   var figures = document.getElementById('figures');
@@ -1359,6 +1394,7 @@
     document.documentElement.setAttribute('data-lens', key);
 
     deck.innerHTML = cfg.deck; pulseNode(deck);
+    if (roleEl) roleEl.innerHTML = cfg.role || (LANG === 'en' ? EN.role : PT.role);
     scaleTitle.textContent = cfg.scaleTitle;
     scaleLede.textContent = cfg.scaleLede; pulseNode(scaleLede);
     catTitle.textContent = cfg.catTitle;
@@ -1443,6 +1479,11 @@
     var nav = (navigator.language || 'pt').toLowerCase();
     savedLang = (nav.indexOf('pt') === 0) ? 'pt' : 'en';
   }
+  try {
+    var qs = new URLSearchParams(window.location.search);
+    var fromUrl = qs.get('lente') || qs.get('lens');
+    if (fromUrl && LENSES_PT[fromUrl]) savedLens = fromUrl;
+  } catch (e) {}
   current = LENSES_PT[savedLens] ? savedLens : 'tudo';
   setLang(savedLang, false);
 
