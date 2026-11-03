@@ -410,6 +410,8 @@
   .sign h3 { font-family: var(--f-display); font-weight: 700; font-size: 20px; letter-spacing: -0.02em; margin: 0; line-height: 1.15; }
   .sign p { margin: 0; color: var(--ink-soft); font-size: 15px; }
   .signs .sign:last-child:nth-child(odd) { grid-column: 1 / -1; }
+  .lab-foot { margin-top: 14px; font-family: var(--f-mono); font-size: 10.5px; letter-spacing: 0.06em; color: var(--muted); display: flex; flex-wrap: wrap; gap: 6px 14px; }
+  .lab-foot a { color: var(--warm); text-decoration: none; border-bottom: 1px solid currentColor; }
 
   /* ---------------- trajetória ---------------- */
 
@@ -720,6 +722,22 @@
     </div>
   </section>
 
+  <!-- ============ LAB ============ -->
+  <section class="shell" id="sec-lab">
+    <div class="sec-head rv">
+      <span class="label" data-i18n="lbl.lab">Fora do expediente</span>
+      <h2 data-i18n="lab.h2">Código que a IA escreve precisa da mesma trava que código regulado.</h2>
+      <p data-i18n="lab.p">Na corretora, construí uma plataforma em que o deploy não roda sem aprovação. Hoje qualquer pessoa sem formação técnica coloca um app no ar com Lovable, Cursor ou Claude Code, e a dificuldade mudou de lugar. Escrever código ficou barato. O caro é saber se a próxima mudança pode ir para produção. O Virgílio é como estou testando essa ideia.</p>
+    </div>
+
+    <div class="signs rv" id="lab" style="--d:.08s">
+      <article class="sign" data-i18n="lab.r0"><span class="n">01</span><h3>A IA trabalha numa cópia</h3><p>O agente mexe numa prévia, com ambiente de teste separado da produção. A mudança só sobe quando alguém vê os arquivos alterados e aprova.</p></article>
+      <article class="sign" data-i18n="lab.r1"><span class="n">02</span><h3>A trava fica no caminho, não na revisão</h3><p>Chave no código, migração que apaga coluna, tabela sem regra de acesso e teste quebrado barram a mudança ao salvar, ao enviar e antes de publicar. Ninguém precisa lembrar de conferir.</p></article>
+      <article class="sign" data-i18n="lab.r2"><span class="n">03</span><h3>Quem aprova precisa entender o que aprova</h3><p>O erro de produção chega traduzido, com o próximo passo e a correção aberta numa cópia. O backup do banco tem restauração testada longe da produção. A decisão continua sendo da pessoa.</p></article>
+    </div>
+    <div class="lab-foot rv" data-i18n="lab.foot"><span>Virgílio · em beta</span><a href="https://virgilio.work" target="_blank" rel="noopener">virgilio.work</a></div>
+  </section>
+
   <!-- ============ FECHO ============ -->
   <section class="shell" id="sec-fecho">
     <div class="closing rv">
@@ -782,6 +800,13 @@
   "forte.r2": "<span class=\"n\">03</span><h3>Modernization without stopping delivery</h3><p>I migrate systems that are already in production, with clients on top and without freezing the roadmap. That is how it went with authentication, with ten BFFs consolidated into a monorepo, and with the 80-thousand-client platform, module by module.</p>",
   "forte.r3": "<span class=\"n\">04</span><h3>Business literacy</h3><p>I bring the commercial cost into the technical decision. I learned it the expensive way, as a partner at MeuPortfolio: I set the roadmap next to sales and operations, served family offices and asset managers, and lived an M&amp;A from the inside.</p>",
   "forte.r4": "<span class=\"n\">05</span><h3>Teams that run without micromanagement</h3><p>I write the criterion and build the mechanism that holds it up. A seniority track, a stability rotation, an incident process with post-mortems. I got to 24 engineers without becoming the bottleneck.</p>",
+  "lbl.lab": "Off the clock",
+  "lab.h2": "Code written by AI needs the same gate as regulated code.",
+  "lab.p": "At the brokerage I built a platform where deploys do not run without approval. Today anyone without a technical background can put an app live with Lovable, Cursor or Claude Code, and the hard part has moved. Writing code got cheap. The expensive part is knowing whether the next change can go to production. Virgílio is how I am testing that idea.",
+  "lab.r0": "<span class=\"n\">01</span><h3>The AI works on a copy</h3><p>The agent changes a preview, with a test environment separate from production. The change only goes up when someone sees the changed files and approves it.</p>",
+  "lab.r1": "<span class=\"n\">02</span><h3>The gate sits in the path, not in the review</h3><p>Secrets in code, migrations that drop a column, tables without access rules and failing tests block the change on save, on push and before publishing. Nobody has to remember to check.</p>",
+  "lab.r2": "<span class=\"n\">03</span><h3>Whoever approves has to understand what they approve</h3><p>Production errors arrive translated, with the next step and the fix opened on a copy. The database backup has a restore tested away from production. The decision stays with the person.</p>",
+  "lab.foot": "<span>Virgílio · in beta</span><a href=\"https://virgilio.work\" target=\"_blank\" rel=\"noopener\">virgilio.work</a>",
   "forte.r5": "<span class=\"n\">06</span><h3>AI-accelerated engineering</h3><p>I use AI as delivery leverage. An internal tool built in 16 hours, a migration executed by agentic workflows, assisted QA. It lets me ship alone what used to take a team.</p>",
   "lbl.pessoas": "People management",
   "pessoas.h2": "With people, the method doesn't change.",
@@ -947,7 +972,7 @@
       catTitle: 'O que a prática me ensinou.',
       closeTitle: 'A transição já aconteceu no organograma.',
       closeText: 'Desde julho de 2026 estou na camada transversal de arquitetura. Respondo por dois domínios que cortam todas as squads: segurança e identidade, e a plataforma de Wealth-as-a-Service. Saí da gestão de linha e continuei na mesa onde as decisões são tomadas. É esse trabalho que levo agora para o mercado, como Staff ou Principal. Meu foco é transformar desenho de arquitetura em software rodando.',
-      order: ['sec-escala', 'sec-escada', 'sec-catalogo', 'sec-pessoas', 'sec-altitude', 'sec-assinaturas', 'sec-trajetoria', 'sec-fecho']
+      order: ['sec-escala', 'sec-escada', 'sec-catalogo', 'sec-pessoas', 'sec-altitude', 'sec-assinaturas', 'sec-trajetoria', 'sec-lab', 'sec-fecho']
     },
     entrega: {
       deck: 'Oito anos entregando sistema dentro de instituição financeira regulada, do JWT à tela. <b>Desenho a arquitetura e escrevo o código</b>, sem tradução no meio do caminho.',
@@ -962,7 +987,7 @@
       catTitle: 'O que a prática me ensinou.',
       closeTitle: 'A decisão e a implementação na mesma pessoa.',
       closeText: 'Hoje cuido de segurança e identidade e da plataforma de Wealth-as-a-Service, na camada de arquitetura. Quero seguir assim, decidindo arquitetura e escrevendo o código. Staff, Principal, ou um EM que não largou o teclado.',
-      order: ['sec-escala', 'sec-escada', 'sec-catalogo', 'sec-altitude', 'sec-assinaturas', 'sec-pessoas', 'sec-trajetoria', 'sec-fecho']
+      order: ['sec-escala', 'sec-escada', 'sec-catalogo', 'sec-altitude', 'sec-assinaturas', 'sec-pessoas', 'sec-trajetoria', 'sec-lab', 'sec-fecho']
     },
     lidera: {
       deck: 'Cheguei a 24 engenheiros, em três disciplinas e cinco níveis. Com gente uso a mesma regra que uso com sistema: <b>escrevo o critério e construo o que o sustenta</b>. Trilha de senioridade, rodízio de estabilidade, processo de incidente.',
@@ -977,7 +1002,7 @@
       catTitle: 'O que a prática me ensinou.',
       closeTitle: 'Gestão que não terminou no organograma.',
       closeText: 'Cheguei a 24 engenheiros e saí da gestão de linha em julho de 2026, sem parar de integrar liderança nova, escrever critério e cobrar post-mortem. Ter gerido 24 pessoas não é o argumento. O argumento é que decido arquitetura sabendo o que ela custa em gente, em prazo e no regulador.',
-      order: ['sec-escala', 'sec-pessoas', 'sec-catalogo', 'sec-assinaturas', 'sec-escada', 'sec-altitude', 'sec-trajetoria', 'sec-fecho']
+      order: ['sec-escala', 'sec-pessoas', 'sec-catalogo', 'sec-assinaturas', 'sec-escada', 'sec-altitude', 'sec-trajetoria', 'sec-lab', 'sec-fecho']
     },
     risco: {
       deck: 'Oito anos e cinco meses sem um único mês fora de instituição financeira regulada. Aqui <b>toda mudança precisa deixar rastro</b>, e eu coloco isso no desenho, não na revisão. Levei decisão de arquitetura a Compliance, conduzi investigação forense, tornei a trilha de auditoria obrigatória.',
@@ -991,7 +1016,7 @@
       catTitle: 'O que a prática me ensinou.',
       closeTitle: 'Arquitetura e conformidade não são duas conversas.',
       closeText: 'Dezesseis anos de engenharia, os últimos oito dentro de instituição financeira regulada, sob CVM, BACEN e BSM. Hoje respondo formalmente pelo domínio de segurança e identidade da corretora. É nesse terreno que procuro o próximo passo.',
-      order: ['sec-escala', 'sec-assinaturas', 'sec-catalogo', 'sec-altitude', 'sec-escada', 'sec-pessoas', 'sec-trajetoria', 'sec-fecho']
+      order: ['sec-escala', 'sec-assinaturas', 'sec-catalogo', 'sec-altitude', 'sec-escada', 'sec-pessoas', 'sec-trajetoria', 'sec-lab', 'sec-fecho']
     },
     ownership: {
       deck: 'Fui sócio da MeuPortfolio, startup de 15 pessoas, até a Warren comprar a empresa. Quem é dono aprende a <b>colocar o preço junto com a recomendação</b>. Sentei na mesa de M&A do lado da empresa comprada, como sócio, da diligência à integração. Isso mudou o que eu considero uma boa decisão técnica.',
@@ -1006,7 +1031,7 @@
       catTitle: 'O que a prática me ensinou.',
       closeTitle: 'Decisão técnica com o custo comercial junto.',
       closeText: 'Calculo o preço da minha recomendação antes de fazer, porque já paguei essa conta uma vez. Hoje é essa leitura que sustenta as decisões de plataforma em uma corretora regulada. O caminho tecnicamente melhor só vale quando se sustenta também para quem vende, para quem opera e para o regulador.',
-      order: ['sec-escala', 'sec-trajetoria', 'sec-altitude', 'sec-catalogo', 'sec-assinaturas', 'sec-pessoas', 'sec-escada', 'sec-fecho']
+      order: ['sec-escala', 'sec-trajetoria', 'sec-altitude', 'sec-catalogo', 'sec-assinaturas', 'sec-pessoas', 'sec-escada', 'sec-lab', 'sec-fecho']
     }
   };
   var LENSES_EN = {
@@ -1023,7 +1048,7 @@
       catTitle: 'What experience taught me.',
       closeTitle: 'The transition already happened on the org chart.',
       closeText: 'Since July 2026 I sit in the cross-cutting architecture layer. I own two domains that cut across every squad: security and identity, and the Wealth-as-a-Service platform. I stepped out of line management and stayed at the table where decisions are made. That is the work I now bring to the market, as Staff or Principal. My focus is turning architecture design into running software.',
-      order: ['sec-escala', 'sec-escada', 'sec-catalogo', 'sec-pessoas', 'sec-altitude', 'sec-assinaturas', 'sec-trajetoria', 'sec-fecho']
+      order: ['sec-escala', 'sec-escada', 'sec-catalogo', 'sec-pessoas', 'sec-altitude', 'sec-assinaturas', 'sec-trajetoria', 'sec-lab', 'sec-fecho']
     },
     entrega: {
       deck: 'Eight years shipping systems inside a regulated financial institution, from the JWT to the screen. <b>I design the architecture and write the code</b>, with no translation along the way.',
@@ -1038,7 +1063,7 @@
       catTitle: 'What experience taught me.',
       closeTitle: 'The decision and the implementation in the same person.',
       closeText: 'Today I look after security and identity and the Wealth-as-a-Service platform, in the architecture layer. I want to keep working like this, deciding architecture and writing the code. Staff, Principal, or an EM who never left the keyboard.',
-      order: ['sec-escala', 'sec-escada', 'sec-catalogo', 'sec-altitude', 'sec-assinaturas', 'sec-pessoas', 'sec-trajetoria', 'sec-fecho']
+      order: ['sec-escala', 'sec-escada', 'sec-catalogo', 'sec-altitude', 'sec-assinaturas', 'sec-pessoas', 'sec-trajetoria', 'sec-lab', 'sec-fecho']
     },
     lidera: {
       deck: 'I got to 24 engineers, across three disciplines and five levels. With people I use the same rule I use with systems: <b>I write the criterion and build what holds it up</b>. A seniority track, a stability rotation, an incident process.',
@@ -1053,7 +1078,7 @@
       catTitle: 'What experience taught me.',
       closeTitle: 'Management that did not end on the org chart.',
       closeText: 'I got to 24 engineers and stepped out of line management in July 2026, without stopping bringing in new leadership, writing criteria and chasing post-mortems. Having managed 24 people is not the argument. The argument is that I decide architecture knowing what it costs in people, in deadlines and with the regulator.',
-      order: ['sec-escala', 'sec-pessoas', 'sec-catalogo', 'sec-assinaturas', 'sec-escada', 'sec-altitude', 'sec-trajetoria', 'sec-fecho']
+      order: ['sec-escala', 'sec-pessoas', 'sec-catalogo', 'sec-assinaturas', 'sec-escada', 'sec-altitude', 'sec-trajetoria', 'sec-lab', 'sec-fecho']
     },
     risco: {
       deck: 'Eight years and five months without a single month outside a regulated financial institution. Here <b>every change has to leave a trail</b>, and I put that into the design, not the review. I took an architecture decision to Compliance, ran forensic investigation, made the audit trail mandatory.',
@@ -1067,7 +1092,7 @@
       catTitle: 'What experience taught me.',
       closeTitle: 'Architecture and compliance are not two conversations.',
       closeText: 'Sixteen years in engineering, the last eight inside a regulated financial institution, under Brazilian securities, central bank and market supervision. Today I am formally responsible for the brokerage security and identity domain. That is the ground where I am looking for the next step.',
-      order: ['sec-escala', 'sec-assinaturas', 'sec-catalogo', 'sec-altitude', 'sec-escada', 'sec-pessoas', 'sec-trajetoria', 'sec-fecho']
+      order: ['sec-escala', 'sec-assinaturas', 'sec-catalogo', 'sec-altitude', 'sec-escada', 'sec-pessoas', 'sec-trajetoria', 'sec-lab', 'sec-fecho']
     },
     ownership: {
       deck: 'I was a partner at MeuPortfolio, a 15-person startup, until Warren bought the company. An owner learns to <b>put the price next to the recommendation</b>. I sat at the M&A table on the acquired side, as a partner, from diligence to integration. That changed what I count as a good technical decision.',
@@ -1082,7 +1107,7 @@
       catTitle: 'What experience taught me.',
       closeTitle: 'Technical decisions with the commercial cost attached.',
       closeText: 'I price my recommendation before making it, because I already paid that bill once. Today that reading sits behind the platform decisions in a regulated brokerage. The technically better path only counts when it also holds up for whoever sells, whoever operates and the regulator.',
-      order: ['sec-escala', 'sec-trajetoria', 'sec-altitude', 'sec-catalogo', 'sec-assinaturas', 'sec-pessoas', 'sec-escada', 'sec-fecho']
+      order: ['sec-escala', 'sec-trajetoria', 'sec-altitude', 'sec-catalogo', 'sec-assinaturas', 'sec-pessoas', 'sec-escada', 'sec-lab', 'sec-fecho']
     }
   };
   function lensCfg(key) {
